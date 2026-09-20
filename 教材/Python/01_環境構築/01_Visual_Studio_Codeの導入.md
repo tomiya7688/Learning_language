@@ -98,3 +98,9 @@ Shell Command: Install 'code' command in PATH
 次:
 
 - [Python をインストールする](./02_Pythonの導入.md)
+
+---
+
+## 前後のページ
+
+← [1. 環境構築](./環境構築ガイド.md) ｜ [1-2. Pythonをインストールする](./02_Pythonの導入.md) →

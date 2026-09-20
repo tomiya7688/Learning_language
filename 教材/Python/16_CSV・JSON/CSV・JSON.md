@@ -473,3 +473,9 @@ Pythonコードを変えなくても、読み込むデータが増えること�
 7. `json.load()` でJSONファイルをPythonのデータへ変換できる
 8. CSVは表形式、JSONは名前付き・階層的なデータに向いている
 9. JSONはWeb APIでもよく使われる
+
+---
+
+## 前後のページ
+
+← [15. 標準ライブラリ・外部ライブラリ・pip](../15_標準ライブラリ・外部ライブラリ・pip/標準ライブラリ・外部ライブラリ・pip.md) ｜ [17. Web APIからデータを取得（準備中）](https://github.com/tomiya7688/Learning_language/issues/21) →
