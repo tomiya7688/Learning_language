@@ -69,3 +69,9 @@ sudo apt install python3
 次:
 
 - [Python が動くか確認する](./03_動作確認.md)
+
+---
+
+## 前後のページ
+
+← [1-1. Visual Studio Codeをインストールする](./01_Visual_Studio_Codeの導入.md) ｜ [1-3. Pythonが動くか確認する](./03_動作確認.md) →
