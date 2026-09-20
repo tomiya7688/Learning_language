@@ -51,7 +51,7 @@ tkinterはPythonに標準で付属しているため、最初の一歩では追�
 
 次に読む教材:
 
-- [Issue #24: tkinter入門「最初のウィンドウ」](https://github.com/tomiya7688/Learning_language/issues/24)
+- [Tk1: tkinter入門「最初のウィンドウ」](../Tk1_最初のウィンドウ/最初のウィンドウ.md)
 
 ---
 
@@ -223,7 +223,7 @@ GUIで「この書き方は何だろう？」と思ったら、必要に応じ�
 
 作りたいものに近いルートを1つ選んでください。
 
-- デスクトップアプリ → [tkinter入門](https://github.com/tomiya7688/Learning_language/issues/24)
+- デスクトップアプリ → [Tk1: tkinter入門「最初のウィンドウ」](../Tk1_最初のウィンドウ/最初のウィンドウ.md)
 - ブラウザで動く小さなツール → [Streamlit入門](https://github.com/tomiya7688/Learning_language/issues/25)
 - ゲーム・自由な描画 → [pygame入門](https://github.com/tomiya7688/Learning_language/issues/26)
 
