@@ -316,3 +316,9 @@ import
 6. `python -m pip` を使うとPythonとの対応が分かりやすい
 7. インストールしたPythonと実行するPythonをそろえる
 8. 仮想環境でプロジェクトごとにライブラリを分けられる
+
+---
+
+## 前後のページ
+
+← [14. import・モジュール](../14_import・モジュール/import・モジュール.md) ｜ [16. CSV・JSON](../16_CSV・JSON/CSV・JSON.md) →
