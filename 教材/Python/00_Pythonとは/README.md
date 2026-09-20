@@ -184,4 +184,4 @@ Python がどのような言語かを大まかに確認できたら、
 
 次の章:
 
-- [1. 環境構築](../01_environment_setup/README.md)
+- [1. 環境構築](../01_環境構築/README.md)
