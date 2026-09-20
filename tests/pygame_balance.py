@@ -24,6 +24,8 @@ RANGES: dict[str, tuple[float, float]] = {
     "boss_hp": (5, 500),
     "boss_bullet_speed": (1, 12),
     "boss_fire_interval": (10, 300),
+    "boss_bullet_width": (4, 120),
+    "boss_bullet_height": (4, 120),
     "player_damage": (1, 50),
 }
 
@@ -118,6 +120,18 @@ def is_intentionally_unfair(path: Path) -> bool:
     return path.parent.name.startswith("Pg9_")
 
 
+def has_oversized_boss_bullet(values: dict[str, float]) -> bool:
+    width = values.get("boss_bullet_width")
+    height = values.get("boss_bullet_height")
+
+    if width is None or height is None:
+        return False
+
+    # 640x480の教材画面で、弾1発が避ける場所を大きく奪うサイズを
+    # Pg9の「わざとやらかした状態」とみなす。
+    return width >= 320 or height >= 240
+
+
 def main() -> int:
     examples = find_examples()
 
@@ -133,14 +147,16 @@ def main() -> int:
         relative = path.relative_to(ROOT)
 
         if is_intentionally_unfair(path):
-            if violations:
+            if has_oversized_boss_bullet(values):
                 print(f"[PASS: INTENTIONALLY UNFAIR] {relative}")
-                for violation in violations:
-                    print(f"  - {violation.message}")
+                print(
+                    "  - Pg9のボス弾は、画面を覆って避けにくくなるよう"
+                    "意図的に巨大化されています。"
+                )
             else:
                 print(
-                    f"[FAIL] {relative}: Pg9は『強すぎるボス』の失敗例なのに、"
-                    "通常のバランス基準へ違反していません。"
+                    f"[FAIL] {relative}: Pg9は『ボスの弾がデカすぎる』失敗例なのに、"
+                    "boss_bullet_width / boss_bullet_height が十分大きくありません。"
                 )
                 failed = True
             continue
