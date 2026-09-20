@@ -1,5 +1,7 @@
-import random
+import message_tools
 
-number = random.randint(1, 10)
+message1 = message_tools.make_greeting("たろう")
+message2 = message_tools.make_goodbye("さくら")
 
-print("1から10のランダムな数字:", number)
+print(message1)
+print(message2)
