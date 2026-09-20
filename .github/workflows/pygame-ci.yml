@@ -1,0 +1,50 @@
+name: pygame CI
+
+on:
+  push:
+    paths:
+      - "教材/Python/Pg*/**"
+      - "tests/pygame_*.py"
+      - ".github/workflows/pygame-ci.yml"
+  pull_request:
+    paths:
+      - "教材/Python/Pg*/**"
+      - "tests/pygame_*.py"
+      - ".github/workflows/pygame-ci.yml"
+
+jobs:
+  pygame:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pygame
+        run: python -m pip install --upgrade pip pygame
+
+      - name: Compile pygame examples
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import py_compile
+
+          files = sorted(Path("教材/Python").glob("Pg*_*/**/*.py"))
+          if not files:
+              raise SystemExit("pygameサンプルが見つかりません")
+
+          for path in files:
+              print("compile:", path)
+              py_compile.compile(str(path), doraise=True)
+          PY
+
+      - name: Smoke test pygame examples
+        run: python tests/pygame_smoke.py
+
+      - name: Check gameplay balance
+        run: python tests/pygame_balance.py
