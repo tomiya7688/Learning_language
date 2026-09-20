@@ -505,7 +505,7 @@ print(math.sqrt(25))
 
 の役割が見えてきました。
 
-次は、標準ライブラリの `csv` や `json` を実際に使って、**CSV・JSON** を扱います。
+次は、標準ライブラリの `csv` や `json` を実際に使って、**[15章「CSV・JSON」](../15_CSV・JSON/CSV・JSON.md)** を扱います。
 
 ---
 
