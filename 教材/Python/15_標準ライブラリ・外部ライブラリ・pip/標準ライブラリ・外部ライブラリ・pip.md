@@ -321,4 +321,6 @@ import
 
 ## 前後のページ
 
-← [14. import・モジュール](../14_import・モジュール/import・モジュール.md) ｜ [16. CSV・JSON](../16_CSV・JSON/CSV・JSON.md) →
+← [14. import・モジュール](../14_import・モジュール/import・モジュール.md)
+
+[16. CSV・JSON](../16_CSV・JSON/CSV・JSON.md) →
