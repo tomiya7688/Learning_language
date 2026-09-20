@@ -202,7 +202,108 @@ Python のソースコードは普通のテキストファイルなので、テ�
 
 ---
 
-## 0-7. 環境構築 Q&A
+## 0-7. PATH とは
+
+環境構築で特につまずきやすいのが **PATH（パス）** です。
+
+PATH は、ターミナルで `python` のようなコマンドを入力したときに、
+「そのプログラムをどのフォルダから探すか」を OS に教えるための設定です。
+
+たとえば Python 本体が次の場所にあるとします。
+
+```text
+C:\Users\ユーザー名\AppData\Local\Programs\Python\Python314\python.exe
+```
+
+このとき PATH に入れるのは、通常 **python.exe そのものではなく、python.exe が入っているフォルダ** です。
+
+```text
+C:\Users\ユーザー名\AppData\Local\Programs\Python\Python314\
+```
+
+### どこまで PATH に入れればいいの？
+
+基本は、
+
+> **実行したい .exe ファイルが入っているフォルダまで**
+
+です。
+
+Python の場合は、主に次の2か所が関係します。
+
+```text
+C:\Users\ユーザー名\AppData\Local\Programs\Python\Python314\
+C:\Users\ユーザー名\AppData\Local\Programs\Python\Python314\Scripts\
+```
+
+1つ目には `python.exe` があります。
+
+2つ目の `Scripts` には、`pip.exe` など Python 関連のコマンドが入ります。
+
+そのため、手動で PATH を設定する場合は、通常この2つを追加します。
+
+> インストール方法によって実際のフォルダは異なります。
+> 上の例をそのままコピーせず、自分の PC にある Python の場所を確認してください。
+
+### PATH に python.exe まで書いてはいけないの？
+
+PATH に追加するのは通常フォルダです。
+
+たとえば、
+
+```text
+C:\Python314\python.exe
+```
+
+ではなく、
+
+```text
+C:\Python314\
+```
+
+を追加します。
+
+OS は PATH に登録されたフォルダの中から、入力されたコマンド名に対応する実行ファイルを探します。
+
+### Python がどこにあるか確認する
+
+Windows では、Python が認識されている場合は次のコマンドで場所を確認できます。
+
+```powershell
+where python
+```
+
+または、
+
+```powershell
+where py
+```
+
+macOS / Linux では、
+
+```bash
+which python3
+```
+
+を使えます。
+
+### PATH を変更したのに反映されない
+
+PATH を変更したあと、すでに開いていた PowerShell やコマンドプロンプトには
+変更が反映されていないことがあります。
+
+その場合は、
+
+1. ターミナルを閉じる
+2. 新しくターミナルを開く
+3. もう一度 `python --version` を試す
+
+という順番で確認してください。
+
+
+---
+
+## 0-8. 環境構築 Q&A
 
 環境構築では、Pythonそのものを書く前につまずくことがあります。
 
@@ -371,7 +472,7 @@ Python 3.14.7
 
 ---
 
-## 0-8. 確認
+## 0-9. 確認
 
 ここまで終わったら、次の3点を確認してください。
 
