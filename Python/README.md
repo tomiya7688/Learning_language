@@ -5,7 +5,8 @@
 
 ## 学習項目
 
-0. [環境構築](./00_environment_setup/README.md)
-1. [Hello World](./01_hello_world/README.md)
+0. [Python とは？](./00_what_is_python/README.md)
+1. [環境構築](./01_environment_setup/README.md)
+2. [Hello World](./02_hello_world/README.md)
 
 以降の項目は、教材を追加しながら順次整理していきます。
