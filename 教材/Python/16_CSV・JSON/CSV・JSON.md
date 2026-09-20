@@ -478,4 +478,6 @@ Pythonコードを変えなくても、読み込むデータが増えること�
 
 ## 前後のページ
 
-← [15. 標準ライブラリ・外部ライブラリ・pip](../15_標準ライブラリ・外部ライブラリ・pip/標準ライブラリ・外部ライブラリ・pip.md) ｜ [17. Web APIからデータを取得（準備中）](https://github.com/tomiya7688/Learning_language/issues/21) →
+← [15. 標準ライブラリ・外部ライブラリ・pip](../15_標準ライブラリ・外部ライブラリ・pip/標準ライブラリ・外部ライブラリ・pip.md)
+
+[17. Web APIからデータを取得（準備中）](https://github.com/tomiya7688/Learning_language/issues/21) →
