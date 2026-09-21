@@ -40,7 +40,7 @@ boss_bullet_speed = 4
 boss_fire_interval = 60
 boss_fire_timer = 0
 boss_bullet_width = 700
-boss_bullet_height = 260
+boss_bullet_height = 80
 
 game_clear = False
 running = True
