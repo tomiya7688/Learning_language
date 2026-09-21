@@ -24,7 +24,6 @@ spawn_interval = 90
 spawn_timer = 0
 spawn_index = 0
 total_enemies = len(spawn_positions)
-defeated_enemies = 0
 
 enemy_bullets = []
 enemy_bullet_speed = 4
@@ -34,7 +33,7 @@ enemy_fire_timer = 0
 boss_active = False
 boss_x = 320
 boss_y = 90
-boss_hp = 20
+boss_hp = 50
 
 boss_bullets = []
 boss_bullet_speed = 4
@@ -141,14 +140,14 @@ while running:
     for enemy in enemies_to_remove:
         if enemy in enemies:
             enemies.remove(enemy)
-            defeated_enemies = defeated_enemies + 1
 
     if (
-        defeated_enemies >= total_enemies
+        spawn_index >= total_enemies
         and not enemies
         and not boss_active
     ):
         boss_active = True
+        bullets.clear()
 
     if boss_active:
         boss_fire_timer = boss_fire_timer + 1

@@ -127,9 +127,9 @@ def has_oversized_boss_bullet(values: dict[str, float]) -> bool:
     if width is None or height is None:
         return False
 
-    # 640x480の教材画面で、弾1発が避ける場所を大きく奪うサイズを
+    # 640x480の教材画面で、弾1発が画面幅または画面高さを覆うサイズを
     # Pg9の「わざとやらかした状態」とみなす。
-    return width >= 320 or height >= 240
+    return width >= 640 or height >= 480
 
 
 def main() -> int:
