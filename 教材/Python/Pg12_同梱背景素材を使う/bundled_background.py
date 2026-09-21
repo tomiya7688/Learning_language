@@ -14,13 +14,13 @@ font = pygame.font.Font(None, 36)
 background_path = (
     Path(__file__).parent
     / "assets"
-    / "space_background.xpm"
+    / "space_background.ppm"
 )
 background_image = pygame.image.load(
     str(background_path)
 ).convert()
 
-# 教材用素材は160x120なので、ゲーム画面の640x480へ拡大する
+# 教材用素材は80x60なので、ゲーム画面の640x480へ拡大する
 background_image = pygame.transform.scale(
     background_image,
     (640, 480)
