@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 screen = pygame.display.set_mode((640, 480))
-pygame.display.set_caption("ボスの強さを調整する")
+pygame.display.set_caption("ボスが強すぎる")
 
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
