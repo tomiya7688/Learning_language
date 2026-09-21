@@ -33,7 +33,7 @@ enemy_fire_timer = 0
 boss_active = False
 boss_x = 320
 boss_y = 90
-boss_hp = 20
+boss_hp = 50
 
 boss_bullets = []
 boss_bullet_speed = 4
