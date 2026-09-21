@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 screen = pygame.display.set_mode((640, 480))
-pygame.display.set_caption("ボスを出す")
+pygame.display.set_caption("敵ごとに発射タイミングを分ける")
 
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
@@ -16,26 +16,59 @@ player_hp = 3
 bullets = []
 bullet_speed = 8
 
-enemies = []
 enemy_speed = 1
+enemy_bullets = []
+enemy_bullet_speed = 4
 
-spawn_positions_x = [120, 320, 520, 220, 420, 100, 540]
+
+class Enemy:
+    # 敵1体ぶんの座標と発射タイマーをまとめて持つ
+    def __init__(self, x, fire_interval):
+        self.x = x
+        self.y = -20
+        self.fire_interval = fire_interval
+        self.fire_timer = 0
+
+    def move(self):
+        self.y = self.y + enemy_speed
+
+    def ready_to_fire(self):
+        self.fire_timer = self.fire_timer + 1
+
+        if self.fire_timer >= self.fire_interval:
+            self.fire_timer = 0
+            return True
+
+        return False
+
+
+enemies = []
+
+spawn_positions_x = [
+    120,
+    320,
+    520,
+    220,
+    420,
+    100,
+    540
+]
+
+# 敵ごとに別の発射間隔を持たせる
+enemy_fire_intervals = [
+    60,
+    90,
+    120,
+    75,
+    105,
+    80,
+    110
+]
+
 spawn_interval = 90
 spawn_timer = 0
 spawn_index = 0
-total_enemies = len(spawn_positions_x)
 
-enemy_bullets = []
-enemy_bullet_speed = 4
-enemy_fire_interval = 90
-enemy_fire_timer = 0
-
-boss_active = False
-boss_x = 320
-boss_y = 90
-boss_hp = 20
-
-game_clear = False
 running = True
 
 while running:
@@ -65,7 +98,12 @@ while running:
 
     if spawn_timer >= spawn_interval:
         if spawn_index < len(spawn_positions_x):
-            enemies.append([spawn_positions_x[spawn_index], -20])
+            enemies.append(
+                Enemy(
+                    spawn_positions_x[spawn_index],
+                    enemy_fire_intervals[spawn_index]
+                )
+            )
             spawn_index = spawn_index + 1
             spawn_timer = 0
 
@@ -74,16 +112,21 @@ while running:
     bullets = [bullet for bullet in bullets if bullet[1] > -20]
 
     for enemy in enemies:
-        enemy[1] = enemy[1] + enemy_speed
+        enemy.move()
 
-    enemies = [enemy for enemy in enemies if enemy[1] < 520]
+    enemies = [
+        enemy
+        for enemy in enemies
+        if enemy.y < 520
+    ]
 
-    enemy_fire_timer = enemy_fire_timer + 1
-
-    if enemy_fire_timer >= enemy_fire_interval:
-        for enemy in enemies:
-            enemy_bullets.append([enemy[0], enemy[1] + 20])
-        enemy_fire_timer = 0
+    # 敵1体ずつ、自分のタイマーを進めて発射する
+    for enemy in enemies:
+        if enemy.ready_to_fire():
+            enemy_bullets.append([
+                enemy.x,
+                enemy.y + 20
+            ])
 
     for enemy_bullet in enemy_bullets:
         enemy_bullet[1] = enemy_bullet[1] + enemy_bullet_speed
@@ -107,8 +150,8 @@ while running:
 
         for enemy in enemies:
             enemy_rect = pygame.Rect(
-                enemy[0] - 20,
-                enemy[1] - 15,
+                enemy.x - 20,
+                enemy.y - 15,
                 40,
                 30
             )
@@ -117,18 +160,6 @@ while running:
                 bullets_to_remove.append(bullet)
                 enemies_to_remove.append(enemy)
 
-        if boss_active:
-            boss_rect = pygame.Rect(
-                boss_x - 60,
-                boss_y - 30,
-                120,
-                60
-            )
-
-            if bullet_rect.colliderect(boss_rect):
-                bullets_to_remove.append(bullet)
-                boss_hp = boss_hp - 1
-
     for bullet in bullets_to_remove:
         if bullet in bullets:
             bullets.remove(bullet)
@@ -136,13 +167,6 @@ while running:
     for enemy in enemies_to_remove:
         if enemy in enemies:
             enemies.remove(enemy)
-
-    if (
-        spawn_index >= total_enemies
-        and not enemies
-        and not boss_active
-    ):
-        boss_active = True
 
     player_rect = pygame.Rect(
         player_x - 20,
@@ -171,10 +195,6 @@ while running:
     if player_hp <= 0:
         running = False
 
-    if boss_active and boss_hp <= 0:
-        game_clear = True
-        running = False
-
     screen.fill((10, 10, 30))
 
     player_points = [
@@ -195,7 +215,7 @@ while running:
         pygame.draw.rect(
             screen,
             (255, 100, 100),
-            (enemy[0] - 20, enemy[1] - 15, 40, 30)
+            (enemy.x - 20, enemy.y - 15, 40, 30)
         )
 
     for enemy_bullet in enemy_bullets:
@@ -204,20 +224,6 @@ while running:
             (255, 100, 180),
             (enemy_bullet[0] - 4, enemy_bullet[1] - 8, 8, 16)
         )
-
-    if boss_active:
-        pygame.draw.rect(
-            screen,
-            (180, 80, 255),
-            (boss_x - 60, boss_y - 30, 120, 60)
-        )
-
-        boss_text = font.render(
-            f"BOSS HP: {boss_hp}",
-            True,
-            (255, 255, 255)
-        )
-        screen.blit(boss_text, (220, 10))
 
     hp_text = font.render(
         f"HP: {player_hp}",
@@ -230,6 +236,3 @@ while running:
     clock.tick(60)
 
 pygame.quit()
-
-if game_clear:
-    print("GAME CLEAR")

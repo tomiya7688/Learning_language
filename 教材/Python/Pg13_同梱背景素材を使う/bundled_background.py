@@ -10,7 +10,7 @@ pygame.display.set_caption("同梱背景素材を使う")
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
 
-# この.pyと同じPg12フォルダから、同梱背景画像を読み込む
+# この.pyと同じPg13フォルダから、同梱背景画像を読み込む
 background_path = (
     Path(__file__).parent
     / "assets"
@@ -39,10 +39,34 @@ player_hp = 3
 bullets = []
 bullet_speed = 8
 
-enemies = []
 enemy_speed = 1
 
+
+class Enemy:
+    # 敵1体ぶんの座標と発射タイマーをまとめて持つ
+    def __init__(self, x, fire_interval):
+        self.x = x
+        self.y = -20
+        self.fire_interval = fire_interval
+        self.fire_timer = 0
+
+    def move(self):
+        self.y = self.y + enemy_speed
+
+    def ready_to_fire(self):
+        self.fire_timer = self.fire_timer + 1
+
+        if self.fire_timer >= self.fire_interval:
+            self.fire_timer = 0
+            return True
+
+        return False
+
+
+enemies = []
+
 spawn_positions_x = [120, 320, 520, 220, 420, 100, 540]
+enemy_fire_intervals = [60, 90, 120, 75, 105, 80, 110]
 spawn_interval = 90
 spawn_timer = 0
 spawn_index = 0
@@ -50,8 +74,6 @@ total_enemies = len(spawn_positions_x)
 
 enemy_bullets = []
 enemy_bullet_speed = 4
-enemy_fire_interval = 90
-enemy_fire_timer = 0
 
 boss_active = False
 boss_x = 320
@@ -105,7 +127,7 @@ while running:
     spawn_timer = spawn_timer + 1
     if spawn_timer >= spawn_interval:
         if spawn_index < len(spawn_positions_x):
-            enemies.append([spawn_positions_x[spawn_index], -20])
+            enemies.append(Enemy(spawn_positions_x[spawn_index], enemy_fire_intervals[spawn_index]))
             spawn_index = spawn_index + 1
             spawn_timer = 0
 
@@ -114,14 +136,12 @@ while running:
     bullets = [bullet for bullet in bullets if bullet[1] > -20]
 
     for enemy in enemies:
-        enemy[1] = enemy[1] + enemy_speed
-    enemies = [enemy for enemy in enemies if enemy[1] < 520]
+        enemy.move()
+    enemies = [enemy for enemy in enemies if enemy.y < 520]
 
-    enemy_fire_timer = enemy_fire_timer + 1
-    if enemy_fire_timer >= enemy_fire_interval:
-        for enemy in enemies:
-            enemy_bullets.append([enemy[0], enemy[1] + 20])
-        enemy_fire_timer = 0
+    for enemy in enemies:
+        if enemy.ready_to_fire():
+            enemy_bullets.append([enemy.x, enemy.y + 20])
 
     for enemy_bullet in enemy_bullets:
         enemy_bullet[1] = enemy_bullet[1] + enemy_bullet_speed
@@ -145,8 +165,8 @@ while running:
 
         for enemy in enemies:
             enemy_rect = pygame.Rect(
-                enemy[0] - 20,
-                enemy[1] - 15,
+                enemy.x - 20,
+                enemy.y - 15,
                 40,
                 30
             )
@@ -272,7 +292,7 @@ while running:
         pygame.draw.rect(
             screen,
             (255, 100, 100),
-            (enemy[0] - 20, enemy[1] - 15, 40, 30)
+            (enemy.x - 20, enemy.y - 15, 40, 30)
         )
 
     for enemy_bullet in enemy_bullets:

@@ -3,35 +3,10 @@ import pygame
 pygame.init()
 
 screen = pygame.display.set_mode((640, 480))
-pygame.display.set_caption("背景を動かす")
+pygame.display.set_caption("ボスにも弾を撃たせる")
 
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
-
-# 背景の星を [x座標, y座標] で持つ
-background_stars = [
-    [40, 30],
-    [120, 90],
-    [210, 40],
-    [300, 160],
-    [390, 70],
-    [480, 210],
-    [570, 130],
-    [80, 260],
-    [170, 350],
-    [260, 290],
-    [350, 430],
-    [440, 330],
-    [530, 400],
-    [620, 250],
-    [30, 440],
-    [145, 190],
-    [235, 10],
-    [325, 240],
-    [415, 150],
-    [555, 20]
-]
-background_speed = 2
 
 player_x = 320
 player_y = 400
@@ -41,10 +16,34 @@ player_hp = 3
 bullets = []
 bullet_speed = 8
 
-enemies = []
 enemy_speed = 1
 
+
+class Enemy:
+    # 敵1体ぶんの座標と発射タイマーをまとめて持つ
+    def __init__(self, x, fire_interval):
+        self.x = x
+        self.y = -20
+        self.fire_interval = fire_interval
+        self.fire_timer = 0
+
+    def move(self):
+        self.y = self.y + enemy_speed
+
+    def ready_to_fire(self):
+        self.fire_timer = self.fire_timer + 1
+
+        if self.fire_timer >= self.fire_interval:
+            self.fire_timer = 0
+            return True
+
+        return False
+
+
+enemies = []
+
 spawn_positions_x = [120, 320, 520, 220, 420, 100, 540]
+enemy_fire_intervals = [60, 90, 120, 75, 105, 80, 110]
 spawn_interval = 90
 spawn_timer = 0
 spawn_index = 0
@@ -52,8 +51,6 @@ total_enemies = len(spawn_positions_x)
 
 enemy_bullets = []
 enemy_bullet_speed = 4
-enemy_fire_interval = 90
-enemy_fire_timer = 0
 
 boss_active = False
 boss_x = 320
@@ -62,10 +59,10 @@ boss_hp = 50
 
 boss_bullets = []
 boss_bullet_speed = 4
-boss_fire_interval = 120
+boss_fire_interval = 60
 boss_fire_timer = 0
-boss_bullet_width = 48
-boss_bullet_height = 48
+boss_bullet_width = 700
+boss_bullet_height = 80
 
 game_clear = False
 running = True
@@ -93,18 +90,10 @@ while running:
     player_x = max(20, min(620, player_x))
     player_y = max(20, min(460, player_y))
 
-    # 星を毎フレーム下へ動かす
-    for background_star in background_stars:
-        background_star[1] = background_star[1] + background_speed
-
-        # 画面下へ出た星を上へ戻して、ずっと流れ続けるようにする
-        if background_star[1] > 480:
-            background_star[1] = 0
-
     spawn_timer = spawn_timer + 1
     if spawn_timer >= spawn_interval:
         if spawn_index < len(spawn_positions_x):
-            enemies.append([spawn_positions_x[spawn_index], -20])
+            enemies.append(Enemy(spawn_positions_x[spawn_index], enemy_fire_intervals[spawn_index]))
             spawn_index = spawn_index + 1
             spawn_timer = 0
 
@@ -113,14 +102,12 @@ while running:
     bullets = [bullet for bullet in bullets if bullet[1] > -20]
 
     for enemy in enemies:
-        enemy[1] = enemy[1] + enemy_speed
-    enemies = [enemy for enemy in enemies if enemy[1] < 520]
+        enemy.move()
+    enemies = [enemy for enemy in enemies if enemy.y < 520]
 
-    enemy_fire_timer = enemy_fire_timer + 1
-    if enemy_fire_timer >= enemy_fire_interval:
-        for enemy in enemies:
-            enemy_bullets.append([enemy[0], enemy[1] + 20])
-        enemy_fire_timer = 0
+    for enemy in enemies:
+        if enemy.ready_to_fire():
+            enemy_bullets.append([enemy.x, enemy.y + 20])
 
     for enemy_bullet in enemy_bullets:
         enemy_bullet[1] = enemy_bullet[1] + enemy_bullet_speed
@@ -144,12 +131,11 @@ while running:
 
         for enemy in enemies:
             enemy_rect = pygame.Rect(
-                enemy[0] - 20,
-                enemy[1] - 15,
+                enemy.x - 20,
+                enemy.y - 15,
                 40,
                 30
             )
-
             if bullet_rect.colliderect(enemy_rect):
                 bullets_to_remove.append(bullet)
                 enemies_to_remove.append(enemy)
@@ -161,7 +147,6 @@ while running:
                 120,
                 60
             )
-
             if bullet_rect.colliderect(boss_rect):
                 bullets_to_remove.append(bullet)
                 boss_hp = boss_hp - 1
@@ -181,10 +166,10 @@ while running:
     ):
         boss_active = True
         bullets.clear()
+        boss_bullets.append([boss_x, boss_y + 40])
 
     if boss_active:
         boss_fire_timer = boss_fire_timer + 1
-
         if boss_fire_timer >= boss_fire_interval:
             boss_bullets.append([boss_x, boss_y + 40])
             boss_fire_timer = 0
@@ -206,7 +191,6 @@ while running:
     )
 
     enemy_bullets_to_remove = []
-
     for enemy_bullet in enemy_bullets:
         enemy_bullet_rect = pygame.Rect(
             enemy_bullet[0] - 4,
@@ -214,7 +198,6 @@ while running:
             8,
             16
         )
-
         if enemy_bullet_rect.colliderect(player_rect):
             enemy_bullets_to_remove.append(enemy_bullet)
             player_hp = player_hp - 1
@@ -224,7 +207,6 @@ while running:
             enemy_bullets.remove(enemy_bullet)
 
     boss_bullets_to_remove = []
-
     for boss_bullet in boss_bullets:
         boss_bullet_rect = pygame.Rect(
             boss_bullet[0] - boss_bullet_width // 2,
@@ -232,7 +214,6 @@ while running:
             boss_bullet_width,
             boss_bullet_height
         )
-
         if boss_bullet_rect.colliderect(player_rect):
             boss_bullets_to_remove.append(boss_bullet)
             player_hp = player_hp - 1
@@ -250,21 +231,11 @@ while running:
 
     screen.fill((10, 10, 30))
 
-    # 背景なので、プレイヤーや敵より先に描く
-    for background_star in background_stars:
-        pygame.draw.circle(
-            screen,
-            (180, 180, 220),
-            (background_star[0], background_star[1]),
-            2
-        )
-
     player_points = [
         (player_x, player_y - 20),
         (player_x - 20, player_y + 20),
         (player_x + 20, player_y + 20)
     ]
-
     pygame.draw.polygon(screen, (100, 200, 255), player_points)
 
     for bullet in bullets:
@@ -278,7 +249,7 @@ while running:
         pygame.draw.rect(
             screen,
             (255, 100, 100),
-            (enemy[0] - 20, enemy[1] - 15, 40, 30)
+            (enemy.x - 20, enemy.y - 15, 40, 30)
         )
 
     for enemy_bullet in enemy_bullets:
