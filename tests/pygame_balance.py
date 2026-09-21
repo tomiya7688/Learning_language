@@ -117,7 +117,7 @@ def check_values(values: dict[str, float]) -> list[Violation]:
 
 
 def is_intentionally_unfair(path: Path) -> bool:
-    return path.parent.name.startswith("Pg9_")
+    return path.parent.name.startswith("Pg10_")
 
 
 def has_oversized_boss_bullet(values: dict[str, float]) -> bool:
@@ -128,7 +128,7 @@ def has_oversized_boss_bullet(values: dict[str, float]) -> bool:
         return False
 
     # 640x480の教材画面で、弾1発が画面幅または画面高さを覆うサイズを
-    # Pg9の「わざとやらかした状態」とみなす。
+    # Pg10の「わざとやらかした状態」とみなす。
     return width >= 640 or height >= 480
 
 
