@@ -19,11 +19,11 @@ bullet_speed = 8
 enemies = []
 enemy_speed = 1
 
-spawn_positions = [120, 320, 520, 220, 420, 100, 540]
+spawn_positions_x = [120, 320, 520, 220, 420, 100, 540]
 spawn_interval = 90
 spawn_timer = 0
 spawn_index = 0
-total_enemies = len(spawn_positions)
+total_enemies = len(spawn_positions_x)
 
 enemy_bullets = []
 enemy_bullet_speed = 4
@@ -70,8 +70,8 @@ while running:
 
     spawn_timer = spawn_timer + 1
     if spawn_timer >= spawn_interval:
-        if spawn_index < len(spawn_positions):
-            enemies.append([spawn_positions[spawn_index], -20])
+        if spawn_index < len(spawn_positions_x):
+            enemies.append([spawn_positions_x[spawn_index], -20])
             spawn_index = spawn_index + 1
             spawn_timer = 0
 
