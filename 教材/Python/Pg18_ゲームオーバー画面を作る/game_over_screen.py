@@ -9,7 +9,11 @@ pygame.display.set_caption("ゲームオーバー画面を作る")
 
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
+
+# GAME CLEARとGAME OVERの大きな文字に使うフォントです。
+# Noneはpygameの標準フォント、72は文字の大きさです。
 clear_font = pygame.font.Font(None, 72)
+
 clear_sub_font = pygame.font.Font(None, 32)
 button_font = pygame.font.Font(None, 40)
 menu_font = pygame.font.Font(None, 64)
@@ -182,16 +186,25 @@ while running:
 
     # HPが0になったら、敵や弾の更新を止めてゲームオーバー画面だけを描く
     if game_state == "game_over":
+        # ゲーム画面全体を黒に近い赤系の色で塗ります。
+        # 色は、赤・緑・青の順です。
         screen.fill((28, 8, 12))
 
+        # GAME OVERという文字画像を作ります。
+        # Trueは文字の縁を滑らかにし、(255, 90, 90)は赤系の文字色です。
         game_over_text = clear_font.render(
             "GAME OVER",
             True,
             (255, 90, 90)
         )
+
+        # 文字画像と同じ大きさの四角を作り、
+        # その中心を横320・縦220へ合わせます。
         game_over_text_rect = game_over_text.get_rect(
             center=(320, 220)
         )
+
+        # 文字画像を、上で決めた四角の位置へ描きます。
         screen.blit(game_over_text, game_over_text_rect)
 
         game_over_sub_text = clear_sub_font.render(
@@ -207,6 +220,7 @@ while running:
             game_over_sub_text_rect
         )
 
+        # ここまでscreenへ描いた内容を、ウィンドウへ反映します。
         pygame.display.flip()
         clock.tick(60)
         continue
