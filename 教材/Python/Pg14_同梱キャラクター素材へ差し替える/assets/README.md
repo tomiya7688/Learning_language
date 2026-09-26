@@ -1,12 +1,20 @@
-# Pg14 キャラクター素材
+# Pg14 素材情報
 
-このフォルダの画像は、Learning_language のpygame教材用に新規作成したオリジナル素材です。
+このフォルダに同梱している素材の出所とライセンスをまとめます。
 
-- `player_ship.png` — プレイヤー機 40×40
-- `enemy_ship.png` — 通常敵 40×30
-- `boss_ship.png` — ボス 120×60
-- `space_background.png` — Pg13から引き継いだ背景素材
+| ファイル | 内容 | 作成元・引き継ぎ元 | ライセンス |
+| --- | --- | --- | --- |
+| `player_ship.png` | プレイヤー機 40×40 | Pg14でLearning_language用に新規作成したオリジナル素材 | MIT |
+| `enemy_ship.png` | 通常敵 40×30 | Pg14でLearning_language用に新規作成したオリジナル素材 | MIT |
+| `boss_ship.png` | ボス 120×60 | Pg14でLearning_language用に新規作成したオリジナル素材 | MIT |
+| `space_background.png` | 背景画像 160×120 | Pg13で作成したオリジナル素材をPg13から引き継ぎ | MIT |
+
+## 外部素材
 
 外部素材は使用していません。
 
-このリポジトリ本体と同じライセンス条件で扱います。
+## ライセンス
+
+このフォルダの素材は、[リポジトリ直下の LICENSE](../../../../LICENSE) に記載されたMIT Licenseで扱います。
+
+将来、第三者の素材を追加する場合は、このREADMEに作者・配布元・元ライセンスを記載し、元のCopyright noticeとLicense noticeを保持します。
