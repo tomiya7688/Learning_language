@@ -52,9 +52,14 @@ total_enemies = len(spawn_positions_x)
 enemy_bullets = []
 enemy_bullet_speed = 4
 
+# ボスは最初はまだ画面に出ていません。
 boss_active = False
+
+# ボスの中心位置です。横320・縦90ピクセルに置きます。
 boss_x = 320
 boss_y = 90
+
+# ボスの残りHPです。プレイヤー弾が当たるたびに1減ります。
 boss_hp = 20
 
 game_clear = False
@@ -137,6 +142,10 @@ while running:
                 enemies_to_remove.append(enemy)
 
         if boss_active:
+            # pygame.Rect()は位置と大きさを持つ四角を用意するだけで、
+            # この行だけでは画面には描きません。
+            # 幅120・高さ60の半分である60・30を引いて、
+            # 四角形の中心をboss_x・boss_yへ合わせます。
             boss_rect = pygame.Rect(
                 boss_x - 60,
                 boss_y - 30,
@@ -225,17 +234,24 @@ while running:
         )
 
     if boss_active:
+        # screenへ、RGB(180, 80, 255)の紫系の色でボスを描きます。
+        # 左上を中心座標から60px左、30px上へずらし、
+        # 幅120・高さ60の四角形の中心をboss_x・boss_yへ合わせます。
         pygame.draw.rect(
             screen,
             (180, 80, 255),
             (boss_x - 60, boss_y - 30, 120, 60)
         )
 
+        # ボスHPの文章から白い文字画像を作ります。
+        # Trueは文字の縁を滑らかにする指定です。
         boss_text = font.render(
             f"BOSS HP: {boss_hp}",
             True,
             (255, 255, 255)
         )
+
+        # 作った文字画像の左上を、画面の左220・上10ピクセルへ置いて描きます。
         screen.blit(boss_text, (220, 10))
 
     hp_text = font.render(
@@ -245,6 +261,7 @@ while running:
     )
     screen.blit(hp_text, (10, 10))
 
+    # このフレームで描いたボスや文字を含む内容を画面へ反映します。
     pygame.display.flip()
     clock.tick(60)
 
