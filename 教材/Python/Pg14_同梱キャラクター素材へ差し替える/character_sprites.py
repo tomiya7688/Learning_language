@@ -27,17 +27,22 @@ background_image = pygame.transform.scale(
 )
 
 
-# 自機・通常敵・ボスも同梱PNGから読み込む
+# 自機・通常敵・ボスも同梱PNGから読み込みます。
 assets_path = Path(__file__).parent / "assets"
 
+# player_imageには自機画像を入れます。
+# convert_alpha()は、PNGがもともと持っている透明度を保ったまま
+# 画面へ描きやすい内部形式の画像を作ります。
 player_image = pygame.image.load(
     str(assets_path / "player_ship.png")
 ).convert_alpha()
 
+# enemy_imageには通常敵の画像を入れます。
 enemy_image = pygame.image.load(
     str(assets_path / "enemy_ship.png")
 ).convert_alpha()
 
+# boss_imageにはボス画像を入れます。
 boss_image = pygame.image.load(
     str(assets_path / "boss_ship.png")
 ).convert_alpha()
@@ -180,6 +185,9 @@ while running:
         )
 
         for enemy in enemies:
+            # enemy_imageと同じ幅・高さのRectを作り、
+            # その中心を敵の座標へ合わせます。
+            # get_rect()だけでは画像は画面へ描かれません。
             enemy_rect = enemy_image.get_rect(
                 center=(enemy.x, enemy.y)
             )
@@ -189,6 +197,8 @@ while running:
                 enemies_to_remove.append(enemy)
 
         if boss_active:
+            # boss_imageと同じ幅・高さのRectを作り、
+            # その中心をボスの座標へ合わせます。
             boss_rect = boss_image.get_rect(
                 center=(boss_x, boss_y)
             )
@@ -229,6 +239,9 @@ while running:
         if boss_bullet[1] < 520
     ]
 
+    # player_imageと同じ幅・高さのRectを作り、
+    # その中心をプレイヤー座標へ合わせます。
+    # このRectは透明部分も含む画像全体の四角形です。
     player_rect = player_image.get_rect(
         center=(player_x, player_y)
     )
@@ -280,9 +293,13 @@ while running:
     screen.blit(background_image, (0, background_y_1))
     screen.blit(background_image, (0, background_y_2))
 
+    # player_image_rectは、player_imageと同じ幅・高さと、
+    # 画面上の置き場所を持つRectです。
     player_image_rect = player_image.get_rect(
         center=(player_x, player_y)
     )
+
+    # player_imageを、player_image_rectの位置へ実際に描きます。
     screen.blit(player_image, player_image_rect)
 
     for bullet in bullets:
@@ -293,9 +310,12 @@ while running:
         )
 
     for enemy in enemies:
+        # 敵画像と同じ大きさのRectを作り、中心を敵座標へ合わせます。
         enemy_image_rect = enemy_image.get_rect(
             center=(enemy.x, enemy.y)
         )
+
+        # enemy_imageを、enemy_image_rectの位置へ実際に描きます。
         screen.blit(enemy_image, enemy_image_rect)
 
     for enemy_bullet in enemy_bullets:
@@ -306,9 +326,12 @@ while running:
         )
 
     if boss_active:
+        # ボス画像と同じ大きさのRectを作り、中心をボス座標へ合わせます。
         boss_image_rect = boss_image.get_rect(
             center=(boss_x, boss_y)
         )
+
+        # boss_imageを、boss_image_rectの位置へ実際に描きます。
         screen.blit(boss_image, boss_image_rect)
 
         for boss_bullet in boss_bullets:
