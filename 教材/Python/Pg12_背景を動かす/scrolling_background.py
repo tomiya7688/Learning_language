@@ -268,10 +268,13 @@ while running:
         game_clear = True
         running = False
 
+    # まずゲーム画面全体を暗い色で塗ります。
     screen.fill((10, 10, 30))
 
-    # 背景なので、プレイヤーや敵より先に描く
+    # 背景の星は、プレイヤーや敵より先に描きます。
     for background_star in background_stars:
+        # screenへ、明るい青みのある色で半径2ピクセルの丸を描きます。
+        # background_star[0]が中心のx、background_star[1]が中心のyです。
         pygame.draw.circle(
             screen,
             (180, 180, 220),
@@ -279,6 +282,7 @@ while running:
             2
         )
 
+    # 星のあとにプレイヤーを描きます。
     player_points = [
         (player_x, player_y - 20),
         (player_x - 20, player_y + 20),
