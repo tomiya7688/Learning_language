@@ -10,17 +10,23 @@ pygame.display.set_caption("同梱背景素材を使う")
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
 
-# この.pyと同じPg13フォルダから、同梱背景画像を読み込む
+# この.pyがあるフォルダを基準に、背景画像ファイルの場所を作ります。
+# Pathの / は、ここでは割り算ではなくフォルダ名やファイル名をつなぐ記法です。
 background_path = (
     Path(__file__).parent
     / "assets"
     / "space_background.png"
 )
+
+# Pathで作った画像の場所を文字列へ変え、画像ファイルを読み込みます。
+# convert()で、画面へ描きやすい内部形式の画像を作ります。
+# PNGファイルそのものを書き換えたり、画像サイズを変えたりはしません。
 background_image = pygame.image.load(
     str(background_path)
 ).convert()
 
-# 教材用素材は160x120なので、ゲーム画面の640x480へ拡大する
+# 読み込んだ160x120の画像を、640x480の大きさへ拡大します。
+# scale()が返した新しい画像を、background_imageへ入れ直します。
 background_image = pygame.transform.scale(
     background_image,
     (640, 480)
@@ -269,7 +275,8 @@ while running:
         game_clear = True
         running = False
 
-    # 背景画像はプレイヤーや敵より先に描く
+    # 背景画像はプレイヤーや敵より先に描きます。
+    # blit()の2つ目の値は、画像の左上を置く(x, y)です。
     screen.blit(background_image, (0, background_y_1))
     screen.blit(background_image, (0, background_y_2))
 
@@ -335,6 +342,7 @@ while running:
     )
     screen.blit(hp_text, (10, 10))
 
+    # このフレームでscreenへ描いた内容を実際の画面へ反映します。
     pygame.display.flip()
     clock.tick(60)
 
