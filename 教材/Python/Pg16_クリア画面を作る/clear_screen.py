@@ -9,7 +9,11 @@ pygame.display.set_caption("クリア画面を作る")
 
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
+
+# GAME CLEAR! の文字に使うフォントです。
+# Noneはpygameの標準フォント、72は文字サイズです。
 clear_font = pygame.font.Font(None, 72)
+
 clear_sub_font = pygame.font.Font(None, 32)
 
 # この.pyと同じPg16フォルダから、同梱背景画像を読み込む
@@ -120,18 +124,26 @@ while running:
             ):
                 bullets.append([player_x, player_y - 20])
 
-    # クリア中は、敵や弾の更新を止めて専用画面だけを描く
+    # クリア中は、敵や弾の更新を止めて専用画面だけを描きます。
     if game_state == "clear":
+        # ゲーム画面全体を、RGB(8, 8, 24)の暗い青系の色で塗ります。
         screen.fill((8, 8, 24))
 
+        # "GAME CLEAR!" から黄色系の文字画像を作ります。
+        # Trueは文字の縁を滑らかにする指定です。
         clear_text = clear_font.render(
             "GAME CLEAR!",
             True,
             (255, 240, 100)
         )
+
+        # clear_textと同じ大きさのRectを作り、
+        # その中心を画面の(320, 210)へ合わせます。
         clear_text_rect = clear_text.get_rect(
             center=(320, 210)
         )
+
+        # 作った文字画像を、clear_text_rectの位置へ実際に描きます。
         screen.blit(clear_text, clear_text_rect)
 
         clear_sub_text = clear_sub_font.render(
@@ -144,6 +156,7 @@ while running:
         )
         screen.blit(clear_sub_text, clear_sub_text_rect)
 
+        # このフレームで描いたクリア画面を実際の画面へ反映します。
         pygame.display.flip()
         clock.tick(60)
         continue
