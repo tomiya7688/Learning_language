@@ -61,6 +61,8 @@ while running:
     enemies_to_remove = []
 
     for bullet in bullets:
+        # Rectは画面へ描かず、弾の位置と大きさを持つ四角を用意します。
+        # 幅6・高さ20の中心をbulletの座標へ合わせます。
         bullet_rect = pygame.Rect(
             bullet[0] - 3,
             bullet[1] - 10,
@@ -69,6 +71,8 @@ while running:
         )
 
         for enemy in enemies:
+            # enemyは敵1体です。幅40・高さ30の中心をenemyの座標へ合わせます。
+            # pygame.Rect()は四角を用意するだけで、ここではまだ描画しません。
             enemy_rect = pygame.Rect(
                 enemy[0] - 20,
                 enemy[1] - 15,
@@ -76,6 +80,7 @@ while running:
                 30
             )
 
+            # 弾の四角と敵の四角が重なればTrueになり、ifの中を実行します。
             if bullet_rect.colliderect(enemy_rect):
                 bullets_to_remove.append(bullet)
                 enemies_to_remove.append(enemy)
@@ -106,6 +111,8 @@ while running:
         )
 
     for enemy in enemies:
+        # RGB(255, 100, 100)の赤系の色で、幅40・高さ30の敵を描きます。
+        # 左上を中心座標から20px左、15px上へずらして中心を合わせます。
         pygame.draw.rect(
             screen,
             (255, 100, 100),
