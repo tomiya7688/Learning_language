@@ -11,7 +11,11 @@ clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
 clear_font = pygame.font.Font(None, 72)
 clear_sub_font = pygame.font.Font(None, 32)
+
+# BACKの文字に使うフォントです。
+# Noneはpygameの標準フォント、40は文字サイズです。
 button_font = pygame.font.Font(None, 40)
+
 menu_font = pygame.font.Font(None, 64)
 
 # この.pyと同じPg17フォルダから、同梱背景画像を読み込む
@@ -131,6 +135,8 @@ while running:
             and event.button == 1
             and game_state == "clear"
         ):
+            # event.posはクリックした(x, y)です。
+            # その点がback_buttonの四角の中ならTrueになります。
             if back_button.collidepoint(event.pos):
                 game_state = "menu"
 
@@ -158,7 +164,8 @@ while running:
         )
         screen.blit(clear_sub_text, clear_sub_text_rect)
 
-        # Rectを描いて、その上にBACKという文字を置く
+        # screenへ、RGB(70, 90, 180)の青系の色でback_buttonを描きます。
+        # border_radius=8は、角を半径8ピクセルで丸める指定です。
         pygame.draw.rect(
             screen,
             (70, 90, 180),
@@ -166,14 +173,21 @@ while running:
             border_radius=8
         )
 
+        # "BACK" から白い文字画像を作ります。
+        # Trueは文字の縁を滑らかにする指定です。
         back_text = button_font.render(
             "BACK",
             True,
             (255, 255, 255)
         )
+
+        # back_textと同じ大きさのRectを作り、
+        # その中心をback_buttonの中心へ合わせます。
         back_text_rect = back_text.get_rect(
             center=back_button.center
         )
+
+        # 作った文字画像を、back_text_rectの位置へ実際に描きます。
         screen.blit(back_text, back_text_rect)
 
         pygame.display.flip()
