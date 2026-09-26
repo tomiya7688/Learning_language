@@ -57,10 +57,19 @@ boss_x = 320
 boss_y = 90
 boss_hp = 50
 
+# ボス弾はまだ発射されていないので、最初は空の一覧です。
 boss_bullets = []
+
+# ボス弾は1フレームに4ピクセル下へ進みます。
 boss_bullet_speed = 4
+
+# 60フレーム数えたら次のボス弾を発射します。
 boss_fire_interval = 60
+
+# 発射間隔を数え始めるので、最初は0です。
 boss_fire_timer = 0
+
+# ボス弾の幅と高さです。
 boss_bullet_width = 700
 boss_bullet_height = 80
 
@@ -166,15 +175,22 @@ while running:
     ):
         boss_active = True
         bullets.clear()
+
+        # ボス弾1発の位置を追加します。
+        # xは弾の中心、yは弾の上端として使います。
+        # boss_y + 40で、ボス中心より40ピクセル下から発射します。
         boss_bullets.append([boss_x, boss_y + 40])
 
     if boss_active:
         boss_fire_timer = boss_fire_timer + 1
         if boss_fire_timer >= boss_fire_interval:
+            # 最初の1発と同じ位置から次のボス弾を追加します。
             boss_bullets.append([boss_x, boss_y + 40])
             boss_fire_timer = 0
 
     for boss_bullet in boss_bullets:
+        # boss_bullet[1]は弾の上端yです。
+        # yを増やして、弾を下へ4ピクセル動かします。
         boss_bullet[1] = boss_bullet[1] + boss_bullet_speed
 
     boss_bullets = [
@@ -208,12 +224,18 @@ while running:
 
     boss_bullets_to_remove = []
     for boss_bullet in boss_bullets:
+        # xは弾の中心なので、幅の半分を引いて左端を求めます。
+        # yは保存した値をそのまま弾の上端として使います。
+        # pygame.Rect()は位置と大きさを持つ四角を用意するだけで、
+        # この行だけでは画面には描きません。
         boss_bullet_rect = pygame.Rect(
             boss_bullet[0] - boss_bullet_width // 2,
             boss_bullet[1],
             boss_bullet_width,
             boss_bullet_height
         )
+
+        # ボス弾の四角とプレイヤーの四角が重なったらHPを1減らします。
         if boss_bullet_rect.colliderect(player_rect):
             boss_bullets_to_remove.append(boss_bullet)
             player_hp = player_hp - 1
@@ -267,6 +289,7 @@ while running:
         )
 
         for boss_bullet in boss_bullets:
+            # 当たり判定と同じ左端・上端・幅・高さでボス弾を描きます。
             pygame.draw.rect(
                 screen,
                 (255, 80, 80),
