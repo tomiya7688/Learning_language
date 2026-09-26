@@ -47,6 +47,7 @@ while running:
 
     bullets = [bullet for bullet in bullets if bullet[1] > -20]
 
+    # ゲーム画面全体を暗く青みのある色で塗ります。
     screen.fill((10, 10, 30))
 
     player_points = [
@@ -58,12 +59,15 @@ while running:
     pygame.draw.polygon(screen, (100, 200, 255), player_points)
 
     for bullet in bullets:
+        # bullet[0]は弾の横位置、bullet[1]は縦位置です。
+        # 幅6・高さ20の中心を弾の座標へ合わせて四角形を描きます。
         pygame.draw.rect(
             screen,
             (255, 240, 100),
             (bullet[0] - 3, bullet[1] - 10, 6, 20)
         )
 
+    # このフレームで描いた内容を画面へ反映します。
     pygame.display.flip()
 
     clock.tick(60)
