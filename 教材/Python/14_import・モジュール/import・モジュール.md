@@ -24,7 +24,9 @@
 
 ## 14-2. 関数を別ファイルへ分ける
 
-`message_tools.py` に、挨拶関係の関数をまとめます。
+挨拶関係の関数を別ファイルへまとめましょう。
+
+中身がメッセージを作る道具なので、ファイル名は `message_tools.py` にします。
 
 ```python
 def make_greeting(name):
@@ -41,7 +43,11 @@ def make_goodbye(name):
 
 ## 14-3. 別ファイルから使う
 
-`module_example.py` では、
+次は、分けた `message_tools.py` を使う側のファイルを作ります。
+
+モジュールを使う例なので、`module_example.py` にしましょう。
+
+まず `message_tools` を読み込みます。
 
 ```python
 import message_tools
