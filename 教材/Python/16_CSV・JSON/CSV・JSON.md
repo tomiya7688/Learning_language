@@ -84,7 +84,11 @@ Excelや表計算ソフトでも扱いやすい形式です。
 
 `csv` はCSV、`json` はJSON、`example` は「例」という意味です。
 
-まずCSVを読みます。
+まずCSVを読みましょう。
+
+CSVを1行ずつ辞書として扱いたいので、`csv.DictReader(file)` の結果を `reader` に入れます。
+
+そこから1行ずつ取り出す値は `row` にしましょう。
 
 ```python
 import csv
