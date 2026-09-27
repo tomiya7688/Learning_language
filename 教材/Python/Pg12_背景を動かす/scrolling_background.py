@@ -8,7 +8,7 @@ pygame.display.set_caption("背景を動かす")
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
 
-# 背景の星を [x座標, y座標] で持つ
+# 背景に使う星の一覧
 background_stars = [
     [40, 30],
     [120, 90],
