@@ -64,11 +64,18 @@ import random
 
 [standard_library_example.py](./standard_library_example.py) を開いてください。
 
+1から10までのランダムな整数が欲しいので、まず `random` を使えるようにします。
+
+作った数字はあとで表示したいので、保存先は `number` にしましょう。
+
 ```python
+# random を使えるようにします。
 import random
 
+# 1から10までのランダムな整数を作り、number に保存します。
 number = random.randint(1, 10)
 
+# number に入った数字を表示します。
 print("1から10のランダムな数字:", number)
 ```
 

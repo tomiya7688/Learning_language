@@ -1,3 +1,4 @@
+# 生徒1人分の名前と点数を student にまとめます。
 student = {
     "name": "たろう",
     "score": 80
@@ -14,6 +15,6 @@ student["score"] = 90
 
 print("更新後の点数:", student["score"])
 
-# キーと値を順番に表示します。
+# キーを key、対応する値を value に入れながら順番に表示します。
 for key, value in student.items():
     print(key, ":", value)

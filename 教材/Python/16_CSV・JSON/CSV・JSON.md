@@ -84,7 +84,11 @@ Excelや表計算ソフトでも扱いやすい形式です。
 
 `csv` はCSV、`json` はJSON、`example` は「例」という意味です。
 
-まずCSVを読みます。
+まずCSVを読みましょう。
+
+CSVを1行ずつ辞書として扱いたいので、`csv.DictReader(file)` の結果を `reader` に入れます。
+
+そこから1行ずつ取り出す値は `row` にしましょう。
 
 ```python
 import csv
@@ -273,6 +277,12 @@ JSONもかなり似ています。
 
 ## 16-11. JSONを読み込む
 
+JSONには複数の生徒データが入っています。
+
+読み込んだ一覧をまとめて使いたいので、名前は `students` にしましょう。
+
+そこから1人ずつ取り出すときは `student` にします。
+
 ```python
 import json
 
@@ -299,7 +309,7 @@ students = json.load(file)
 
 という処理です。
 
-今回のJSONなら、`students` にはリストが入り、その中に辞書が入ります。
+今回のJSONを読み込むと、先ほど決めた `students` にリストが入り、その中に生徒ごとの辞書が入ります。
 
 ---
 
@@ -312,6 +322,7 @@ import json
 print("CSV:")
 
 with open("students.csv", "r", encoding="utf-8") as file:
+    # CSVを1行ずつ辞書として扱う reader を作ります。
     reader = csv.DictReader(file)
 
     for row in reader:
@@ -320,6 +331,7 @@ with open("students.csv", "r", encoding="utf-8") as file:
 print("JSON:")
 
 with open("students.json", "r", encoding="utf-8") as file:
+    # JSONから読み込んだ生徒一覧を students に保存します。
     students = json.load(file)
 
 for student in students:

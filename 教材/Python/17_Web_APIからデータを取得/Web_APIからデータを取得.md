@@ -142,7 +142,15 @@ python3 -m pip install requests
 
 ---
 
-## 17-7. サンプルコード
+## 17-7. APIへ渡す値を組み立てる
+
+まず、どのAPIへ取りに行くかを決めます。
+
+Open-Meteoの取得先URLを `url` に保存しましょう。
+
+次に、緯度・経度・欲しい現在値・タイムゾーンをまとめて渡したいので、辞書 `params` を作ります。
+
+APIから返ってきた応答は `response`、JSONへ変換した全体は `data`、その中の現在値は `current` に保存します。
 
 ```python
 import requests
