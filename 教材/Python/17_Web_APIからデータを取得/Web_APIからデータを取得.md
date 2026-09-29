@@ -191,11 +191,7 @@ response = requests.get(url, params=params, timeout=10)
 
 今回使っているのはHTTPの **GET** です。
 
-今は、
-
-> GET = データをください
-
-くらいに考えておけば十分です。
+HTTPのGETリクエストは、Webサーバーからデータを取得するときに使います。
 
 ---
 
