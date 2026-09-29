@@ -26,7 +26,17 @@
 
 挨拶関係の関数を別ファイルへまとめましょう。
 
-中身がメッセージを作る道具なので、ファイル名は `message_tools.py` にします。
+中身がメッセージを作る道具なので、ファイル名は [`message_tools.py`](./message_tools.py) にします。
+
+```python
+# 挨拶文を作る関数をこのファイルへまとめます。
+def make_greeting(name):
+    return f"こんにちは {name}"
+
+
+def make_goodbye(name):
+    return f"さようなら {name}"
+```
 
 ```python
 def make_greeting(name):
@@ -45,7 +55,20 @@ def make_goodbye(name):
 
 次は、分けた `message_tools.py` を使う側のファイルを作ります。
 
-モジュールを使う例なので、`module_example.py` にしましょう。
+モジュールを使う例なので、[`module_example.py`](./module_example.py) にしましょう。
+
+```python
+# 別ファイルの message_tools を使えるようにします。
+import message_tools
+
+# 挨拶文を作り、message1 に保存します。
+message1 = message_tools.make_greeting("たろう")
+# 別れの挨拶を作り、message2 に保存します。
+message2 = message_tools.make_goodbye("さくら")
+
+print(message1)
+print(message2)
+```
 
 まず `message_tools` を読み込みます。
 
