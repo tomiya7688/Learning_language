@@ -1,120 +1,179 @@
+# pygame をインポートする
 import pygame
 
+# pygame を初期化する
 pygame.init()
 
+# screen に640×480のpygame画面をセットする
 screen = pygame.display.set_mode((640, 480))
+# pygame画面のタイトルに「敵が攻撃してくる」をセットする
 pygame.display.set_caption("敵が攻撃してくる")
 
+# clock に pygame.time.Clock() をセットする
 clock = pygame.time.Clock()
 
-# HP表示に使う文字の形と大きさを用意します。
-# Noneはpygameの標準フォント、36は文字サイズです。
+# font に pygame.font.Font(None, 36) をセットする
 font = pygame.font.Font(None, 36)
 
+# player_x に320を入れる
 player_x = 320
+# player_y に400を入れる
 player_y = 400
+# player_speed に5を入れる
 player_speed = 5
 
-# プレイヤーの残りHPです。1回当たるたびに1減ります。
+# player_hp に3を入れる
 player_hp = 3
 
+# bullets に空のリストを入れる
 bullets = []
+# bullet_speed に8を入れる
 bullet_speed = 8
 
+# enemies に [160, 80]、[320, 40]、[480, 100] を入れる
 enemies = [
     [160, 80],
     [320, 40],
     [480, 100]
 ]
+# enemy_speed に1を入れる
 enemy_speed = 1
 
-# 敵弾はまだ発射されていないので、最初は空のリストです。
+# enemy_bullets に空のリストを入れる
 enemy_bullets = []
 
-# 敵弾は1フレームに4ピクセル下へ進みます。
+# enemy_bullet_speed に4を入れる
 enemy_bullet_speed = 4
 
-# 90フレームごとに敵弾を発射します。
+# enemy_fire_interval に90を入れる
 enemy_fire_interval = 90
 
-# 発射間隔を数え始めるので、最初は0です。
+# enemy_fire_timer に0を入れる
 enemy_fire_timer = 0
 
+# running に True を入れる
 running = True
 
+# running が True の間、繰り返す
 while running:
+    # pygameで起きたイベントを1つずつ event に入れて繰り返す
     for event in pygame.event.get():
+        # event.type が pygame.QUIT なら
         if event.type == pygame.QUIT:
+            # running に False を入れる
             running = False
 
+        # event.type が pygame.KEYDOWN なら
         if event.type == pygame.KEYDOWN:
+            # event.key が pygame.K_SPACE なら
             if event.key == pygame.K_SPACE:
+                # bullets に [player_x, player_y - 20] を追加する
                 bullets.append([player_x, player_y - 20])
 
+    # keys に pygame.key.get_pressed() の戻り値を入れる
     keys = pygame.key.get_pressed()
 
+    # keys[pygame.K_LEFT] が True なら
     if keys[pygame.K_LEFT]:
+        # player_x に player_x から player_speed を引いた値を入れる
         player_x = player_x - player_speed
+    # keys[pygame.K_RIGHT] が True なら
     if keys[pygame.K_RIGHT]:
+        # player_x に player_x と player_speed を足した値を入れる
         player_x = player_x + player_speed
+    # keys[pygame.K_UP] が True なら
     if keys[pygame.K_UP]:
+        # player_y に player_y から player_speed を引いた値を入れる
         player_y = player_y - player_speed
+    # keys[pygame.K_DOWN] が True なら
     if keys[pygame.K_DOWN]:
+        # player_y に player_y と player_speed を足した値を入れる
         player_y = player_y + player_speed
 
+    # player_x に max(20, min(620, player_x)) の値を入れる
     player_x = max(20, min(620, player_x))
+    # player_y に max(20, min(460, player_y)) の値を入れる
     player_y = max(20, min(460, player_y))
 
+    # bullets から bullet を1つずつ取り出して繰り返す
     for bullet in bullets:
+        # bullet[1] に bullet[1] から bullet_speed を引いた値を入れる
         bullet[1] = bullet[1] - bullet_speed
+    # bullets に bullet[1] > -20 の bullet だけを入れる
     bullets = [bullet for bullet in bullets if bullet[1] > -20]
 
+    # enemies から enemy を1つずつ取り出して繰り返す
     for enemy in enemies:
+        # enemy[1] に enemy[1] と enemy_speed を足した値を入れる
         enemy[1] = enemy[1] + enemy_speed
 
+    # enemy_fire_timer に enemy_fire_timer と1を足した値を入れる
     enemy_fire_timer = enemy_fire_timer + 1
+    # enemy_fire_timer が enemy_fire_interval 以上なら
     if enemy_fire_timer >= enemy_fire_interval:
+        # enemies から enemy を1つずつ取り出して繰り返す
         for enemy in enemies:
+            # enemy_bullets に [enemy[0], enemy[1] + 20] を追加する
             enemy_bullets.append([enemy[0], enemy[1] + 20])
+        # enemy_fire_timer に0を入れる
         enemy_fire_timer = 0
 
+    # enemy_bullets から enemy_bullet を1つずつ取り出して繰り返す
     for enemy_bullet in enemy_bullets:
+        # enemy_bullet[1] に enemy_bullet[1] と enemy_bullet_speed を足した値を入れる
         enemy_bullet[1] = enemy_bullet[1] + enemy_bullet_speed
 
+    # enemy_bullets に enemy_bullet[1] < 500 の enemy_bullet だけを入れる
     enemy_bullets = [
         enemy_bullet
         for enemy_bullet in enemy_bullets
         if enemy_bullet[1] < 500
     ]
 
+    # bullets_to_remove に空のリストを入れる
     bullets_to_remove = []
+    # enemies_to_remove に空のリストを入れる
     enemies_to_remove = []
 
+    # bullets から bullet を1つずつ取り出して繰り返す
     for bullet in bullets:
+        # bullet_rect に pygame.Rect(bullet[0] - 3, bullet[1] - 10, 6, 20) をセットする
         bullet_rect = pygame.Rect(bullet[0] - 3, bullet[1] - 10, 6, 20)
 
+        # enemies から enemy を1つずつ取り出して繰り返す
         for enemy in enemies:
+            # enemy_rect に pygame.Rect(enemy[0] - 20, enemy[1] - 15, 40, 30) をセットする
             enemy_rect = pygame.Rect(enemy[0] - 20, enemy[1] - 15, 40, 30)
 
+            # bullet_rect.colliderect(enemy_rect) が True なら
             if bullet_rect.colliderect(enemy_rect):
+                # bullets_to_remove に bullet を追加する
                 bullets_to_remove.append(bullet)
+                # enemies_to_remove に enemy を追加する
                 enemies_to_remove.append(enemy)
 
+    # bullets_to_remove から bullet を1つずつ取り出して繰り返す
     for bullet in bullets_to_remove:
+        # bullet が bullets に含まれているなら
         if bullet in bullets:
+            # bullets から bullet を削除する
             bullets.remove(bullet)
 
+    # enemies_to_remove から enemy を1つずつ取り出して繰り返す
     for enemy in enemies_to_remove:
+        # enemy が enemies に含まれているなら
         if enemy in enemies:
+            # enemies から enemy を削除する
             enemies.remove(enemy)
 
-    # プレイヤー中心から20ピクセルずつ左・上へずらし、
-    # 幅40・高さ40の四角形の中心をプレイヤー座標へ合わせます。
+    # player_rect に pygame.Rect(player_x - 20, player_y - 20, 40, 40) をセットする
     player_rect = pygame.Rect(player_x - 20, player_y - 20, 40, 40)
+    # enemy_bullets_to_remove に空のリストを入れる
     enemy_bullets_to_remove = []
 
+    # enemy_bullets から enemy_bullet を1つずつ取り出して繰り返す
     for enemy_bullet in enemy_bullets:
-        # 敵弾は幅8・高さ16なので、半分の4・8を引いて中心を合わせます。
+        # enemy_bullet_rect に pygame.Rect(enemy_bullet[0] - 4, enemy_bullet[1] - 8, 8, 16) をセットする
         enemy_bullet_rect = pygame.Rect(
             enemy_bullet[0] - 4,
             enemy_bullet[1] - 8,
@@ -122,57 +181,74 @@ while running:
             16
         )
 
-        # 敵弾の四角とプレイヤーの四角が重なればHPを1減らします。
+        # enemy_bullet_rect.colliderect(player_rect) が True なら
         if enemy_bullet_rect.colliderect(player_rect):
+            # enemy_bullets_to_remove に enemy_bullet を追加する
             enemy_bullets_to_remove.append(enemy_bullet)
+            # player_hp に player_hp から1を引いた値を入れる
             player_hp = player_hp - 1
 
+    # enemy_bullets_to_remove から enemy_bullet を1つずつ取り出して繰り返す
     for enemy_bullet in enemy_bullets_to_remove:
+        # enemy_bullet が enemy_bullets に含まれているなら
         if enemy_bullet in enemy_bullets:
+            # enemy_bullets から enemy_bullet を削除する
             enemy_bullets.remove(enemy_bullet)
 
+    # player_hp が0以下なら
     if player_hp <= 0:
+        # running に False を入れる
         running = False
 
+    # screen を (10, 10, 30) で塗る
     screen.fill((10, 10, 30))
 
+    # player_points に (player_x, player_y - 20)、(player_x - 20, player_y + 20)、(player_x + 20, player_y + 20) を入れる
     player_points = [
         (player_x, player_y - 20),
         (player_x - 20, player_y + 20),
         (player_x + 20, player_y + 20)
     ]
+    # screen に (100, 200, 255) と player_points を使った多角形を描く
     pygame.draw.polygon(screen, (100, 200, 255), player_points)
 
+    # bullets から bullet を1つずつ取り出して繰り返す
     for bullet in bullets:
+        # screen に (255, 240, 100) と (bullet[0] - 3, bullet[1] - 10, 6, 20) を使った四角形を描く
         pygame.draw.rect(
             screen,
             (255, 240, 100),
             (bullet[0] - 3, bullet[1] - 10, 6, 20)
         )
 
+    # enemies から enemy を1つずつ取り出して繰り返す
     for enemy in enemies:
+        # screen に (255, 100, 100) と (enemy[0] - 20, enemy[1] - 15, 40, 30) を使った四角形を描く
         pygame.draw.rect(
             screen,
             (255, 100, 100),
             (enemy[0] - 20, enemy[1] - 15, 40, 30)
         )
 
+    # enemy_bullets から enemy_bullet を1つずつ取り出して繰り返す
     for enemy_bullet in enemy_bullets:
+        # screen に (255, 100, 180) と (enemy_bullet[0] - 4, enemy_bullet[1] - 8, 8, 16) を使った四角形を描く
         pygame.draw.rect(
             screen,
             (255, 100, 180),
             (enemy_bullet[0] - 4, enemy_bullet[1] - 8, 8, 16)
         )
 
-    # HPの文章から白い文字画像を作ります。
-    # Trueは文字の縁を滑らかにする指定です。
+    # hp_text に font.render(f"HP: {player_hp}", True, (255, 255, 255)) をセットする
     hp_text = font.render(f"HP: {player_hp}", True, (255, 255, 255))
 
-    # 作った文字画像の左上を、画面の左10・上10ピクセルへ置いて描きます。
+    # screen に hp_text を (10, 10) の位置へ描く
     screen.blit(hp_text, (10, 10))
 
-    # このフレームで描いた内容を画面へ反映します。
+    # このフレームの描画内容を画面に反映する
     pygame.display.flip()
+    # 1秒間に60回を上限にして clock を進める
     clock.tick(60)
 
+# pygame を終了する
 pygame.quit()
