@@ -1,14 +1,3 @@
-# Pg20. pygame「タイトル画面を作る」
-
-Pg19までのサンプルは、起動するとすぐシューティングゲームが始まります。
-
-今回は、起動直後にタイトル画面を表示します。プレイ中の画面やGAME OVER画面とは別に `title` という状態を用意し、その状態に合わせて表示を切り替えます。
-
-## Pg20-1. サンプルコード
-
-[title_screen.py](./title_screen.py) を開いてください。
-
-```python
 # Path をインポートする
 from pathlib import Path
 
@@ -20,8 +9,8 @@ pygame.init()
 
 # screen に640×480のpygame画面をセットする
 screen = pygame.display.set_mode((640, 480))
-# pygame画面のタイトルに「タイトル画面を作る」をセットする
-pygame.display.set_caption("タイトル画面を作る")
+# pygame画面のタイトルに「始めるボタンを作る」をセットする
+pygame.display.set_caption("始めるボタンを作る")
 
 # clock に pygame.time.Clock() をセットする
 clock = pygame.time.Clock()
@@ -183,6 +172,8 @@ game_state = "title"
 back_button = pygame.Rect(220, 330, 200, 60)
 # restart_button に pygame.Rect(220, 330, 200, 60) をセットする
 restart_button = pygame.Rect(220, 330, 200, 60)
+# start_button に pygame.Rect(220, 330, 200, 60) をセットする
+start_button = pygame.Rect(220, 330, 200, 60)
 
 # running に True を入れる
 running = True
@@ -206,8 +197,42 @@ while running:
                 # bullets に [player_x, player_y - 20] を追加する
                 bullets.append([player_x, player_y - 20])
 
-            # event.key が pygame.K_SPACE で game_state が "title" なら
-            if event.key == pygame.K_SPACE and game_state == "title":
+        # 左クリックでタイトル画面の start_button を押したなら
+        if (
+            event.type == pygame.MOUSEBUTTONDOWN
+            and event.button == 1
+            and game_state == "title"
+        ):
+            # start_button.collidepoint(event.pos) が True なら
+            if start_button.collidepoint(event.pos):
+                # background_y_1 に0を入れる
+                background_y_1 = 0
+                # background_y_2 に-480を入れる
+                background_y_2 = -480
+                # player_x に320を入れる
+                player_x = 320
+                # player_y に400を入れる
+                player_y = 400
+                # player_hp に3を入れる
+                player_hp = 3
+                # bullets に空のリストを入れる
+                bullets = []
+                # enemies に空のリストを入れる
+                enemies = []
+                # spawn_timer に0を入れる
+                spawn_timer = 0
+                # spawn_index に0を入れる
+                spawn_index = 0
+                # enemy_bullets に空のリストを入れる
+                enemy_bullets = []
+                # boss_active に False を入れる
+                boss_active = False
+                # boss_hp に50を入れる
+                boss_hp = 50
+                # boss_bullets に空のリストを入れる
+                boss_bullets = []
+                # boss_fire_timer に0を入れる
+                boss_fire_timer = 0
                 # game_state に "playing" をセットする
                 game_state = "playing"
 
@@ -402,9 +427,9 @@ while running:
         # screen.blit(title_text, title_text_rect) を実行する
         screen.blit(title_text, title_text_rect)
 
-        # title_sub_text に clear_sub_font.render("PRESS SPACE TO START", True, (190, 190, 210)) をセットする
+        # title_sub_text に clear_sub_font.render("Defeat the boss!", True, (190, 190, 210)) をセットする
         title_sub_text = clear_sub_font.render(
-            "PRESS SPACE TO START",
+            "Defeat the boss!",
             True,
             (190, 190, 210)
         )
@@ -414,6 +439,27 @@ while running:
         )
         # screen.blit(title_sub_text, title_sub_text_rect) を実行する
         screen.blit(title_sub_text, title_sub_text_rect)
+
+        # screen に (70, 110, 190) の start_button を角の半径8で描く
+        pygame.draw.rect(
+            screen,
+            (70, 110, 190),
+            start_button,
+            border_radius=8
+        )
+
+        # start_text に button_font.render("START", True, (255, 255, 255)) をセットする
+        start_text = button_font.render(
+            "START",
+            True,
+            (255, 255, 255)
+        )
+        # start_text_rect に start_text.get_rect(center=start_button.center) をセットする
+        start_text_rect = start_text.get_rect(
+            center=start_button.center
+        )
+        # screen.blit(start_text, start_text_rect) を実行する
+        screen.blit(start_text, start_text_rect)
 
     # このフレームの描画内容を画面に反映する
         pygame.display.flip()
@@ -755,91 +801,3 @@ while running:
 
 # pygame を終了する
 pygame.quit()
-```
-
-## Pg20-2. 起動時の状態を `title` にする
-
-初期状態を `playing` から `title` に変えます。
-
-```python
-# game_state に "title" をセットする
-game_state = "title"
-```
-
-ゲーム画面を描く処理は、`game_state` が `playing` のときに動きます。起動時に `title` を設定すると、ゲーム画面の処理へ進まず、タイトル画面が表示されます。
-
-## Pg20-3. `title` の画面を描く
-
-`title` のときは、背景を塗り、タイトル文字と短い説明を表示します。
-
-```python
-# game_state が "title" なら
-if game_state == "title":
-    # screen に (18, 18, 30) を使った色を塗る
-    screen.fill((18, 18, 30))
-
-    # title_text に menu_font.render("SPACE SHOOTER", True, (255, 255, 255)) をセットする
-    title_text = menu_font.render(
-        "SPACE SHOOTER",
-        True,
-        (255, 255, 255)
-    )
-    # title_text_rect に title_text.get_rect(center=(320, 220)) をセットする
-    title_text_rect = title_text.get_rect(
-        center=(320, 220)
-    )
-    # screen.blit(title_text, title_text_rect) を実行する
-    screen.blit(title_text, title_text_rect)
-
-    # title_sub_text に clear_sub_font.render("PRESS SPACE TO START", True, (190, 190, 210)) をセットする
-    title_sub_text = clear_sub_font.render(
-        "PRESS SPACE TO START",
-        True,
-        (190, 190, 210)
-    )
-    # title_sub_text_rect に title_sub_text.get_rect(center=(320, 280)) をセットする
-    title_sub_text_rect = title_sub_text.get_rect(
-        center=(320, 280)
-    )
-    # screen.blit(title_sub_text, title_sub_text_rect) を実行する
-    screen.blit(title_sub_text, title_sub_text_rect)
-
-    # このフレームの描画内容を画面に反映する
-    pygame.display.flip()
-    # 1秒間に60回を上限にして clock を進める
-    clock.tick(60)
-    # 次のループへ進む
-    continue
-```
-
-`continue` でこの周回の残りを飛ばすため、タイトル画面の間はプレイヤー移動や敵の出現など、ゲーム中の処理は進みません。
-
-## Pg20-4. 画面ごとに状態を分ける
-
-サンプルでは、`game_state` の値によってタイトル画面、クリア画面、ゲームオーバー画面、ゲーム画面を分けています。
-
-- `title` ならタイトル画面を描く
-- `clear` ならクリア画面を描く
-- `game_over` ならGAME OVER画面を描く
-- `playing` ならゲームを進めてゲーム画面を描く
-
-Pg19でクリア画面のBACKを押したときに表示していた仮のMENU画面も、タイトル画面に置き換えました。起動時も、クリア後に戻ったときも、同じ `title` 状態を使います。
-
-## Pg20-5. 動かして確かめる
-
-1. [title_screen.py](./title_screen.py) を実行します。
-2. 起動直後にSPACE SHOOTERのタイトル画面が表示されることを確認します。
-3. Spaceキーを押し、ゲームが始まることを確認します。
-4. タイトル画面で待っている間は、プレイヤーや敵が動かないことも確認します。
-
-タイトル画面からゲームを始める操作には、Spaceキーを使います。タイトル表示とゲーム処理が別の状態になっているため、それぞれの画面を別の場所で描けます。
-
-## このルートの移動
-
-← [Pg19. 再開ボタンを作る](../Pg19_再開ボタンを作る/再開ボタンを作る.md)
-
-[Pg15. 次に進みたいことを選ぼうへ戻る](../Pg15_次に進みたいことを選ぼう/次に進みたいことを選ぼう.md)
-
-[9. 進みたい方を選ぼうへ戻る](../09_進みたい方を選ぼう/進みたい方を選ぼう.md)
-
-[Pg21. 始めるボタンを作る](../Pg21_始めるボタンを作る/始めるボタンを作る.md) →
