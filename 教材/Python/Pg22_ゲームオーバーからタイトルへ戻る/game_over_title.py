@@ -1,12 +1,3 @@
-# Pg21. pygame「始めるボタンを作る」
-
-Pg20で作ったタイトル画面にSTARTボタンを追加します。ボタンを左クリックするとゲームが始まり、クリア画面からタイトルへ戻った場合も、ゲームの状態を初期化して再開します。
-
-## Pg21-1. サンプルコード
-
-[start_button.py](./start_button.py) を実行してください。
-
-```python
 # Path をインポートする
 from pathlib import Path
 
@@ -18,8 +9,8 @@ pygame.init()
 
 # screen に640×480のpygame画面をセットする
 screen = pygame.display.set_mode((640, 480))
-# pygame画面のタイトルに「始めるボタンを作る」をセットする
-pygame.display.set_caption("始めるボタンを作る")
+# pygame画面のタイトルに「ゲームオーバーからタイトルへ戻る」をセットする
+pygame.display.set_caption("ゲームオーバーからタイトルへ戻る")
 
 # clock に pygame.time.Clock() をセットする
 clock = pygame.time.Clock()
@@ -179,8 +170,10 @@ game_state = "title"
 
 # back_button に pygame.Rect(220, 330, 200, 60) をセットする
 back_button = pygame.Rect(220, 330, 200, 60)
-# restart_button に pygame.Rect(220, 330, 200, 60) をセットする
-restart_button = pygame.Rect(220, 330, 200, 60)
+# restart_button に pygame.Rect(60, 330, 220, 60) をセットする
+restart_button = pygame.Rect(60, 330, 220, 60)
+# title_button に pygame.Rect(360, 330, 220, 60) をセットする
+title_button = pygame.Rect(360, 330, 220, 60)
 # start_button に pygame.Rect(220, 330, 200, 60) をセットする
 start_button = pygame.Rect(220, 330, 200, 60)
 
@@ -294,6 +287,39 @@ while running:
                 boss_fire_timer = 0
                 # game_state に "playing" をセットする
                 game_state = "playing"
+
+            # title_button.collidepoint(event.pos) が True なら
+            if title_button.collidepoint(event.pos):
+                # background_y_1 に0を入れる
+                background_y_1 = 0
+                # background_y_2 に-480を入れる
+                background_y_2 = -480
+                # player_x に320を入れる
+                player_x = 320
+                # player_y に400を入れる
+                player_y = 400
+                # player_hp に3を入れる
+                player_hp = 3
+                # bullets に空のリストを入れる
+                bullets = []
+                # enemies に空のリストを入れる
+                enemies = []
+                # spawn_timer に0を入れる
+                spawn_timer = 0
+                # spawn_index に0を入れる
+                spawn_index = 0
+                # enemy_bullets に空のリストを入れる
+                enemy_bullets = []
+                # boss_active に False を入れる
+                boss_active = False
+                # boss_hp に50を入れる
+                boss_hp = 50
+                # boss_bullets に空のリストを入れる
+                boss_bullets = []
+                # boss_fire_timer に0を入れる
+                boss_fire_timer = 0
+                # game_state に "title" をセットする
+                game_state = "title"
 
     # game_state が "clear" なら
     if game_state == "clear":
@@ -410,6 +436,27 @@ while running:
         )
         # screen.blit(restart_text, restart_text_rect) を実行する
         screen.blit(restart_text, restart_text_rect)
+
+        # screen に (70, 90, 180) の title_button を角の半径8で描く
+        pygame.draw.rect(
+            screen,
+            (70, 90, 180),
+            title_button,
+            border_radius=8
+        )
+
+        # title_text に button_font.render("TITLE", True, (255, 255, 255)) をセットする
+        title_text = button_font.render(
+            "TITLE",
+            True,
+            (255, 255, 255)
+        )
+        # title_text_rect に title_text.get_rect(center=title_button.center) をセットする
+        title_text_rect = title_text.get_rect(
+            center=title_button.center
+        )
+        # screen.blit(title_text, title_text_rect) を実行する
+        screen.blit(title_text, title_text_rect)
 
         # このフレームの描画内容を画面に反映する
         pygame.display.flip()
@@ -810,36 +857,3 @@ while running:
 
 # pygame を終了する
 pygame.quit()
-```
-
-## Pg21-2. ボタンの位置を決める
-
-`pygame.Rect(220, 330, 200, 60)` で、左上の座標が `(220, 330)`、幅が200、高さが60の四角形を作ります。この四角形を、描画とクリック位置の判定に共通して使います。
-
-## Pg21-3. 左クリックを判定する
-
-`pygame.MOUSEBUTTONDOWN` はマウスボタンを押したイベントです。`event.button == 1` で左クリックを選び、`start_button.collidepoint(event.pos)` で押した位置がボタンの内側か調べます。
-
-ボタンを押したとき、プレイヤーのHPや敵、弾、背景の位置を初期値に戻してから `game_state` を `playing` にします。タイトル画面の外をクリックしただけではゲームは始まりません。
-
-## Pg21-4. タイトル画面に描く
-
-`pygame.draw.rect` で青い四角形を描き、`button_font.render` で作ったSTARTの文字を中央に置きます。タイトル画面の状態でだけ、このボタンを表示します。
-
-## Pg21-5. 動かして確かめる
-
-1. [start_button.py](./start_button.py) を実行します。
-2. タイトル画面にSTARTボタンが表示されることを確認します。
-3. ボタンの外をクリックしてもゲームが始まらないことを確認します。
-4. STARTボタンを左クリックし、ゲームが始まることを確認します。
-5. ゲームクリア後にBACKでタイトルへ戻り、STARTを押すと最初から始まることを確認します。
-
-## このルートの移動
-
-← [Pg20. タイトル画面を作る](../Pg20_タイトル画面を作る/タイトル画面を作る.md)
-
-[Pg15. 次に進みたいことを選ぼうへ戻る](../Pg15_次に進みたいことを選ぼう/次に進みたいことを選ぼう.md)
-
-[9. 進みたい方を選ぼうへ戻る](../09_進みたい方を選ぼう/進みたい方を選ぼう.md)
-
-[Pg22. ゲームオーバーからタイトルへ戻る](../Pg22_ゲームオーバーからタイトルへ戻る/ゲームオーバーからタイトルへ戻る.md) →
