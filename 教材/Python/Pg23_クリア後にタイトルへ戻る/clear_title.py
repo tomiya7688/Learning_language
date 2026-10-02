@@ -1,16 +1,3 @@
-# Pg19. pygame「再開ボタンを作る」
-
-Pg18では、プレイヤーのHPが0になるとGAME OVER画面へ切り替わるようにしました。
-
-今回はその画面に **RESTARTボタン** を置き、クリックすると最初の状態からもう一度遊べるようにします。
-
-画面を `playing` に戻すだけでは再開できません。HP、敵、弾、ボスの状態もリセットします。
-
-## Pg19-1. サンプルコード
-
-[restart_game.py](./restart_game.py) を開いてください。
-
-```python
 # Path をインポートする
 from pathlib import Path
 
@@ -22,8 +9,8 @@ pygame.init()
 
 # screen に640×480のpygame画面をセットする
 screen = pygame.display.set_mode((640, 480))
-# pygame画面のタイトルに「ゲームオーバー画面を作る」をセットする
-pygame.display.set_caption("再開ボタンを作る")
+# pygame画面のタイトルに「クリア後にタイトルへ戻る」をセットする
+pygame.display.set_caption("クリア後にタイトルへ戻る")
 
 # clock に pygame.time.Clock() をセットする
 clock = pygame.time.Clock()
@@ -178,13 +165,17 @@ boss_bullet_width = 48
 # boss_bullet_height に48を入れる
 boss_bullet_height = 48
 
-# game_state に "playing" をセットする
-game_state = "playing"
+# game_state に "title" をセットする
+game_state = "title"
 
 # back_button に pygame.Rect(220, 330, 200, 60) をセットする
 back_button = pygame.Rect(220, 330, 200, 60)
-# restart_button に pygame.Rect(220, 330, 200, 60) をセットする
-restart_button = pygame.Rect(220, 330, 200, 60)
+# restart_button に pygame.Rect(60, 330, 220, 60) をセットする
+restart_button = pygame.Rect(60, 330, 220, 60)
+# title_button に pygame.Rect(360, 330, 220, 60) をセットする
+title_button = pygame.Rect(360, 330, 220, 60)
+# start_button に pygame.Rect(220, 330, 200, 60) をセットする
+start_button = pygame.Rect(220, 330, 200, 60)
 
 # running に True を入れる
 running = True
@@ -208,6 +199,45 @@ while running:
                 # bullets に [player_x, player_y - 20] を追加する
                 bullets.append([player_x, player_y - 20])
 
+        # 左クリックでタイトル画面の start_button を押したなら
+        if (
+            event.type == pygame.MOUSEBUTTONDOWN
+            and event.button == 1
+            and game_state == "title"
+        ):
+            # start_button.collidepoint(event.pos) が True なら
+            if start_button.collidepoint(event.pos):
+                # background_y_1 に0を入れる
+                background_y_1 = 0
+                # background_y_2 に-480を入れる
+                background_y_2 = -480
+                # player_x に320を入れる
+                player_x = 320
+                # player_y に400を入れる
+                player_y = 400
+                # player_hp に3を入れる
+                player_hp = 3
+                # bullets に空のリストを入れる
+                bullets = []
+                # enemies に空のリストを入れる
+                enemies = []
+                # spawn_timer に0を入れる
+                spawn_timer = 0
+                # spawn_index に0を入れる
+                spawn_index = 0
+                # enemy_bullets に空のリストを入れる
+                enemy_bullets = []
+                # boss_active に False を入れる
+                boss_active = False
+                # boss_hp に50を入れる
+                boss_hp = 50
+                # boss_bullets に空のリストを入れる
+                boss_bullets = []
+                # boss_fire_timer に0を入れる
+                boss_fire_timer = 0
+                # game_state に "playing" をセットする
+                game_state = "playing"
+
         # event.type が pygame.MOUSEBUTTONDOWN で event.button が1で game_state が "clear" なら
         if (
             event.type == pygame.MOUSEBUTTONDOWN
@@ -216,8 +246,36 @@ while running:
         ):
             # back_button.collidepoint(event.pos) が True なら
             if back_button.collidepoint(event.pos):
-                # game_state に "menu" をセットする
-                game_state = "menu"
+                # background_y_1 に0を入れる
+                background_y_1 = 0
+                # background_y_2 に-480を入れる
+                background_y_2 = -480
+                # player_x に320を入れる
+                player_x = 320
+                # player_y に400を入れる
+                player_y = 400
+                # player_hp に3を入れる
+                player_hp = 3
+                # bullets に空のリストを入れる
+                bullets = []
+                # enemies に空のリストを入れる
+                enemies = []
+                # spawn_timer に0を入れる
+                spawn_timer = 0
+                # spawn_index に0を入れる
+                spawn_index = 0
+                # enemy_bullets に空のリストを入れる
+                enemy_bullets = []
+                # boss_active に False を入れる
+                boss_active = False
+                # boss_hp に50を入れる
+                boss_hp = 50
+                # boss_bullets に空のリストを入れる
+                boss_bullets = []
+                # boss_fire_timer に0を入れる
+                boss_fire_timer = 0
+                # game_state に "title" をセットする
+                game_state = "title"
 
         # event.type が pygame.MOUSEBUTTONDOWN で event.button が1で game_state が "game_over" なら
         if (
@@ -258,6 +316,39 @@ while running:
                 # game_state に "playing" をセットする
                 game_state = "playing"
 
+            # title_button.collidepoint(event.pos) が True なら
+            if title_button.collidepoint(event.pos):
+                # background_y_1 に0を入れる
+                background_y_1 = 0
+                # background_y_2 に-480を入れる
+                background_y_2 = -480
+                # player_x に320を入れる
+                player_x = 320
+                # player_y に400を入れる
+                player_y = 400
+                # player_hp に3を入れる
+                player_hp = 3
+                # bullets に空のリストを入れる
+                bullets = []
+                # enemies に空のリストを入れる
+                enemies = []
+                # spawn_timer に0を入れる
+                spawn_timer = 0
+                # spawn_index に0を入れる
+                spawn_index = 0
+                # enemy_bullets に空のリストを入れる
+                enemy_bullets = []
+                # boss_active に False を入れる
+                boss_active = False
+                # boss_hp に50を入れる
+                boss_hp = 50
+                # boss_bullets に空のリストを入れる
+                boss_bullets = []
+                # boss_fire_timer に0を入れる
+                boss_fire_timer = 0
+                # game_state に "title" をセットする
+                game_state = "title"
+
     # game_state が "clear" なら
     if game_state == "clear":
         # screen に (8, 8, 24) を使った色を塗る
@@ -297,9 +388,9 @@ while running:
             border_radius=8
         )
 
-        # back_text に button_font.render("BACK", True, (255, 255, 255)) をセットする
+        # back_text に button_font.render("TITLE", True, (255, 255, 255)) をセットする
         back_text = button_font.render(
-            "BACK",
+            "TITLE",
             True,
             (255, 255, 255)
         )
@@ -374,6 +465,27 @@ while running:
         # screen.blit(restart_text, restart_text_rect) を実行する
         screen.blit(restart_text, restart_text_rect)
 
+        # screen に (70, 90, 180) の title_button を角の半径8で描く
+        pygame.draw.rect(
+            screen,
+            (70, 90, 180),
+            title_button,
+            border_radius=8
+        )
+
+        # title_text に button_font.render("TITLE", True, (255, 255, 255)) をセットする
+        title_text = button_font.render(
+            "TITLE",
+            True,
+            (255, 255, 255)
+        )
+        # title_text_rect に title_text.get_rect(center=title_button.center) をセットする
+        title_text_rect = title_text.get_rect(
+            center=title_button.center
+        )
+        # screen.blit(title_text, title_text_rect) を実行する
+        screen.blit(title_text, title_text_rect)
+
         # このフレームの描画内容を画面に反映する
         pygame.display.flip()
         # 1秒間に60回を上限にして clock を進める
@@ -381,36 +493,57 @@ while running:
         # 次のループへ進む
         continue
 
-    # game_state が "menu" なら
-    if game_state == "menu":
+    # game_state が "title" なら
+    if game_state == "title":
         # screen に (18, 18, 30) を使った色を塗る
         screen.fill((18, 18, 30))
 
-        # menu_text に menu_font.render("MENU", True, (255, 255, 255)) をセットする
-        menu_text = menu_font.render(
-            "MENU",
+        # title_text に menu_font.render("SPACE SHOOTER", True, (255, 255, 255)) をセットする
+        title_text = menu_font.render(
+            "SPACE SHOOTER",
             True,
             (255, 255, 255)
         )
-        # menu_text_rect に menu_text.get_rect(center=(320, 220)) をセットする
-        menu_text_rect = menu_text.get_rect(
+        # title_text_rect に title_text.get_rect(center=(320, 220)) をセットする
+        title_text_rect = title_text.get_rect(
             center=(320, 220)
         )
-        # screen.blit(menu_text, menu_text_rect) を実行する
-        screen.blit(menu_text, menu_text_rect)
+        # screen.blit(title_text, title_text_rect) を実行する
+        screen.blit(title_text, title_text_rect)
 
-        # menu_sub_text に clear_sub_font.render("This is a temporary screen.", True, (190, 190, 210)) をセットする
-        menu_sub_text = clear_sub_font.render(
-            "This is a temporary screen.",
+        # title_sub_text に clear_sub_font.render("Defeat the boss!", True, (190, 190, 210)) をセットする
+        title_sub_text = clear_sub_font.render(
+            "Defeat the boss!",
             True,
             (190, 190, 210)
         )
-        # menu_sub_text_rect に menu_sub_text.get_rect(center=(320, 280)) をセットする
-        menu_sub_text_rect = menu_sub_text.get_rect(
+        # title_sub_text_rect に title_sub_text.get_rect(center=(320, 280)) をセットする
+        title_sub_text_rect = title_sub_text.get_rect(
             center=(320, 280)
         )
-        # screen.blit(menu_sub_text, menu_sub_text_rect) を実行する
-        screen.blit(menu_sub_text, menu_sub_text_rect)
+        # screen.blit(title_sub_text, title_sub_text_rect) を実行する
+        screen.blit(title_sub_text, title_sub_text_rect)
+
+        # screen に (70, 110, 190) の start_button を角の半径8で描く
+        pygame.draw.rect(
+            screen,
+            (70, 110, 190),
+            start_button,
+            border_radius=8
+        )
+
+        # start_text に button_font.render("START", True, (255, 255, 255)) をセットする
+        start_text = button_font.render(
+            "START",
+            True,
+            (255, 255, 255)
+        )
+        # start_text_rect に start_text.get_rect(center=start_button.center) をセットする
+        start_text_rect = start_text.get_rect(
+            center=start_button.center
+        )
+        # screen.blit(start_text, start_text_rect) を実行する
+        screen.blit(start_text, start_text_rect)
 
     # このフレームの描画内容を画面に反映する
         pygame.display.flip()
@@ -752,77 +885,3 @@ while running:
 
 # pygame を終了する
 pygame.quit()
-```
-
-## Pg19-2. 再開ボタンを用意する
-
-クリア画面のBACKボタンとは別に、ゲームオーバー画面用のボタンを用意します。
-
-```python
-# restart_button に pygame.Rect(220, 330, 200, 60) をセットする
-restart_button = pygame.Rect(220, 330, 200, 60)
-```
-
-`pygame.Rect` はボタンの位置と大きさを表します。画面の中央に横200ピクセル、縦60ピクセルのボタンを置いています。
-
-## Pg19-3. ゲームオーバー画面にボタンを描く
-
-ボタンは `game_state == "game_over"` の画面を描く場所に追加します。文字を描くだけではクリックできないため、クリック判定には先ほどの `restart_button` を使います。
-
-ボタンの四角形、文字、その文字を置く位置を順番に作り、最後に `screen.blit()` で画面へ描きます。
-
-## Pg19-4. クリックされたらゲームの状態を戻す
-
-マウスの左ボタンが押され、ゲームオーバー中で、さらに押した位置がボタンの中なら、再開します。
-
-```python
-# restart_button.collidepoint(event.pos) が True なら
-if restart_button.collidepoint(event.pos):
-    # player_hp に3を入れる
-    player_hp = 3
-    # bullets に空のリストを入れる
-    bullets = []
-    # enemies に空のリストを入れる
-    enemies = []
-    # enemy_bullets に空のリストを入れる
-    enemy_bullets = []
-    # boss_bullets に空のリストを入れる
-    boss_bullets = []
-    # boss_active に False を入れる
-    boss_active = False
-    # boss_hp に50を入れる
-    boss_hp = 50
-    # game_state に "playing" をセットする
-    game_state = "playing"
-```
-
-`game_state` だけを `playing` に戻すと、HPが0のままなので、すぐにまたGAME OVERになります。
-
-敵や弾が前のプレイのまま残っていても困ります。そこでHP、敵、敵弾、ボス弾、ボスの状態を初期値へ戻します。サンプルでは、敵の出現位置やタイマー、背景の位置、プレイヤーの位置も最初の状態へ戻しています。
-
-## Pg19-5. 動かして確かめる
-
-1. [restart_game.py](./restart_game.py) を実行します。
-2. プレイヤーを動かし、敵や敵弾に当たってHPを0にします。
-3. GAME OVER画面にRESTARTボタンが表示されたことを確認します。
-4. RESTARTボタンをクリックします。
-5. プレイヤーのHPが3になり、敵や弾が消えて、ゲームが最初から始まることを確認します。
-
-ボタンの外をクリックしても、再開しないことも確かめてください。
-
-## Pg19-6. 自分で変えてみる
-
-RESTARTボタンの位置と色を変えてみましょう。
-
-- `restart_button = pygame.Rect(...)` の数値を変えると、ボタンの位置や大きさが変わります。
-- `pygame.draw.rect()` に渡している色の数値を変えると、ボタンの色が変わります。
-
-## このルートの移動
-
-← [Pg18. ゲームオーバー画面を作る](../Pg18_ゲームオーバー画面を作る/ゲームオーバー画面を作る.md)
-
-[Pg15. 次に進みたいことを選ぼうへ戻る](../Pg15_次に進みたいことを選ぼう/次に進みたいことを選ぼう.md)
-
-[9. 進みたい方を選ぼうへ戻る](../09_進みたい方を選ぼう/進みたい方を選ぼう.md)
-
-[Pg20. タイトル画面を作る](../Pg20_タイトル画面を作る/タイトル画面を作る.md) →
