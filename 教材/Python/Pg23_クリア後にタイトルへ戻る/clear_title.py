@@ -1,12 +1,3 @@
-# Pg22. pygame「ゲームオーバーからタイトルへ戻る」
-
-Pg21で作った開始ボタンのあるタイトル画面に、ゲームオーバーから戻るボタンを加えます。GAME OVER画面には「RESTART」と「TITLE」の2つのボタンを置きます。
-
-## Pg22-1. サンプルコード
-
-[game_over_title.py](./game_over_title.py) を実行してください。
-
-```python
 # Path をインポートする
 from pathlib import Path
 
@@ -18,8 +9,8 @@ pygame.init()
 
 # screen に640×480のpygame画面をセットする
 screen = pygame.display.set_mode((640, 480))
-# pygame画面のタイトルに「ゲームオーバーからタイトルへ戻る」をセットする
-pygame.display.set_caption("ゲームオーバーからタイトルへ戻る")
+# pygame画面のタイトルに「クリア後にタイトルへ戻る」をセットする
+pygame.display.set_caption("クリア後にタイトルへ戻る")
 
 # clock に pygame.time.Clock() をセットする
 clock = pygame.time.Clock()
@@ -255,6 +246,34 @@ while running:
         ):
             # back_button.collidepoint(event.pos) が True なら
             if back_button.collidepoint(event.pos):
+                # background_y_1 に0を入れる
+                background_y_1 = 0
+                # background_y_2 に-480を入れる
+                background_y_2 = -480
+                # player_x に320を入れる
+                player_x = 320
+                # player_y に400を入れる
+                player_y = 400
+                # player_hp に3を入れる
+                player_hp = 3
+                # bullets に空のリストを入れる
+                bullets = []
+                # enemies に空のリストを入れる
+                enemies = []
+                # spawn_timer に0を入れる
+                spawn_timer = 0
+                # spawn_index に0を入れる
+                spawn_index = 0
+                # enemy_bullets に空のリストを入れる
+                enemy_bullets = []
+                # boss_active に False を入れる
+                boss_active = False
+                # boss_hp に50を入れる
+                boss_hp = 50
+                # boss_bullets に空のリストを入れる
+                boss_bullets = []
+                # boss_fire_timer に0を入れる
+                boss_fire_timer = 0
                 # game_state に "title" をセットする
                 game_state = "title"
 
@@ -369,9 +388,9 @@ while running:
             border_radius=8
         )
 
-        # back_text に button_font.render("BACK", True, (255, 255, 255)) をセットする
+        # back_text に button_font.render("TITLE", True, (255, 255, 255)) をセットする
         back_text = button_font.render(
-            "BACK",
+            "TITLE",
             True,
             (255, 255, 255)
         )
@@ -866,32 +885,3 @@ while running:
 
 # pygame を終了する
 pygame.quit()
-```
-
-## Pg22-2. 「再開」と「タイトルへ戻る」を分ける
-
-RESTARTを押すと、Pg19の再開処理と同じようにゲーム状態を初期化して、そのままゲームを始めます。TITLEを押すと、同じ初期化を行ってからタイトル画面に戻ります。タイトル画面では、Pg21のSTARTボタンを押してゲームを始めます。
-
-どちらも初期化を行いますが、`game_state` に設定する値が違います。RESTARTは `playing`、TITLEは `title` に切り替えます。
-
-## Pg22-3. ボタンを配置する
-
-`restart_button` と `title_button` にそれぞれ `pygame.Rect` を使い、ゲームオーバー画面の下部に並べて配置します。左クリックの位置がどちらの四角形に入っているかを `collidepoint` で調べます。
-
-## Pg22-4. 動かして確かめる
-
-1. [game_over_title.py](./game_over_title.py) を実行し、Pg21のタイトル画面からSTARTを押します。
-2. HPが0になり、GAME OVER画面が表示されるまで遊びます。
-3. RESTARTを押すとタイトルを経由せずゲームが始まることを確認します。
-4. もう一度ゲームオーバーにし、TITLEを押すとタイトル画面へ戻ることを確認します。
-5. STARTを押すと、初期状態でゲームが始まることを確認します。
-
-## このルートの移動
-
-← [Pg21. 始めるボタンを作る](../Pg21_始めるボタンを作る/始めるボタンを作る.md)
-
-[Pg15. 次に進みたいことを選ぼうへ戻る](../Pg15_次に進みたいことを選ぼう/次に進みたいことを選ぼう.md)
-
-[9. 進みたい方を選ぼうへ戻る](../09_進みたい方を選ぼう/進みたい方を選ぼう.md)
-
-[Pg23. クリア後にタイトルへ戻る](../Pg23_クリア後にタイトルへ戻る/クリア後にタイトルへ戻る.md) →
