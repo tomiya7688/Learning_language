@@ -99,7 +99,7 @@ Python 3.x.x
 
 次:
 
-- [Python が動くか確認する](./03_動作確認.md)
+- [VS Code が使う Python を確認する](./03_動作確認.md)
 
 ---
 
@@ -107,4 +107,4 @@ Python 3.x.x
 
 ← [1-1. Visual Studio Codeをインストールする](./01_Visual_Studio_Codeの導入.md)
 
-[1-3. Pythonが動くか確認する](./03_動作確認.md) →
+[1-3. VS Codeが使うPythonを確認する](./03_動作確認.md) →

@@ -53,7 +53,7 @@ print("Hello")
 一方、
 
 ```text
-python hello.py
+python hello_world.py
 where python
 cd フォルダ名
 ```
@@ -139,13 +139,13 @@ PATH を変更したあと、すでに開いていたターミナルには反映
 Windows:
 
 ```text
-C:\Users\sample\Documents\hello.py
+C:\Users\sample\Documents\hello_world.py
 ```
 
 macOS / Linux:
 
 ```text
-/home/sample/hello.py
+/home/sample/hello_world.py
 ```
 
 PATH 環境変数と普通の「パス」は別のものです。
@@ -195,20 +195,20 @@ cd ..
 絶対パスは、場所を先頭から全部書いたものです。
 
 ```text
-C:\Users\sample\Documents\Python\hello.py
+C:\Users\sample\Documents\Python\hello_world.py
 ```
 
 相対パスは、現在地を基準にした書き方です。
 
-現在のフォルダに `hello.py` があるなら、
+現在のフォルダに `hello_world.py` があるなら、
 
 ```text
-hello.py
+hello_world.py
 ```
 
 だけで指定できます。
 
-`python hello.py` でファイルが見つからない場合は、
+`python hello_world.py` でファイルが見つからない場合は、
 Pythonではなく **今いるフォルダが違う** 可能性も確認してください。
 
 ---
