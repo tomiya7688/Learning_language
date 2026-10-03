@@ -1,6 +1,8 @@
 # 1-1. Visual Studio Code をインストールする
 
-この教材では、Python のコードを書くエディタとして **Visual Studio Code（VS Code）** を使用します。
+**Visual Studio Code（VS Code）は、Pythonを書くためのアプリです。**
+
+この教材では、VS Code を使って Python のコードを書きます。
 
 VS Code は Windows / macOS / Linux で利用できます。
 
