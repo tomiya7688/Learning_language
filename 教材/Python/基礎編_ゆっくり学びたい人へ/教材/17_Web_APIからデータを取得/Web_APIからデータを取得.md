@@ -153,11 +153,19 @@ https://api.open-meteo.com/v1/forecast
 
 Windows:
 
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 次のコマンドを、そのターミナルに入力します。
+3. Enter キーを押します。
+
 ```text
 python -m pip install requests
 ```
 
 macOS / Linux:
+
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 次のコマンドを、そのターミナルに入力します。
+3. Enter キーを押します。
 
 ```text
 python3 -m pip install requests

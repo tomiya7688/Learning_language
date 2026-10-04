@@ -99,13 +99,7 @@ random
 
 ## 15-5. 標準ライブラリはpip不要
 
-`random` はPythonに最初から入っているので、
-
-```text
-python -m pip install random
-```
-
-は必要ありません。
+`random` はPythonに最初から入っているので、pipでインストールする操作は必要ありません。
 
 そのまま `import random` で使えます。
 
@@ -147,11 +141,19 @@ Python本体とは別に配布されている便利なライブラリもあり�
 
 Windows:
 
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 次のコマンドを、そのターミナルに入力します。
+3. Enter キーを押します。
+
 ```text
 python -m pip install requests
 ```
 
 macOS / Linux:
+
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 次のコマンドを、そのターミナルに入力します。
+3. Enter キーを押します。
 
 ```text
 python3 -m pip install requests
@@ -207,12 +209,20 @@ ModuleNotFoundError: No module named 'requests'
 
 Windows:
 
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 次のコマンドを上から1行ずつ、そのターミナルに入力します。
+3. 1行入力するたびに Enter キーを押します。
+
 ```text
 python --version
 python -m pip --version
 ```
 
 macOS / Linux:
+
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 次のコマンドを上から1行ずつ、そのターミナルに入力します。
+3. 1行入力するたびに Enter キーを押します。
 
 ```text
 python3 --version
@@ -237,11 +247,21 @@ python3 -m pip --version
 
 Windows:
 
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 同じターミナルに `cd "このプログラムの作業用フォルダのパス"` と入力し、Enter キーを押します。引用符の中は、自分の作業用フォルダの場所に置き換えてください。
+3. 次のコマンドを、そのターミナルに入力します。
+4. Enter キーを押します。
+
 ```text
 python -m venv .venv
 ```
 
 macOS / Linux:
+
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 同じターミナルに `cd "このプログラムの作業用フォルダのパス"` と入力し、Enter キーを押します。引用符の中は、自分の作業用フォルダの場所に置き換えてください。
+3. 次のコマンドを、そのターミナルに入力します。
+4. Enter キーを押します。
 
 ```text
 python3 -m venv .venv
@@ -253,11 +273,19 @@ python3 -m venv .venv
 
 Windows:
 
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 次のコマンドを、そのターミナルに入力します。
+3. Enter キーを押します。
+
 ```text
 .venv\Scripts\activate
 ```
 
 macOS / Linux:
+
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 次のコマンドを、そのターミナルに入力します。
+3. Enter キーを押します。
 
 ```text
 source .venv/bin/activate
@@ -273,6 +301,10 @@ source .venv/bin/activate
 
 仮想環境を有効にしたあと、
 
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 次のコマンドを、そのターミナルに入力します。
+3. Enter キーを押します。
+
 ```text
 python -m pip install requests
 ```
@@ -282,6 +314,10 @@ python -m pip install requests
 ---
 
 ## 15-16. 仮想環境を終了する
+
+1. VS Code のターミナルを開きます。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選びます。前の操作から続ける場合は、同じターミナルを使います。
+2. 次のコマンドを、そのターミナルに入力します。
+3. Enter キーを押します。
 
 ```text
 deactivate
