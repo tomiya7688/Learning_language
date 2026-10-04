@@ -1,2 +1,2 @@
-# print関数でHello World!という文字を画面に表示する
+# Hello World! という文字列を画面に表示する
 print("Hello World!")
