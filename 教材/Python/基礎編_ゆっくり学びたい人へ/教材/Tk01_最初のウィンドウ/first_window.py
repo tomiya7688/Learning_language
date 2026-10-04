@@ -1,13 +1,14 @@
+# tkinterを、このプログラムで使えるようにする
 import tkinter
 
-# tkinterのウィンドウを作ります。
+# window に tkinterのTkクラスから作ったウィンドウを入れる
 window = tkinter.Tk()
 
-# ウィンドウのタイトルを設定します。
+# window のタイトルを「はじめてのGUI」にする
 window.title("はじめてのGUI")
 
-# ウィンドウの大きさを設定します。
+# window の大きさを横400、縦300にする
 window.geometry("400x300")
 
-# ウィンドウを表示し続けます。
+# window の画面を表示し、操作を待ち続ける
 window.mainloop()
