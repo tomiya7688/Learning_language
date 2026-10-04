@@ -18,7 +18,8 @@ VS Code は Windows / macOS / Linux で利用できます。
 2. Windows 用の **User Setup** をダウンロードする
 3. ダウンロードしたインストーラーを実行する
 4. 画面の指示に従ってインストールする
-5. VS Code を起動する
+5. Windowsのスタートボタンをクリックし、検索欄に `Visual Studio Code` と入力する
+6. 検索結果の **Visual Studio Code** をクリックして起動する
 
 通常の個人利用では User Setup で問題ありません。
 
@@ -155,13 +156,18 @@ code .
 
 Windows の通常のインストーラーでは `code` コマンドが PATH に追加されます。
 
-macOS では必要な場合、VS Code のコマンドパレットから
+macOSで `code` コマンドが見つからない場合は、次の操作で使えるようにします。
 
-```text
-Shell Command: Install 'code' command in PATH
-```
+1. VS Codeを開き、**Command + Shift + P** を押します。
+2. 画面上部に、操作を検索して選ぶ入力欄が表示されます。この画面が **コマンドパレット** です。
+3. 入力欄に `shell command` と入力します。
+4. 一覧から **Shell Command: Install 'code' command in PATH** を選びます。
+5. VS Codeを **Code → Quit Visual Studio Code** から終了します。
+6. Finderの **アプリケーション（Applications）** フォルダで **Visual Studio Code** をダブルクリックして開きます。
+7. 上部の **ターミナル（Terminal）→ 新しいターミナル（New Terminal）** を選びます。
+8. 画面下に開いたターミナルへ `code .` と入力し、Enterキーを押します。
 
-を実行します。
+この設定の手順は、[VS CodeのmacOS向け公式説明](https://code.visualstudio.com/docs/setup/mac#launch-vs-code-from-the-command-line)でも確認できます。
 
 この機能は便利ですが、最初から必須ではありません。
 

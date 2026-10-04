@@ -132,11 +132,13 @@ which python3
 
 PATH を変更したあと、すでに開いていたターミナルには反映されないことがあります。
 
-1. ターミナルを閉じる
-2. 新しく開く
-3. もう一度コマンドを試す
+VS Codeを使っている場合は、アプリごと開き直します。
 
-で確認してください。
+1. VS Code上部の **ファイル（File）→ 終了（Exit）** を選びます。macOSでは **Code → Quit Visual Studio Code** を選びます。
+2. Windowsではスタートボタンをクリックし、検索欄に `Visual Studio Code` と入力して、検索結果のアプリを開きます。macOSではFinderの **アプリケーション（Applications）** フォルダから、LinuxではOSのアプリ一覧から **Visual Studio Code** を開きます。
+3. 上部の **ターミナル（Terminal）→ 新しいターミナル（New Terminal）** を選びます。
+4. Windowsでは `python --version`、macOS / Linuxでは `python3 --version` を、画面下に開いたターミナルへ入力します。
+5. Enterキーを押し、Pythonのバージョンが表示されるか確認します。
 
 ---
 
