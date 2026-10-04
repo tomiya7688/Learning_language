@@ -12,19 +12,19 @@ screen = pygame.display.set_mode((640, 480))
 # pygame画面のタイトルに「タイトル画面を作る」をセットする
 pygame.display.set_caption("タイトル画面を作る")
 
-# clock に pygame.time.Clock() をセットする
+# 画面更新の間隔を調整する時計を用意する（後でclock.tick(60)に使う）
 clock = pygame.time.Clock()
-# font に pygame.font.Font(None, 36) をセットする
+# Noneで同梱のFreeSans Boldを選び、自機とボスのHP表示用にサイズ36（ピクセル単位）を指定する
 font = pygame.font.Font(None, 36)
 
-# clear_font に pygame.font.Font(None, 72) をセットする
+# Noneで同梱のFreeSans Boldを選び、クリア・ゲームオーバーの見出し用にサイズ72（ピクセル単位）を指定する
 clear_font = pygame.font.Font(None, 72)
 
-# clear_sub_font に pygame.font.Font(None, 32) をセットする
+# Noneで同梱のFreeSans Boldを選び、画面の説明文と操作案内用にサイズ32（ピクセル単位）を指定する
 clear_sub_font = pygame.font.Font(None, 32)
-# button_font に pygame.font.Font(None, 40) をセットする
+# Noneで同梱のFreeSans Boldを選び、ボタンの文字用にサイズ40（ピクセル単位）を指定する
 button_font = pygame.font.Font(None, 40)
-# menu_font に pygame.font.Font(None, 64) をセットする
+# Noneで同梱のFreeSans Boldを選び、タイトルの見出し用にサイズ64（ピクセル単位）を指定する
 menu_font = pygame.font.Font(None, 64)
 
 # background_path に Path(__file__).parent / "assets" / "space_background.png" をセットする

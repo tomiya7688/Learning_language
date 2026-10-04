@@ -12,15 +12,15 @@ screen = pygame.display.set_mode((640, 480))
 # pygame画面のタイトルに「クリア画面を作る」をセットする
 pygame.display.set_caption("クリア画面を作る")
 
-# clock に pygame.time.Clock() をセットする
+# 画面更新の間隔を調整する時計を用意する（後でclock.tick(60)に使う）
 clock = pygame.time.Clock()
-# font に pygame.font.Font(None, 36) をセットする
+# Noneで同梱のFreeSans Boldを選び、自機とボスのHP表示用にサイズ36（ピクセル単位）を指定する
 font = pygame.font.Font(None, 36)
 
-# clear_font に pygame.font.Font(None, 72) をセットする
+# Noneで同梱のFreeSans Boldを選び、クリア画面の見出し用にサイズ72（ピクセル単位）を指定する
 clear_font = pygame.font.Font(None, 72)
 
-# clear_sub_font に pygame.font.Font(None, 32) をセットする
+# Noneで同梱のFreeSans Boldを選び、画面の説明文用にサイズ32（ピクセル単位）を指定する
 clear_sub_font = pygame.font.Font(None, 32)
 
 # background_path に Path(__file__).parent / "assets" / "space_background.png" をセットする
