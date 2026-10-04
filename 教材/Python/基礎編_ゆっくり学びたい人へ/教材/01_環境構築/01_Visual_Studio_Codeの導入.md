@@ -55,6 +55,32 @@ sudo dnf install ./ダウンロードしたファイル.rpm
 
 ---
 
+## VS Code の表示を日本語にする
+
+VS Code のメニューやボタンを日本語で表示するには、**Japanese Language Pack** を入れます。たとえば、`File` メニューが「ファイル」と表示されるようになります。
+
+このように、VS Code に機能を追加するものを **拡張機能** といいます。
+
+1. VS Code を起動する
+2. 左側の四角が並んだ **Extensions（拡張機能）** アイコンをクリックする。Windows / Linux では **Ctrl + Shift + X**、macOS では **Command + Shift + X** でも開ける
+3. 開いた画面の検索欄に `Japanese Language Pack` と入力する
+4. Microsoft が提供している [Japanese Language Pack](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja) を選ぶ
+5. **Install（インストール）** を押す
+6. 表示言語の変更や再起動の案内が出たら、案内に従って VS Code を再起動する
+
+再起動したら、上部のメニューが「ファイル」「編集」などの日本語になっていることを確認します。
+
+### 表示が英語のままの場合
+
+1. Windows / Linux では **Ctrl + Shift + P**、macOS では **Command + Shift + P** を押す
+2. 画面上部に、操作を検索して選ぶ入力欄が表示される。この画面を **コマンドパレット** と呼ぶ
+3. 入力欄に `Configure Display Language` と入力し、一覧に表示された同じ名前の項目を選ぶ
+4. 言語の一覧から **日本語（ja）** を選び、再起動の案内に従う
+
+表示言語の設定については、[VS Code の公式説明](https://code.visualstudio.com/docs/configure/locales) でも確認できます。
+
+---
+
 ## Python 拡張機能を入れる
 
 VS Code を起動したら、Python を扱いやすくするために Python 拡張機能を入れます。
@@ -62,7 +88,7 @@ VS Code を起動したら、Python を扱いやすくするために Python 拡
 1. VS Code 左側の **拡張機能** アイコンを開く
 2. 検索欄に `Python` と入力する
 3. Microsoft が提供している Python 拡張機能を選ぶ
-4. **Install** を押す
+4. **インストール（Install）** を押す
 
 この拡張機能によって、
 
