@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PYGAME_ROOT = ROOT / "教材" / "Python"
+PYGAME_ROOT = ROOT / "教材" / "Python" / "基礎編_ゆっくり学びたい人へ" / "教材"
 
 
 @dataclass(frozen=True)
