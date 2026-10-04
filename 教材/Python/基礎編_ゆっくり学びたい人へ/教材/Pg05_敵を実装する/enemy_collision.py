@@ -10,6 +10,7 @@ screen = pygame.display.set_mode((640, 480))
 pygame.display.set_caption("敵を実装する")
 
 # 画面更新の間隔を調整する時計を用意する（後でclock.tick(60)に使う）
+# clock に pygame.time.Clock() で作った時計を入れる
 clock = pygame.time.Clock()
 
 # player_x に320を入れる
