@@ -1,34 +1,43 @@
-# Path をインポートする
+# Path は「経路」という意味。ファイルやフォルダの場所を表す
+# pathlib から Path をインポートする
 from pathlib import Path
 
+# pygame は、画面の描画やキー入力などに使う道具の名前
 # pygame をインポートする
 import pygame
 
 # pygame を初期化する
 pygame.init()
 
+# screen は「画面」という意味
 # screen に640×480のpygame画面をセットする
 screen = pygame.display.set_mode((640, 480))
 # pygame画面のタイトルに「クリア後にタイトルへ戻る」をセットする
 pygame.display.set_caption("クリア後にタイトルへ戻る")
 
+# clock は「時計」という意味
 # 画面更新の間隔を調整する時計を用意する（後でclock.tick(60)に使う）
 # clock に pygame.time.Clock() で作った時計を入れる
 clock = pygame.time.Clock()
+# font は「フォント」という意味。文字の形と大きさを指定するもの
 # Noneで同梱のFreeSans Boldを選び、自機とボスのHP表示用にサイズ36（ピクセル単位）を指定する
 # font に pygame.font.Font(None, 36) で作ったフォントを入れる
 font = pygame.font.Font(None, 36)
 
+# clear_font は「クリア画面のフォント」という意味。ゲームオーバー画面にも使う
 # Noneで同梱のFreeSans Boldを選び、クリア・ゲームオーバーの見出し用にサイズ72（ピクセル単位）を指定する
 # clear_font に pygame.font.Font(None, 72) で作ったフォントを入れる
 clear_font = pygame.font.Font(None, 72)
 
+# clear_sub_font は「クリア画面の補足文のフォント」という意味。ほかの画面の説明文にも使う
 # Noneで同梱のFreeSans Boldを選び、画面の説明文用にサイズ32（ピクセル単位）を指定する
 # clear_sub_font に pygame.font.Font(None, 32) で作ったフォントを入れる
 clear_sub_font = pygame.font.Font(None, 32)
+# button_font は「ボタンのフォント」という意味
 # Noneで同梱のFreeSans Boldを選び、ボタンの文字用にサイズ40（ピクセル単位）を指定する
 # button_font に pygame.font.Font(None, 40) で作ったフォントを入れる
 button_font = pygame.font.Font(None, 40)
+# menu_font は「メニューのフォント」という意味。タイトルの見出しに使う
 # Noneで同梱のFreeSans Boldを選び、タイトルの見出し用にサイズ64（ピクセル単位）を指定する
 # menu_font に pygame.font.Font(None, 64) で作ったフォントを入れる
 menu_font = pygame.font.Font(None, 64)
