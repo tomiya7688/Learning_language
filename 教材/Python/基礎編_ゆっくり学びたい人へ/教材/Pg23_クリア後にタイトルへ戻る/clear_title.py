@@ -1,4 +1,4 @@
-# pathlib から Path をインポートする
+# Path をインポートする
 from pathlib import Path
 
 # pygame をインポートする
@@ -13,18 +13,24 @@ screen = pygame.display.set_mode((640, 480))
 pygame.display.set_caption("クリア後にタイトルへ戻る")
 
 # 画面更新の間隔を調整する時計を用意する（後でclock.tick(60)に使う）
+# clock に pygame.time.Clock() で作った時計を入れる
 clock = pygame.time.Clock()
 # Noneで同梱のFreeSans Boldを選び、自機とボスのHP表示用にサイズ36（ピクセル単位）を指定する
+# font に pygame.font.Font(None, 36) で作ったフォントを入れる
 font = pygame.font.Font(None, 36)
 
 # Noneで同梱のFreeSans Boldを選び、クリア・ゲームオーバーの見出し用にサイズ72（ピクセル単位）を指定する
+# clear_font に pygame.font.Font(None, 72) で作ったフォントを入れる
 clear_font = pygame.font.Font(None, 72)
 
 # Noneで同梱のFreeSans Boldを選び、画面の説明文用にサイズ32（ピクセル単位）を指定する
+# clear_sub_font に pygame.font.Font(None, 32) で作ったフォントを入れる
 clear_sub_font = pygame.font.Font(None, 32)
 # Noneで同梱のFreeSans Boldを選び、ボタンの文字用にサイズ40（ピクセル単位）を指定する
+# button_font に pygame.font.Font(None, 40) で作ったフォントを入れる
 button_font = pygame.font.Font(None, 40)
 # Noneで同梱のFreeSans Boldを選び、タイトルの見出し用にサイズ64（ピクセル単位）を指定する
+# menu_font に pygame.font.Font(None, 64) で作ったフォントを入れる
 menu_font = pygame.font.Font(None, 64)
 
 # background_path に Path(__file__).parent / "assets" / "space_background.png" をセットする
@@ -199,7 +205,7 @@ while running:
                 # bullets に [player_x, player_y - 20] を追加する
                 bullets.append([player_x, player_y - 20])
 
-        # 左クリックでタイトル画面の start_button を押したなら
+        # event.type が pygame.MOUSEBUTTONDOWN で event.button が1で game_state が "title" なら
         if (
             event.type == pygame.MOUSEBUTTONDOWN
             and event.button == 1
@@ -545,9 +551,9 @@ while running:
         # screen.blit(start_text, start_text_rect) を実行する
         screen.blit(start_text, start_text_rect)
 
-    # このフレームの描画内容を画面に反映する
+        # このフレームの描画内容を画面に反映する
         pygame.display.flip()
-    # 1秒間に60回を上限にして clock を進める
+        # 1秒間に60回を上限にして clock を進める
         clock.tick(60)
         # 次のループへ進む
         continue
