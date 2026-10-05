@@ -42,12 +42,14 @@ button_font = pygame.font.Font(None, 40)
 # menu_font に pygame.font.Font(None, 64) で作ったフォントを入れる
 menu_font = pygame.font.Font(None, 64)
 
+# background_path は「背景画像の場所」という意味
 # background_path に Path(__file__).parent / "assets" / "space_background.png" をセットする
 background_path = (
     Path(__file__).parent
     / "assets"
     / "space_background.png"
 )
+# background_image は「背景画像」という意味
 # background_image に pygame.image.load(str(background_path)).convert() をセットする
 background_image = pygame.image.load(
     str(background_path)
@@ -60,19 +62,23 @@ background_image = pygame.transform.scale(
 )
 
 
+# assets_path は「素材フォルダの場所」という意味
 # assets_path に Path(__file__).parent / "assets" をセットする
 assets_path = Path(__file__).parent / "assets"
 
+# player_image は「プレイヤーの画像」という意味
 # player_image に pygame.image.load(str(assets_path / "player_ship.png")).convert_alpha() をセットする
 player_image = pygame.image.load(
     str(assets_path / "player_ship.png")
 ).convert_alpha()
 
+# enemy_image は「敵の画像」という意味
 # enemy_image に pygame.image.load(str(assets_path / "enemy_ship.png")).convert_alpha() をセットする
 enemy_image = pygame.image.load(
     str(assets_path / "enemy_ship.png")
 ).convert_alpha()
 
+# boss_image は「ボスの画像」という意味
 # boss_image に pygame.image.load(str(assets_path / "boss_ship.png")).convert_alpha() をセットする
 boss_image = pygame.image.load(
     str(assets_path / "boss_ship.png")
