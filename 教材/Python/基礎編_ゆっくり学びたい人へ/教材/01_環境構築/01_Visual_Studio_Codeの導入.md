@@ -1,8 +1,8 @@
 # 1-1. Visual Studio Code をインストールする
 
-**Visual Studio Code（VS Code）は、Pythonを書くためのアプリです。**
+Pythonのコードを書く場所が必要です。保存したファイルを開いて直し、同じ画面で実行結果も確認できると、書く・直す・試す作業を進めやすくなります。
 
-コードを書くときは、VS Codeを使ってください。
+**Visual Studio Code（VS Code）は、コードを書いて保存するためのアプリです。** この教材ではVS Codeを使ってください。Pythonそのものは、次のページで用意します。
 
 VS Code は Windows / macOS / Linux で利用できます。
 
