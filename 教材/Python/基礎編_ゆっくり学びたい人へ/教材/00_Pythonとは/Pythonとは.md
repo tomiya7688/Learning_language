@@ -44,9 +44,9 @@ print("Hello, World!")
 
 ## 0-4. Python 2 と Python 3
 
-Python には過去に **Python 2** と **Python 3** という大きな系列がありました。
+Pythonには **Python 2** と **Python 3** という大きな系列があります。
 
-現在、この教材では **Python 3** を扱います。
+この教材では **Python 3** を使います。
 
 古い Web ページや古い書籍では Python 2 のコードが残っていることがあります。
 
