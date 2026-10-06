@@ -33,18 +33,6 @@ Java は世界中で広く使われており、Webシステムやスマホアプ
 
 Java は「一度書けば、どこでも動く（Write Once, Run Anywhere）」という大きな特徴を持っています。Windows でも Mac でも Linux でも同じように動作します。
 
-たとえば、画面に文字を表示するコードは次のように書きます。
-
-```java
-public class HelloWorld {
-    public static void main(String[] args) {
-        // コンソールに "Hello, World!" と表示する
-        System.out.println("Hello, World!");
-    }
-}
-```
-少し記述量が多く見えますがしっかりとした構造を持っているため、大きなプログラムを作るときにエラーが起きにくいというメリットがあります。
-
 ## 0-4. Java のバージョンとJDK
 
 Javaには長年の歴史があり、定期的に新しいバージョン (Java 17, Java 21 など) リリースされています。
