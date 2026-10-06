@@ -98,17 +98,12 @@ VS Code を起動したら、Python を扱いやすくするために Python 拡
 
 1. VS Code 左側の **拡張機能** アイコンを開く
 2. 検索欄に `Python` と入力する
-3. Microsoft が提供している Python 拡張機能を選ぶ
+3. Microsoft が提供している [Python 拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-python.python) を選ぶ
 4. **インストール（Install）** を押す
 
-この拡張機能によって、
+Python 拡張機能を入れると、コードを書くときに続きの候補を表示できます。また、VS Code でコードを動かすときに使う Python を選べます。
 
-- Python コードの補完
-- エラーの確認
-- Python 実行環境の選択
-- デバッグ
-
-などが使いやすくなります。
+Python を選ぶ操作は、Python をインストールしたあとの [1-3. VS Code が使う Python を確認する](./03_動作確認.md) で説明します。
 
 ---
 
