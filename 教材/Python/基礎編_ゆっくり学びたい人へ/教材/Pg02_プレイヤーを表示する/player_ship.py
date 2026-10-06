@@ -1,53 +1,76 @@
-# pygame をインポートする
+# pygame を読み込む
 import pygame
 
-# pygame を初期化する
-pygame.init()
+# Player という型を定義する
+class Player:
+    # __init__ の処理を定義する
+    def __init__(self):
+        # rect はrectangle（長方形）の略。位置・大きさと当たり判定に使います。
+        # self.rect に pygame.Rect(0, 0, 40, 40) を入れる
+        self.rect = pygame.Rect(0, 0, 40, 40)
+        # self.rect.center に (320, 400) を入れる
+        self.rect.center = (320, 400)
 
-# screen に640×480のpygame画面をセットする
-screen = pygame.display.set_mode((640, 480))
-# pygame画面のタイトルに「プレイヤーを表示する」をセットする
-pygame.display.set_caption("プレイヤーを表示する")
+    # draw の処理を定義する
+    def draw(self, screen):
+        # points は自機の三角形を結ぶ3点の一覧です。
+        # points に [self.rect.midtop, self.rect.bottomleft, self.rect.bottomright] を入れる
+        points = [self.rect.midtop, self.rect.bottomleft, self.rect.bottomright]
+        # pygame.draw.polygon(screen, (100, 200, 255), points) を実行する
+        pygame.draw.polygon(screen, (100, 200, 255), points)
 
-# 画面更新の間隔を調整する時計を用意する（後でclock.tick(60)に使う）
-# clock に pygame.time.Clock() で作った時計を入れる
-clock = pygame.time.Clock()
+# main の処理を定義する
+def main():
+    # pygame.init() を実行する
+    pygame.init()
+    # 終了時にfinallyの片付けが行われるように、ゲームを動かす
+    try:
+        # screen は画面。pygameが用意した描画先です。
+        # screen に pygame.display.set_mode((640, 480)) を入れる
+        screen = pygame.display.set_mode((640, 480))
+        # pygame.display.set_caption('プレイヤーを表示する') を実行する
+        pygame.display.set_caption('プレイヤーを表示する')
 
-# player_x に320を入れる
-player_x = 320
-# player_y に400を入れる
-player_y = 400
+        # clock は時計。画面更新を最大60回/秒に調整します。
+        # clock に pygame.time.Clock() を入れる
+        clock = pygame.time.Clock()
 
-# running に True を入れる
-running = True
+        # player はプレイヤー。ここでは操作する自機です。
+        # player に Player() を入れる
+        player = Player()
 
-# running が True の間、繰り返す
-while running:
-    # pygameで起きたイベントを1つずつ event に入れて繰り返す
-    for event in pygame.event.get():
-        # event.type が pygame.QUIT なら
-        if event.type == pygame.QUIT:
-            # running に False を入れる
-            running = False
+        # running は実行中かどうか。Falseで繰り返しを終えます。
+        # running に True を入れる
+        running = True
+        # running が成り立つ間、繰り返す
+        while running:
+            # pygame.event.get() から event を1つずつ取り出して繰り返す
+            for event in pygame.event.get():
+                # event.type == pygame.QUIT が成り立つなら
+                if event.type == pygame.QUIT:
+                    # running は実行中かどうか。Falseで繰り返しを終えます。
+                    # running に False を入れる
+                    running = False
+            # not running が成り立つなら
+            if not running:
+                # この繰り返しを終える
+                break
 
-    # screen を (10, 10, 30) で塗る
-    screen.fill((10, 10, 30))
+            # screen.fill((10, 10, 30)) を実行する
+            screen.fill((10, 10, 30))
 
-    # player_points に (player_x, player_y - 20)、(player_x - 20, player_y + 20)、(player_x + 20, player_y + 20) を入れる
-    player_points = [
-        (player_x, player_y - 20),
-        (player_x - 20, player_y + 20),
-        (player_x + 20, player_y + 20)
-    ]
+            # player.draw(screen) を実行する
+            player.draw(screen)
 
-    # screen に (100, 200, 255) と player_points を使った多角形を描く
-    pygame.draw.polygon(screen, (100, 200, 255), player_points)
+            # pygame.display.flip() を実行する
+            pygame.display.flip()
+            # clock.tick(60) を実行する
+            clock.tick(60)
+    finally:
+        # pygame.quit() を実行する
+        pygame.quit()
 
-    # このフレームの描画内容を画面に反映する
-    pygame.display.flip()
-
-    # 1秒間に60回を上限にして clock を進める
-    clock.tick(60)
-
-# pygame を終了する
-pygame.quit()
+# __name__ == '__main__' が成り立つなら
+if __name__ == "__main__":
+    # main() を実行する
+    main()

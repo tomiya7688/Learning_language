@@ -1,83 +1,104 @@
-# pygame をインポートする
+# pygame を読み込む
 import pygame
 
-# pygame を初期化する
-pygame.init()
+# Player という型を定義する
+class Player:
+    # __init__ の処理を定義する
+    def __init__(self):
+        # rect はrectangle（長方形）の略。位置・大きさと当たり判定に使います。
+        # self.rect に pygame.Rect(0, 0, 40, 40) を入れる
+        self.rect = pygame.Rect(0, 0, 40, 40)
+        # self.rect.center に (320, 400) を入れる
+        self.rect.center = (320, 400)
 
-# screen に640×480のpygame画面をセットする
-screen = pygame.display.set_mode((640, 480))
-# pygame画面のタイトルに「プレイヤーを操作する」をセットする
-pygame.display.set_caption("プレイヤーを操作する")
+        # speed は速さ。1回の更新で動く距離で、単位はピクセルです。
+        # self.speed に 5 を入れる
+        self.speed = 5
 
-# 画面更新の間隔を調整する時計を用意する（後でclock.tick(60)に使う）
-# clock に pygame.time.Clock() で作った時計を入れる
-clock = pygame.time.Clock()
+    # move の処理を定義する
+    def move(self, keys):
+        # keys[pygame.K_LEFT] が成り立つなら
+        if keys[pygame.K_LEFT]:
+            # self.rect.x から self.speed を引く
+            self.rect.x -= self.speed
+        # keys[pygame.K_RIGHT] が成り立つなら
+        if keys[pygame.K_RIGHT]:
+            # self.rect.x に self.speed を足す
+            self.rect.x += self.speed
+        # keys[pygame.K_UP] が成り立つなら
+        if keys[pygame.K_UP]:
+            # self.rect.y から self.speed を引く
+            self.rect.y -= self.speed
+        # keys[pygame.K_DOWN] が成り立つなら
+        if keys[pygame.K_DOWN]:
+            # self.rect.y に self.speed を足す
+            self.rect.y += self.speed
+        # self.rect.clamp_ip(pygame.Rect(0, 0, 640, 480)) を実行する
+        self.rect.clamp_ip(pygame.Rect(0, 0, 640, 480))
 
-# player_x に320を入れる
-player_x = 320
-# player_y に400を入れる
-player_y = 400
-# player_speed に5を入れる
-player_speed = 5
+    # draw の処理を定義する
+    def draw(self, screen):
+        # points は自機の三角形を結ぶ3点の一覧です。
+        # points に [self.rect.midtop, self.rect.bottomleft, self.rect.bottomright] を入れる
+        points = [self.rect.midtop, self.rect.bottomleft, self.rect.bottomright]
+        # pygame.draw.polygon(screen, (100, 200, 255), points) を実行する
+        pygame.draw.polygon(screen, (100, 200, 255), points)
 
-# running に True を入れる
-running = True
+# main の処理を定義する
+def main():
+    # pygame.init() を実行する
+    pygame.init()
+    # 終了時にfinallyの片付けが行われるように、ゲームを動かす
+    try:
+        # screen は画面。pygameが用意した描画先です。
+        # screen に pygame.display.set_mode((640, 480)) を入れる
+        screen = pygame.display.set_mode((640, 480))
+        # pygame.display.set_caption('プレイヤーを操作する') を実行する
+        pygame.display.set_caption('プレイヤーを操作する')
 
-# running が True の間、繰り返す
-while running:
-    # pygameで起きたイベントを1つずつ event に入れて繰り返す
-    for event in pygame.event.get():
-        # event.type が pygame.QUIT なら
-        if event.type == pygame.QUIT:
-            # running に False を入れる
-            running = False
+        # clock は時計。画面更新を最大60回/秒に調整します。
+        # clock に pygame.time.Clock() を入れる
+        clock = pygame.time.Clock()
 
-    # keys に pygame.key.get_pressed() の戻り値を入れる
-    keys = pygame.key.get_pressed()
+        # player はプレイヤー。ここでは操作する自機です。
+        # player に Player() を入れる
+        player = Player()
 
-    # keys[pygame.K_LEFT] が True なら
-    if keys[pygame.K_LEFT]:
-        # player_x に player_x から player_speed を引いた値を入れる
-        player_x = player_x - player_speed
+        # running は実行中かどうか。Falseで繰り返しを終えます。
+        # running に True を入れる
+        running = True
+        # running が成り立つ間、繰り返す
+        while running:
+            # pygame.event.get() から event を1つずつ取り出して繰り返す
+            for event in pygame.event.get():
+                # event.type == pygame.QUIT が成り立つなら
+                if event.type == pygame.QUIT:
+                    # running は実行中かどうか。Falseで繰り返しを終えます。
+                    # running に False を入れる
+                    running = False
+            # not running が成り立つなら
+            if not running:
+                # この繰り返しを終える
+                break
 
-    # keys[pygame.K_RIGHT] が True なら
-    if keys[pygame.K_RIGHT]:
-        # player_x に player_x と player_speed を足した値を入れる
-        player_x = player_x + player_speed
+            # player.move(pygame.key.get_pressed()) を実行する
+            player.move(pygame.key.get_pressed())
 
-    # keys[pygame.K_UP] が True なら
-    if keys[pygame.K_UP]:
-        # player_y に player_y から player_speed を引いた値を入れる
-        player_y = player_y - player_speed
+            # screen.fill((10, 10, 30)) を実行する
+            screen.fill((10, 10, 30))
 
-    # keys[pygame.K_DOWN] が True なら
-    if keys[pygame.K_DOWN]:
-        # player_y に player_y と player_speed を足した値を入れる
-        player_y = player_y + player_speed
+            # player.draw(screen) を実行する
+            player.draw(screen)
 
-    # player_x に max(20, min(620, player_x)) の値を入れる
-    player_x = max(20, min(620, player_x))
-    # player_y に max(20, min(460, player_y)) の値を入れる
-    player_y = max(20, min(460, player_y))
+            # pygame.display.flip() を実行する
+            pygame.display.flip()
+            # clock.tick(60) を実行する
+            clock.tick(60)
+    finally:
+        # pygame.quit() を実行する
+        pygame.quit()
 
-    # screen を (10, 10, 30) で塗る
-    screen.fill((10, 10, 30))
-
-    # player_points に (player_x, player_y - 20)、(player_x - 20, player_y + 20)、(player_x + 20, player_y + 20) を入れる
-    player_points = [
-        (player_x, player_y - 20),
-        (player_x - 20, player_y + 20),
-        (player_x + 20, player_y + 20)
-    ]
-
-    # screen に (100, 200, 255) と player_points を使った多角形を描く
-    pygame.draw.polygon(screen, (100, 200, 255), player_points)
-
-    # このフレームの描画内容を画面に反映する
-    pygame.display.flip()
-
-    # 1秒間に60回を上限にして clock を進める
-    clock.tick(60)
-
-# pygame を終了する
-pygame.quit()
+# __name__ == '__main__' が成り立つなら
+if __name__ == "__main__":
+    # main() を実行する
+    main()

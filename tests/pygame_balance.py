@@ -31,7 +31,12 @@ RANGES: dict[str, tuple[float, float]] = {
 
 
 def find_examples() -> list[Path]:
-    return sorted(PYGAME_ROOT.glob("Pg*_*/**/*.py"))
+    # 分割後は各章のsettings.pyへ数値がまとまる。旧形式の章も読めるようにする。
+    examples = []
+    for folder in sorted(PYGAME_ROOT.glob("Pg*_*/")):
+        settings = folder / "settings.py"
+        examples.extend([settings] if settings.exists() else sorted(folder.glob("*.py")))
+    return examples
 
 
 def read_numeric_assignments(path: Path) -> dict[str, float]:
@@ -45,7 +50,7 @@ def read_numeric_assignments(path: Path) -> dict[str, float]:
         if len(node.targets) != 1 or not isinstance(node.targets[0], ast.Name):
             continue
 
-        name = node.targets[0].id
+        name = node.targets[0].id.lower()
 
         if isinstance(node.value, ast.Constant) and isinstance(node.value.value, (int, float)):
             values[name] = float(node.value.value)
@@ -150,12 +155,12 @@ def main() -> int:
             if has_oversized_boss_bullet(values):
                 print(f"[PASS: INTENTIONALLY UNFAIR] {relative}")
                 print(
-                    "  - Pg9のボス弾は、画面を覆って避けにくくなるよう"
+                    "  - Pg10のボス弾は、画面を覆って避けにくくなるよう"
                     "意図的に巨大化されています。"
                 )
             else:
                 print(
-                    f"[FAIL] {relative}: Pg9は『ボスの弾がデカすぎる』失敗例なのに、"
+                    f"[FAIL] {relative}: Pg10は『ボスの弾がデカすぎる』失敗例なのに、"
                     "boss_bullet_width / boss_bullet_height が十分大きくありません。"
                 )
                 failed = True
