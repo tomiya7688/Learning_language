@@ -17,4 +17,4 @@
 
 このフォルダの素材は、[リポジトリ直下の LICENSE](../../../../../../LICENSE) に記載されたMIT Licenseで扱います。
 
-将来、第三者の素材を追加する場合は、このREADMEに作者・配布元・元ライセンスを記載し、元のCopyright noticeとLicense noticeを保持します。
+将来、第三者の素材を追加する場合は、このREADMEに作者・配布元・元ライセンスを記載し、元のCopyright noticeとLicense noticeを保持してください。
