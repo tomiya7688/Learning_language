@@ -12,7 +12,11 @@ STARTUP_SECONDS = 1.5
 
 
 def find_examples() -> list[Path]:
-    return sorted(PYGAME_ROOT.glob("Pg*_*/**/*.py"))
+    # 補助モジュールは単独起動せず、各章のmain()がある入口を起動する。
+    return sorted(
+        path for path in PYGAME_ROOT.glob("Pg*_*/**/*.py")
+        if 'if __name__ == "__main__":' in path.read_text(encoding="utf-8")
+    )
 
 
 def run_example(path: Path) -> tuple[bool, str]:
