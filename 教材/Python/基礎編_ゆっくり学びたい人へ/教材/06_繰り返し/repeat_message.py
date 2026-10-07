@@ -1,7 +1,7 @@
-# 入力を受け取り、int() で整数に変換して表示回数を count に保存します。
+# Pythonは、利用者が入力した表示回数を整数に変換し、変数 count に保存します。
 count = int(input("何回表示しますか: "))
 
-# range(count) で、0 から count - 1 まで順番に値を作ります。
+# range(count) は、0から count - 1 までの整数を for 文へ順番に渡します。
 for i in range(count):
-    # i は 0 から始まるので、表示するときは 1 を足します。
+    # Pythonは、i + 1 を計算して、表示番号を1回目から始めます。
     print(f"{i + 1}回目です")
