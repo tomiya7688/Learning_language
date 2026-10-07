@@ -7,18 +7,18 @@ from game import Game
 def main():
     # pygame.init() を実行する
     pygame.init()
-    # 終了時にfinallyの片付けが行われるように、ゲームを動かす
+    # ゲームが正常に終わってもエラーで終わっても pygame.quit() を実行する
     try:
-        # game はゲーム全体。起動・繰り返し・画面切り替えを担当します。
+        # game はゲーム全体を表し、ゲーム画面や実行状態を持ちます。
         # game に Game() を入れる
         game = Game()
         # game.run() を実行する
         game.run()
     finally:
-        # pygame.quit() を実行する
+        # pygameを終了する
         pygame.quit()
 
-# __name__ == '__main__' が成り立つなら
+# このファイルを直接実行したときだけ main() を実行する
 if __name__ == "__main__":
     # main() を実行する
     main()

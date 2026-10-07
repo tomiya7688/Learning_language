@@ -2,7 +2,7 @@
 class PlayingScreen:
     # __init__ の処理を定義する
     def __init__(self, game):
-        # game はゲーム全体。起動・繰り返し・画面切り替えを担当します。
+        # game はゲーム全体を表し、ゲーム画面や実行状態を持ちます。
         # self.game に game を入れる
         self.game = game
 
