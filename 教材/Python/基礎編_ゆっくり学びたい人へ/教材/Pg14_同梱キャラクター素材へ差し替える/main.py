@@ -18,7 +18,7 @@ def main():
         # pygame.quit() を実行する
         pygame.quit()
 
-# __name__ == '__main__' が成り立つなら
+# このファイルを直接実行したときだけ main() を実行する
 if __name__ == "__main__":
     # main() を実行する
     main()
