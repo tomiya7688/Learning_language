@@ -1,33 +1,35 @@
-# Student という新しい型を定義します。
+# Student（生徒）という新しい種類の値を定義します。
 class Student:
-    # インスタンスを作るときに名前と点数を受け取るメソッドを定義します。
+    # 生徒ひとり分を作るときに呼び出す処理を定義します。
     def __init__(self, name, score):
-        # 受け取った name をこのインスタンスの name 属性に代入します。
+        # self は、いま作っている生徒ひとり分を表します。
+        # name（受け取った生徒の名前）の値を、その生徒の name 属性に結び付けます。
         self.name = name
-
-        # 受け取った score をこのインスタンスの score 属性に代入します。
+        # score（受け取った生徒の点数）の値を、その生徒の score 属性に結び付けます。
         self.score = score
 
-    # name と score を表示するメソッドを定義します。
+    # 生徒の結果を表示する処理を定義します。
     def show_result(self):
-        # name と score をコロンで区切って表示します。
+        # この生徒の名前と点数をコロンで区切って表示します。
         print(self.name, ":", self.score)
 
 
-# Student クラスから、たろうのインスタンスを作ります。
+# Student（生徒）から、たろうのインスタンスを作ります。
+# student（たろうの生徒データを使うための名前）に、その値を結び付けます。
 student = Student("たろう", 80)
 
-# student を通じて name 属性を表示します。
+# student（たろうの生徒データ）の name（名前）を表示します。
 print(student.name)
 
-# student を通じて score 属性を表示します。
+# student（たろうの生徒データ）の score（点数）を表示します。
 print(student.score)
 
-# student の show_result() を呼び出します。
+# student（たろうの生徒データ）の show_result（結果表示）を実行します。
 student.show_result()
 
-# Student クラスから、はなこのインスタンスを作ります。
+# Student（生徒）から、はなこのインスタンスを作ります。
+# student2（はなこの生徒データを使うための名前）に、その値を結び付けます。
 student2 = Student("はなこ", 95)
 
-# student2 の show_result() を呼び出します。
+# student2（はなこの生徒データ）の show_result（結果表示）を実行します。
 student2.show_result()
