@@ -13,7 +13,8 @@ PLAYER_X = 320
 # PLAYER_Y は自機を最初に置く中心位置です。画面上端からの距離をピクセルで表します。
 # PLAYER_Y に 400 を入れる
 PLAYER_Y = 400
-# PLAYER_SPEED は自機が押した矢印の方向へ1回の画面更新で進む距離です（ピクセル）。
+# PLAYER_SPEED は、画面更新1回で押した矢印の方向へ進む距離です（ピクセル）。
+# 縦と横を同時に押すと、それぞれの方向へ PLAYER_SPEED だけ進みます
 # PLAYER_SPEED に 5 を入れる
 PLAYER_SPEED = 5
 # BULLET_SPEED は自機の弾が1回の画面更新で動く距離（ピクセル）です。
