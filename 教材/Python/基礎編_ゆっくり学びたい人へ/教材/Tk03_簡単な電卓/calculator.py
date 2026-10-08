@@ -48,7 +48,7 @@ class CalculatorApp:
         # self.result_label を self.window 内に配置する
         self.result_label.pack()
 
-    # 入力された2つの数字を足して答えを表示する calculate を定義する
+    # 入力された2つの数字から答えを計算して表示する calculate を定義する
     def calculate(self):
         # number1_text（1つ目の入力文字列）に self.number1_entry に入力された文字列を入れる
         number1_text = self.number1_entry.get()
