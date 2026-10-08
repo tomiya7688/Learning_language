@@ -16,6 +16,8 @@ PythonとVS Codeをまだ使える状態にしていない場合は、先に準�
 
 VS Codeで新しいテキストファイルを開いてください（Windows / Linuxは Ctrl + N、macOSは Command + N）。次のコード全体をコピーしてください。
 
+このコードの元ファイル：[`greeting_tools.py` の 1〜5行](./greeting_tools.py#L1-L5)。
+
 ```python
 # make_greeting は「挨拶を作る」、name は「名前」という意味
 # make_greeting という名前で、name を受け取り、下の処理を行う関数を定義する
@@ -33,6 +35,8 @@ greeting は「挨拶」、tools は「道具」という意味です。
 ## 実行する側のファイルを書く
 
 VS Codeで再び新しいテキストファイルを開き（Windows / Linuxは Ctrl + N、macOSは Command + N）、次のコード全体をコピーしてください。
+
+このコードの元ファイル：[`use_greeting.py` の 1〜6行](./use_greeting.py#L1-L6)。
 
 ```python
 # greeting_tools は「挨拶の道具」という意味
@@ -121,9 +125,11 @@ Windows / Linuxは Ctrl + F、macOSは Command + F を押してください。�
 return "こんにちは "
 ```
 
-対象の行と、その直上の処理コメントを、次のように置き換えてください。
+[`greeting_tools.py` の4〜5行](./greeting_tools.py#L4-L5)のコードを、次の内容に置き換えてください。
 
 変更前：
+
+このコードの元ファイル：[`greeting_tools.py` の 4〜5行](./greeting_tools.py#L4-L5)。
 
 ```python
     # 「こんにちは 」と name をつないだ文字列を返す
@@ -131,6 +137,8 @@ return "こんにちは "
 ```
 
 変更後：
+
+変更する場所：[`greeting_tools.py` の 5行](./greeting_tools.py#L5-L5)。
 
 ```python
     # 「おはよう 」と name をつないだ文字列を返す

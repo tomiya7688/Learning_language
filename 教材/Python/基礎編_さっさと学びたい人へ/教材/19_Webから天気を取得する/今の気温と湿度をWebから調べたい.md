@@ -16,6 +16,8 @@ PythonとVS Codeをまだ使える状態にしていない場合は、先に準�
 
 VS Codeで新しいテキストファイルを開いてください（Windows / Linuxは Ctrl + N、macOSは Command + N）。次のコード全体をそのファイルへコピーしてください。
 
+このコードの元ファイル：[`get_weather.py` の 1〜33行](./get_weather.py#L1-L33)。
+
 ```python
 # requests は「要求」という意味
 # 追加した Requests の処理を requests という名前で使えるようにする
@@ -183,9 +185,11 @@ Windows / Linuxは Ctrl + F、macOSは Command + F を押してください。�
 print("気温:"
 ```
 
-対象の行と、その直上の処理コメントを、次のように置き換えてください。
+[`get_weather.py` の26〜27行](./get_weather.py#L26-L27)のコードを、次の内容に置き換えてください。
 
 変更前：
+
+このコードの元ファイル：[`get_weather.py` の 26〜27行](./get_weather.py#L26-L27)。
 
 ```python
     # 「気温:」と data の現在の気温と「℃」を表示する
@@ -193,6 +197,8 @@ print("気温:"
 ```
 
 変更後：
+
+変更する場所：[`get_weather.py` の 27行](./get_weather.py#L27-L27)。
 
 ```python
     # 「東京付近の気温:」と data の現在の気温と「℃」を表示する

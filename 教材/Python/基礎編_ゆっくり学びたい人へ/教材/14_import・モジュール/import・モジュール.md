@@ -26,6 +26,8 @@
 
 中身がメッセージを作る道具なので、ファイル名は [`message_tools.py`](./message_tools.py) にしてください。
 
+このコードの元ファイル：[`message_tools.py` の 1〜7行](./message_tools.py#L1-L7)。
+
 ```python
 # 挨拶文を作る関数をこのファイルへまとめます。
 def make_greeting(name):
@@ -35,6 +37,8 @@ def make_greeting(name):
 def make_goodbye(name):
     return f"さようなら {name}"
 ```
+
+このコードの元ファイル：[`message_tools.py` の 2〜7行](./message_tools.py#L2-L7)。
 
 ```python
 def make_greeting(name):
@@ -55,6 +59,8 @@ def make_goodbye(name):
 
 モジュールを使う例なので、[`module_example.py`](./module_example.py) にしてください。
 
+このコードの元ファイル：[`module_example.py` の 1〜10行](./module_example.py#L1-L10)。
+
 ```python
 # 別ファイルの message_tools を使えるようにします。
 import message_tools
@@ -69,6 +75,8 @@ print(message2)
 ```
 
 まず `message_tools` を読み込みます。
+
+このコードの元ファイル：[`module_example.py` の 2〜10行](./module_example.py#L2-L10)。
 
 ```python
 import message_tools
@@ -93,6 +101,8 @@ print(message2)
 ## 14-4. `.py` は書かない
 
 実際のファイル名は `message_tools.py` ですが、importするときは、
+
+このコードの元ファイル：[`module_example.py` の 2〜2行](./module_example.py#L2-L2)。
 
 ```python
 import message_tools
