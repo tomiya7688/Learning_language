@@ -7,7 +7,7 @@ from game import Game
 def main():
     # pygame.init() を実行する
     pygame.init()
-    # ゲームが正常に終わってもエラーで終わっても pygame.quit() を実行する
+    # Pythonは try: の処理が終わったときもエラーで中断したときも、finally: の下の pygame.quit() を実行する
     try:
         # game はゲーム全体を表し、ゲーム画面や実行状態を持ちます。
         # game に Game() を入れる

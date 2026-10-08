@@ -20,8 +20,7 @@ class PlayingScreen:
 
             # print('GAME OVER') を実行する
             print("GAME OVER")
-            # running は実行中かどうか。Falseで繰り返しを終えます。
-            # self.game.running に False を入れる
+                        # self.game.running を False にし、ゲーム画面の繰り返しを終える
             self.game.running = False
 
         # self.game.battle.is_clear() が成り立つなら
