@@ -12,6 +12,8 @@
 
 [weather_api.py](./weather_api.py) を開いてください。
 
+このコードの元ファイル：[`weather_api.py` の 1〜28行](./weather_api.py#L1-L28)。
+
 ```python
 import requests
 
@@ -214,6 +216,8 @@ print("現在の湿度:", current["relative_humidity_2m"], "%")
 
 ## 17-8. `requests.get()`
 
+このコードの元ファイル：[`weather_api.py` の 16〜16行](./weather_api.py#L16-L16)。
+
 ```python
 response = requests.get(url, params=params, timeout=10)
 ```
@@ -231,6 +235,8 @@ HTTPのGETリクエストは、Webサーバーからデータを取得すると�
 ---
 
 ## 17-9. paramsは何を渡している？
+
+このコードの元ファイル：[`weather_api.py` の 7〜12行](./weather_api.py#L7-L12)。
 
 ```python
 params = {
@@ -291,6 +297,8 @@ Python
 
 Open-MeteoからはJSON形式でデータが返ってきます。
 
+このコードの元ファイル：[`weather_api.py` の 20〜20行](./weather_api.py#L20-L20)。
+
 ```python
 data = response.json()
 ```
@@ -343,6 +351,8 @@ Pythonの辞書
 
 通信に失敗したり、URLやパラメータがおかしかったりすると、正常なデータが返らないことがあります。
 
+このコードの元ファイル：[`weather_api.py` の 17〜17行](./weather_api.py#L17-L17)。
+
 ```python
 response.raise_for_status()
 ```
@@ -381,6 +391,8 @@ Web APIは、自分のPCだけで完結しません。
 
 実際には、次のようにしておくと安全です。
 
+このコードの元ファイル：[`weather_api.py` の 1〜28行](./weather_api.py#L1-L28)。
+
 ```python
 import requests
 
@@ -412,6 +424,8 @@ except requests.RequestException as error:
 ---
 
 ## 17-16. 地点を変えてみる
+
+このコードの元ファイル：[`weather_api.py` の 8〜9行](./weather_api.py#L8-L9)。
 
 ```python
 "latitude": 35.68,

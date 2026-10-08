@@ -44,6 +44,8 @@ import message_tools
 
 標準ライブラリも同じです。
 
+このコードの元ファイル：[`standard_library_example.py` の 2〜2行](./standard_library_example.py#L2-L2)。
+
 ```python
 import random
 ```
@@ -59,6 +61,8 @@ import random
 次の `import` は、1から10までのランダムな整数を選ぶために、`random` を使えるようにするコードです。
 
 作った数字はあとで表示したいので、保存先は `number` にしてください。
+
+このコードの元ファイル：[`standard_library_example.py` の 1〜8行](./standard_library_example.py#L1-L8)。
 
 ```python
 # random を使えるようにします。

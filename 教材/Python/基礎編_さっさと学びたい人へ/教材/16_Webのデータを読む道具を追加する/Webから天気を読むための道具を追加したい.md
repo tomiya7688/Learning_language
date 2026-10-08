@@ -16,6 +16,8 @@ PythonとVS Codeをまだ使える状態にしていない場合は、先に準�
 
 VS Codeで新しいテキストファイルを開いてください（Windows / Linuxは Ctrl + N、macOSは Command + N）。次のコード全体をそのファイルへコピーしてください。
 
+このコードの元ファイル：[`check_requests.py` の 1〜6行](./check_requests.py#L1-L6)。
+
 ```python
 # requests は「要求」という意味
 # 追加した Requests の処理を requests という名前で使えるようにする
@@ -149,9 +151,11 @@ Windows / Linuxは Ctrl + F、macOSは Command + F を押してください。�
 print(
 ```
 
-対象の行と、その直上の処理コメントを、次のように置き換えてください。
+[`check_requests.py` の5〜6行](./check_requests.py#L5-L6)のコードを、次の内容に置き換えてください。
 
 変更前：
+
+このコードの元ファイル：[`check_requests.py` の 5〜6行](./check_requests.py#L5-L6)。
 
 ```python
 # 「天気を読むための道具を使えます」と表示する
@@ -159,6 +163,8 @@ print("天気を読むための道具を使えます")
 ```
 
 変更後：
+
+変更する場所：[`check_requests.py` の 6行](./check_requests.py#L6-L6)。
 
 ```python
 # 「Requestsを読み込めました」と表示する

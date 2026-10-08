@@ -101,6 +101,8 @@ with open("students.csv", "r", encoding="utf-8") as file:
 
 ## 16-5. `import csv`
 
+このコードの元ファイル：[`csv_json_example.py` の 1〜1行](./csv_json_example.py#L1-L1)。
+
 ```python
 import csv
 ```
@@ -118,6 +120,8 @@ import csv
 ---
 
 ## 16-6. `csv.DictReader()`
+
+このコードの元ファイル：[`csv_json_example.py` の 8〜8行](./csv_json_example.py#L8-L8)。
 
 ```python
 reader = csv.DictReader(file)
@@ -292,6 +296,8 @@ for student in students:
 
 ## 16-12. `json.load()`
 
+このコードの元ファイル：[`csv_json_example.py` の 17〜17行](./csv_json_example.py#L17-L17)。
+
 ```python
 students = json.load(file)
 ```
@@ -307,6 +313,8 @@ students = json.load(file)
 ---
 
 ## 16-13. 今回のサンプルコード
+
+このコードの元ファイル：[`csv_json_example.py` の 1〜20行](./csv_json_example.py#L1-L20)。
 
 ```python
 import csv
@@ -428,6 +436,8 @@ encoding="utf-8"
 ## 16-18. ファイルが見つからなければ例外になる
 
 たとえば、
+
+このコードの元ファイル：[`csv_json_example.py` の 6〜6行](./csv_json_example.py#L6-L6)。
 
 ```python
 with open("students.csv", "r", encoding="utf-8") as file:
