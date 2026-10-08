@@ -2,40 +2,63 @@
 import tkinter
 
 
-# 入力された名前で挨拶を表示する show_greeting を定義する
-def show_greeting():
-    # name に name_entry に入力された文字列を入れる
-    name = name_entry.get()
-    # result_label の表示を「こんにちは 」と name をつなげた文字列に変える
-    result_label.config(text=f"こんにちは {name}")
+# 名前入力欄と挨拶表示をまとめる GreetingApp クラスを定義する
+class GreetingApp:
+    # GreetingApp の画面と部品を用意する __init__ を定義する
+    def __init__(self):
+        # self.window に tkinter.Tk() で作ったウィンドウを入れる
+        self.window = tkinter.Tk()
+        # self.window のタイトルを「挨拶アプリ」にする
+        self.window.title("挨拶アプリ")
+        # self.window の大きさを横400、縦220にする
+        self.window.geometry("400x220")
+
+        # self.name_label に名前の入力を案内するLabelを入れる
+        self.name_label = tkinter.Label(self.window, text="名前を入力してください")
+        # self.name_label を self.window 内に配置する
+        self.name_label.pack()
+
+        # self.name_entry に1行の名前入力欄を入れる
+        self.name_entry = tkinter.Entry(self.window)
+        # self.name_entry を self.window 内に配置する
+        self.name_entry.pack()
+
+        # self.greet_button に挨拶を表示するボタンを入れる
+        self.greet_button = tkinter.Button(
+            self.window,
+            text="挨拶する",
+            # ボタンを押したときに呼ぶ処理として self.show_greeting を登録する
+            command=self.show_greeting,
+        )
+        # self.greet_button を self.window 内に配置する
+        self.greet_button.pack()
+
+        # self.result_label に空の文字列を表示するLabelを入れる
+        self.result_label = tkinter.Label(self.window, text="")
+        # self.result_label を self.window 内に配置する
+        self.result_label.pack()
+
+    # 入力された名前で挨拶する show_greeting を定義する
+    def show_greeting(self):
+        # name に self.name_entry から取り出した文字列を入れる
+        name = self.name_entry.get()
+        # self.result_label の表示を「こんにちは 」と name をつないだ文字列に変える
+        self.result_label.config(text=f"こんにちは {name}")
+
+    # ウィンドウを表示する run を定義する
+    def run(self):
+        # self.window を表示し、利用者の操作を待ち続ける
+        self.window.mainloop()
 
 
-# window に tkinterのTkクラスから作ったウィンドウを入れる
-window = tkinter.Tk()
-# window のタイトルを「挨拶アプリ」にする
-window.title("挨拶アプリ")
-# window の大きさを横400、縦220にする
-window.geometry("400x220")
+# アプリの起動処理を main にまとめる
+def main():
+    # app に GreetingApp() で作ったアプリを入れる
+    app = GreetingApp()
+    # app のウィンドウを表示し、利用者の操作を待つ
+    app.run()
 
-# name_label に window 内で「名前を入力してください」と表示するラベルを入れる
-name_label = tkinter.Label(window, text="名前を入力してください")
-# name_label を window 内に配置する
-name_label.pack()
 
-# name_entry に window 内の1行の入力欄を入れる
-name_entry = tkinter.Entry(window)
-# name_entry を window 内に配置する
-name_entry.pack()
-
-# greet_button に window 内で「挨拶する」と表示し、押すと show_greeting を呼ぶボタンを入れる
-greet_button = tkinter.Button(window, text="挨拶する", command=show_greeting)
-# greet_button を window 内に配置する
-greet_button.pack()
-
-# result_label に window 内で空の文字列を表示するラベルを入れる
-result_label = tkinter.Label(window, text="")
-# result_label を window 内に配置する
-result_label.pack()
-
-# window の画面を表示し、操作を待ち続ける
-window.mainloop()
+# このファイルを直接実行したときだけ main() を呼び出す
+if __name__ == "__main__":
+    main()
