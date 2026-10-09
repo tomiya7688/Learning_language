@@ -1,0 +1,236 @@
+# pygame を読み込む
+import pygame
+# settings を読み込む
+import settings
+# player から Player を読み込む
+from player import Player
+# enemy から Enemy を読み込む
+from enemy import Enemy
+# collisions から hit_enemies を読み込む
+from collisions import hit_enemies
+# collisions から hit_player を読み込む
+from collisions import hit_player
+# boss から Boss を読み込む
+from boss import Boss
+# collisions から hit_boss を読み込む
+from collisions import hit_boss
+# background から Background を読み込む
+from background import Background
+# resources から Images を読み込む
+from resources import Images
+
+# Battle という型を定義する
+class Battle:
+    # __init__ の処理を定義する
+    def __init__(self):
+        # images は機体の画像のまとまり。自機・通常敵・ボスごとに使う画像を持ちます。
+        # self.images に Images() を入れる
+        self.images = Images()
+        # player はプレイヤー。ここでは操作する自機です。
+        # self.player に Player(self.images.player) を入れる
+        self.player = Player(self.images.player)
+
+        # bullets は弾の一覧。ここでは自機が撃った弾を並べます。
+        # self.bullets に [] を入れる
+        self.bullets = []
+
+        # enemies は通常の敵の一覧。各要素はEnemyです。
+        # self.enemies に [] を入れる
+        self.enemies = []
+
+        # enemy_bullets は通常の敵が撃った弾の一覧です。
+        # self.enemy_bullets に [] を入れる
+        self.enemy_bullets = []
+        # font はフォント。文字の形と大きさを指定します。
+        # self.font に pygame.font.Font(None, 36) を入れる
+        self.font = pygame.font.Font(None, 36)
+
+        # spawn_timer は前回の敵の出現からの更新回数です。
+        # self.spawn_timer に 0 を入れる
+        self.spawn_timer = 0
+        # spawn_index は次に出す敵の番号。0が最初です。
+        # self.spawn_index に 0 を入れる
+        self.spawn_index = 0
+
+        # boss はボス。通常の敵が全ていなくなった後に登場します。
+        # self.boss に None を入れる
+        self.boss = None
+
+        # boss_bullets はボスが撃った弾の一覧です。
+        # self.boss_bullets に [] を入れる
+        self.boss_bullets = []
+
+        # background は背景。星や画像の移動と描画を担当します。
+        # self.background に Background() を入れる
+        self.background = Background()
+
+    # handle_event の処理を定義する
+    def handle_event(self, event):
+        # event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE が成り立つなら
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            # self.bullets.append(self.player.shoot()) を実行する
+            self.bullets.append(self.player.shoot())
+
+    # update の処理を定義する
+    def update(self):
+        # self.player.move(pygame.key.get_pressed()) を実行する
+        self.player.move(pygame.key.get_pressed())
+
+        # self.background.update() を実行する
+        self.background.update()
+
+        # self.spawn_enemy() を実行する
+        self.spawn_enemy()
+
+        # self.move_bullets(self.bullets) を実行する
+        self.move_bullets(self.bullets)
+
+        # self.update_enemies() を実行する
+        self.update_enemies()
+
+        # self.move_bullets(self.enemy_bullets) を実行する
+        self.move_bullets(self.enemy_bullets)
+
+        # hit_enemies(self.bullets, self.enemies) を実行する
+        hit_enemies(self.bullets, self.enemies)
+
+        # self.update_boss() を実行する
+        self.update_boss()
+
+        # hit_player(self.enemy_bullets, self.player) を実行する
+        hit_player(self.enemy_bullets, self.player)
+
+        # hit_player(self.boss_bullets, self.player) を実行する
+        hit_player(self.boss_bullets, self.player)
+
+    # is_game_over の処理を定義する
+    def is_game_over(self):
+        # self.player.hp <= 0 を返す
+        return self.player.hp <= 0
+
+    # is_clear の処理を定義する
+    def is_clear(self):
+        # self.boss is not None and self.boss.hp <= 0 を返す
+        return self.boss is not None and self.boss.hp <= 0
+
+    # move_bullets の処理を定義する
+    def move_bullets(self, bullets):
+        # bullets[:] から bullet を1つずつ取り出して繰り返す
+        for bullet in bullets[:]:
+            # bullet.move() を実行する
+            bullet.move()
+            # bullet.is_off_screen() が成り立つなら
+            if bullet.is_off_screen():
+                # bullets.remove(bullet) を実行する
+                bullets.remove(bullet)
+
+    # update_enemies の処理を定義する
+    def update_enemies(self):
+        # self.enemies[:] から enemy を1つずつ取り出して繰り返す
+        for enemy in self.enemies[:]:
+            # enemy.move() を実行する
+            enemy.move()
+            # enemy.is_off_screen() が成り立つなら
+            if enemy.is_off_screen():
+                # self.enemies.remove(enemy) を実行する
+                self.enemies.remove(enemy)
+
+            # enemy.ready_to_fire() が成り立つなら
+            elif enemy.ready_to_fire():
+                # self.enemy_bullets.append(enemy.shoot()) を実行する
+                self.enemy_bullets.append(enemy.shoot())
+
+    # spawn_enemy の処理を定義する
+    def spawn_enemy(self):
+        # self.spawn_index >= len(settings.SPAWN_POSITIONS_X) が成り立つなら
+        if self.spawn_index >= len(settings.SPAWN_POSITIONS_X):
+            # この処理を終える
+            return
+        # self.spawn_timer に 1 を足す
+        self.spawn_timer += 1
+        # self.spawn_timer >= settings.SPAWN_INTERVAL が成り立つなら
+        if self.spawn_timer >= settings.SPAWN_INTERVAL:
+            # x は横位置。画面の左から右へ増えます。
+            # x に settings.SPAWN_POSITIONS_X[self.spawn_index] を入れる
+            x = settings.SPAWN_POSITIONS_X[self.spawn_index]
+
+            # fire_interval は発射の間隔。単位は更新回数です。
+            # fire_interval に settings.ENEMY_FIRE_INTERVALS[self.spawn_index] を入れる
+            fire_interval = settings.ENEMY_FIRE_INTERVALS[self.spawn_index]
+            # self.enemies.append(Enemy(x, -20, fire_interval, self.images.enemy)) を実行する
+            self.enemies.append(Enemy(x, -20, fire_interval, self.images.enemy))
+
+            # self.spawn_index に 1 を足す
+            self.spawn_index += 1
+            # spawn_timer は前回の敵の出現からの更新回数です。
+            # self.spawn_timer に 0 を入れる
+            self.spawn_timer = 0
+
+    # update_boss の処理を定義する
+    def update_boss(self):
+        # self.boss is None が成り立つなら
+        if self.boss is None:
+            # self.spawn_index >= len(settings.SPAWN_POSITIONS_X) and (not self.enemies) が成り立つなら
+            if self.spawn_index >= len(settings.SPAWN_POSITIONS_X) and not self.enemies:
+                # boss はボス。通常の敵が全ていなくなった後に登場します。
+                # self.boss に Boss(self.images.boss) を入れる
+                self.boss = Boss(self.images.boss)
+
+                # self.bullets.clear() を実行する
+                self.bullets.clear()
+            # この処理を終える
+            return
+        # hit_boss(self.bullets, self.boss) を実行する
+        hit_boss(self.bullets, self.boss)
+
+        # self.boss.ready_to_fire() が成り立つなら
+        if self.boss.ready_to_fire():
+            # self.boss_bullets.append(self.boss.shoot()) を実行する
+            self.boss_bullets.append(self.boss.shoot())
+        # self.move_bullets(self.boss_bullets) を実行する
+        self.move_bullets(self.boss_bullets)
+
+    # draw の処理を定義する
+    def draw(self, screen):
+        # self.background.draw(screen) を実行する
+        self.background.draw(screen)
+
+        # self.player.draw(screen) を実行する
+        self.player.draw(screen)
+        # self.draw_bullets(screen, self.bullets) を実行する
+        self.draw_bullets(screen, self.bullets)
+
+        # self.enemies から enemy を1つずつ取り出して繰り返す
+        for enemy in self.enemies:
+            # enemy.draw(screen) を実行する
+            enemy.draw(screen)
+
+        # self.draw_bullets(screen, self.enemy_bullets) を実行する
+        self.draw_bullets(screen, self.enemy_bullets)
+        # self.draw_text(screen, f'HP: {self.player.hp}', (10, 10)) を実行する
+        self.draw_text(screen, f"HP: {self.player.hp}", (10, 10))
+
+        # self.boss is not None が成り立つなら
+        if self.boss is not None:
+            # self.boss.draw(screen) を実行する
+            self.boss.draw(screen)
+            # self.draw_text(screen, f'BOSS HP: {self.boss.hp}', (220, 10)) を実行する
+            self.draw_text(screen, f"BOSS HP: {self.boss.hp}", (220, 10))
+
+            # self.draw_bullets(screen, self.boss_bullets) を実行する
+            self.draw_bullets(screen, self.boss_bullets)
+
+    # draw_bullets の処理を定義する
+    def draw_bullets(self, screen, bullets):
+        # bullets から bullet を1つずつ取り出して繰り返す
+        for bullet in bullets:
+            # bullet.draw(screen) を実行する
+            bullet.draw(screen)
+
+    # draw_text の処理を定義する
+    def draw_text(self, screen, text, position):
+        # image は画像。画面へ描く内容を持ちます。
+        # image に self.font.render(text, True, (255, 255, 255)) を入れる
+        image = self.font.render(text, True, (255, 255, 255))
+        # screen.blit(image, position) を実行する
+        screen.blit(image, position)
