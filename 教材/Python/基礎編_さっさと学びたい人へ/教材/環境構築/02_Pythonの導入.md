@@ -99,7 +99,7 @@ Linux では Python 3 が最初から入っている場合があります。
 python3 --version
 ```
 
-Ubuntu / Debian 系で Python 3 が入っていない場合の例:
+Ubuntu / Debian系で電卓・完成ゲーム・ブラウザアプリを動かす場合は、Python本体に加えて、仮想環境を作る `python3-venv` と、入力欄やボタンを作るTkinterの `python3-tk` も導入してください。Python本体がすでにあっても、追加の二つがあるとは限りません。[UbuntuのPythonパッケージ情報](https://packages.ubuntu.com/noble/python3)では、この二つは本体の必須依存に含まれていません。
 
 1. VS Code のターミナルを開いてください。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選んでください。前の操作から続ける場合は、同じターミナルを使ってください。
 2. 次のコマンドを上から1行ずつ、そのターミナルに入力してください。
@@ -107,7 +107,7 @@ Ubuntu / Debian 系で Python 3 が入っていない場合の例:
 
 ```bash
 sudo apt update
-sudo apt install python3
+sudo apt install python3 python3-venv python3-tk
 ```
 
 > Linux では OS 自身が Python を使用している場合があります。

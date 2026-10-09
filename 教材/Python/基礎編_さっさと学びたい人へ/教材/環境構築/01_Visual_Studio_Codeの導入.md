@@ -16,12 +16,11 @@ VS Code は Windows / macOS / Linux で利用できます。
 
 ## Windows
 
-1. VS Code 公式サイトを開いてください
-2. Windows 用の **User Setup** をダウンロードしてください
-3. ダウンロードしたインストーラーを実行してください
-4. 画面の指示に従ってインストールしてください
-5. Windowsのスタートボタンをクリックし、検索欄に `Visual Studio Code` と入力してください
-6. 検索結果の **Visual Studio Code** をクリックして起動してください
+1. ブラウザで[VS Code公式サイト](https://code.visualstudio.com/)を開いてください。VS Codeをダウンロードする画面が表示されます。
+2. VS Codeのダウンロード画面で、Windows用の **User Setup** を選んでダウンロードしてください。完了したら、エクスプローラーの「ダウンロード」フォルダに、`VSCodeUserSetup` から始まる `.exe` ファイルがあることを確認してください。
+3. エクスプローラーの「ダウンロード」フォルダで、`VSCodeUserSetup` から始まる `.exe` ファイルをダブルクリックしてください。VS Codeのインストール画面が開きます。
+4. VS Codeのインストール画面で、ライセンスを読み、同意する場合は同意する項目を選んで **次へ（Next）** を押してください。設定画面を順に確認し、**インストール（Install）** を押してください。完了画面が出たら **完了（Finish）** を押し、インストール画面が閉じることを確認してください。
+5. Windowsのスタートボタンをクリックし、検索欄へ `Visual Studio Code` と入力してください。検索結果の **Visual Studio Code** をクリックすると、VS Codeの編集画面が開きます。
 
 通常の個人利用では User Setup で問題ありません。
 
@@ -31,10 +30,10 @@ VS Code の Windows 用 User Setup は、管理者権限なしでもインスト
 
 ## macOS
 
-1. VS Code 公式サイトから macOS 用の `.dmg` をダウンロードしてください
-2. `.dmg` を開いてください
-3. `Visual Studio Code.app` を `Applications` フォルダへ移動してください
-4. Applications から VS Code を起動してください
+1. ブラウザで[VS Code公式サイト](https://code.visualstudio.com/)を開き、macOS用の `.dmg` をダウンロードしてください。Finderの「ダウンロード」フォルダに `.dmg` ファイルが保存されます。
+2. Finderの「ダウンロード」フォルダで、VS Codeの `.dmg` をダブルクリックしてください。`Visual Studio Code.app` がある画面が開きます。
+3. `.dmg` を開いた画面の `Visual Studio Code.app` を **アプリケーション（Applications）** フォルダへドラッグしてください。FinderのアプリケーションにVisual Studio Codeが追加されます。
+4. Finderの **アプリケーション（Applications）** で **Visual Studio Code** をダブルクリックしてください。VS Codeの編集画面が開きます。
 
 ---
 

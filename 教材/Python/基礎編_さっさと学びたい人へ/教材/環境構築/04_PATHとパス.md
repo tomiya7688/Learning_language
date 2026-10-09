@@ -86,29 +86,17 @@ print("Hello")
 PATH は、`python` や `code` のようなコマンドを入力したときに、
 OS が実行ファイルを探す場所の一覧です。
 
-たとえば Python が次にあるとします。
+この教材のWindows手順では、Python Install ManagerでPythonを導入します。Install ManagerがPythonのコマンド名を用意する標準のフォルダは `%LocalAppData%\Python\bin` です。`%LocalAppData%` は、使っているWindowsアカウントのアプリ用データフォルダを表します。以前のインストーラーの導入先を、そのままPATHへ追加する必要はありません。[Python公式のInstall Manager導入手順](https://docs.python.org/3/using/windows.html#installation)
+
+Pythonの導入時にPATHへ追加するフォルダが表示された場合は、表示されたフォルダの場所を確認してください。標準のフォルダを確認する場合は、エクスプローラーの上部のアドレス欄へ `%LocalAppData%\Python\bin` と入力し、Enterキーを押してください。フォルダを開けたら、アドレス欄をクリックしてCtrl + Cを押すと、実際のアカウント名を含むパスをコピーできます。別の場所へ導入した場合は、導入時に表示されたパスを使ってください。
+
+たとえばアカウント名がsampleの場合、標準のフォルダは次の場所です。この例のsampleを自分のアカウント名だと決めつけず、エクスプローラーで確認したパスを使ってください。
 
 ```text
-C:\Users\ユーザー名\AppData\Local\Programs\Python\Python314\python.exe
+C:\Users\sample\AppData\Local\Python\bin
 ```
 
-PATH に追加するのは通常 `python.exe` 自体ではなく、その入っているフォルダです。
-
-```text
-C:\Users\ユーザー名\AppData\Local\Programs\Python\Python314\
-```
-
-さらに `pip` などを使うため、次のような `Scripts` フォルダも関係します。
-
-```text
-C:\Users\ユーザー名\AppData\Local\Programs\Python\Python314\Scripts\
-```
-
-要するに、
-
-> PATH には、実行したいプログラムが入っているフォルダまでを書く
-
-と覚えてください。
+PATHへ指定するのは、実行するコマンドを置いたフォルダです。ファイルの `python.exe` 自体を追加する指定ではありません。パッケージの追加は `python -m pip` の形で使うため、この教材ではpip用のScriptsフォルダをPATHへ追加する手順は必要ありません。
 
 ---
 
