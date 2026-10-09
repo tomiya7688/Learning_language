@@ -23,7 +23,7 @@ from resources import Images
 class Battle:
     # __init__ の処理を定義する
     def __init__(self):
-        # images は機体の画像のまとまり。各機体へ同じ画像を指定します。
+        # images は機体の画像のまとまり。自機・通常敵・ボスごとに使う画像を持ちます。
         # self.images に Images() を入れる
         self.images = Images()
         # player はプレイヤー。ここでは操作する自機です。
