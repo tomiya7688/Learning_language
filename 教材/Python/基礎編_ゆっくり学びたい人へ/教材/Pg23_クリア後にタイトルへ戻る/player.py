@@ -22,7 +22,7 @@ class Player:
         # self.rect に image.get_rect(center=self.rect.center) を入れる
         self.rect = image.get_rect(center=self.rect.center)
 
-        # speed は速さ。1回の更新で動く距離で、単位はピクセルです。
+        # speed は速さ。1回の更新で、押した矢印の方向ごとに動く距離です。単位はピクセルです。
         # self.speed に settings.PLAYER_SPEED を入れる
         self.speed = settings.PLAYER_SPEED
 
