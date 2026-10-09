@@ -4,6 +4,18 @@
 
 この章の関数電卓は、四則演算に加え、入力した角度のsin（サイン）とcos（コサイン）を求める電卓です。数字・小数点・計算記号を一つの盤面に並べ、計算に使うボタンを近くに配置します。
 
+
+## Pythonファイルの保存場所
+
+この章のPythonファイルは、練習用フォルダ内の `src` へ保存してください。
+
+この章のコードを保存する練習用フォルダを1つ選んでください。まだない場合は、保存したい場所で、Windowsはエクスプローラーの **新規作成 → フォルダー**、macOSはFinderの **ファイル → 新規フォルダ**、Linux（GNOMEの「ファイル」）は右クリックの **新しいフォルダー** を選び、練習用フォルダを作ってください。
+
+練習用フォルダの中で、Windowsはエクスプローラーの空いている場所を右クリックして **新規作成 → フォルダー**、macOSはFinderの **ファイル → 新規フォルダ**、Linux（GNOMEの「ファイル」）は空いている場所を右クリックして **新しいフォルダー** を選んでください。フォルダ名を `src` と入力してEnterキーを押すと、練習用フォルダの中に `src` ができます。すでに `src` がある場合はそのフォルダを使い、保存済みのコードは必要な変更だけを行ってください。
+
+VS Codeで開くフォルダと、ターミナルの `cd` で移動するフォルダは、`src` の一つ上の練習用フォルダです。保存先を選ぶときは `src` を開き、起動するときは練習用フォルダから `src/app.py` を指定してください。実行手順のコマンドは、この練習用フォルダから入力してください。
+
+
 ## Tk10-1. 角度から高さや横の長さを求めたい
 
 たとえば、長さ10メートルの棒を地面から30度傾けた時、棒の先端の高さは約5メートル、地面に沿った横の長さは約8.66メートルです。棒、地面、先端から地面までの垂直線で、角の一つが90度の三角形を考えます。棒は、90度の角の向かい側にある一番長い辺です。
@@ -51,16 +63,16 @@ sinとcosで変わるのは、角度を計算する一行です。入力確認�
 
 PythonとVS Codeで保存して実行する準備がまだなら、[Pythonを書いて動かす準備](../01_環境構築/環境構築ガイド.md)を済ませ、この章へ戻ってください。画面を作る道具には、PythonのTkinter（ティーケーインター）を使います。
 
-Tk10用の新しいフォルダを作り、`calculator.py` と `app.py` を両方保存してください。配布ファイルを使う場合は、次のリンクをそれぞれ開いてコード全体を保存してください。自分で書く場合は、VS Codeで新しいファイルを2つ作り、それぞれの全体コードを書いてください。両方とも同じTk10用フォルダに、末尾の `.py` まで含めた名前で保存してください。
+Tk10用として選んだ練習用フォルダを使い、その中の `src` に `calculator.py` と `app.py` を両方保存してください。配布ファイルを使う場合は、次のリンクをそれぞれ開いてコード全体を保存してください。自分で書く場合は、VS Codeで新しいファイルを2つ作り、それぞれの全体コードを書いてください。両方ともTk10用の練習用フォルダ内の同じ `src` に、末尾の `.py` まで含めた名前で保存してください。
 
 | ファイル | 担当 |
 | --- | --- |
-| [`calculator.py`](./calculator.py) | 表示欄、数字と計算記号の配置、入力確認、四則演算、sin/cosの処理を定義します。機能を変更するファイルです。 |
-| [`app.py`](./app.py) | 同じフォルダから `CalculatorApp` を読み込み、電卓を起動します。ターミナルで実行するファイルです。 |
+| [`calculator.py`](./src/calculator.py) | 表示欄、数字と計算記号の配置、入力確認、四則演算、sin/cosの処理を定義します。機能を変更するファイルです。 |
+| [`app.py`](./src/app.py) | 同じフォルダから `CalculatorApp` を読み込み、電卓を起動します。ターミナルで実行するファイルです。 |
 
 ### calculator.py：関数電卓の画面と計算
 
-元ファイル：[`calculator.py` 全体](./calculator.py)。
+元ファイル：[`calculator.py` 全体](./src/calculator.py)。
 
 ```python
 # tkinterを、このプログラムで使えるようにする
@@ -464,7 +476,7 @@ class CalculatorApp:
 
 ### app.py：電卓を起動する
 
-元ファイル：[`app.py` 全体](./app.py)。
+元ファイル：[`app.py` 全体](./src/app.py)。
 
 ```python
 # 同じフォルダの calculator.py から電卓の CalculatorApp を読み込む
@@ -486,20 +498,20 @@ if __name__ == "__main__":
 
 ## Tk10-4. 保存したapp.pyを実行する
 
-1. `calculator.py` と `app.py` を保存したTk10のフォルダを開き、フォルダの場所を表す文字列（パス）をコピーしてください。Windowsはエクスプローラー上部のアドレスバーをクリックしてCtrl + C、macOSはFinderでフォルダを選択してOption + Command + C、Linux（GNOMEの「ファイル」）はフォルダを開いてCtrl + Lで場所欄を表示しCtrl + Cを押してください。
+1. Tk10の `src` の一つ上の練習用フォルダを開き、フォルダの場所を表す文字列（パス）をコピーしてください。Windowsはエクスプローラー上部のアドレスバーをクリックしてCtrl + C、macOSはFinderでフォルダを選択してOption + Command + C、Linux（GNOMEの「ファイル」）はフォルダを開いてCtrl + Lで場所欄を表示しCtrl + Cを押してください。
 2. VS Codeの **表示（View）→ ターミナル（Terminal）** を選び、文字で操作を入力するターミナルを開いてください。ターミナルへ次のコマンドを入力し、引用符の中を、手順1のエクスプローラーのアドレスバー、Finderのフォルダ選択、Linuxの場所欄でコピーしたTk10のフォルダのパスに置き換えてください。Enterキーを押すと、ターミナルの現在のフォルダがTk10のフォルダに変わります。
 
    ```text
    cd "コピーしたTk10のフォルダのパス"
    ```
 
-3. VS Codeの **表示（View）→ ターミナル（Terminal）** を選び、Tk10のフォルダへ移動したターミナルを表示してください。Windowsは次のコマンドを入力してEnterキーを押してください。macOS / Linuxは `python3 app.py` と入力してEnterキーを押してください。「関数電卓」というタイトルの画面に、数字の入力欄、計算記号、数字・C・小数点・sin・cosのボタンが表示されます。
+3. VS Codeの **表示（View）→ ターミナル（Terminal）** を選び、Tk10のフォルダへ移動したターミナルを表示してください。Windowsは次のコマンドを入力してEnterキーを押してください。macOS / Linuxは `python3 src/app.py` と入力してEnterキーを押してください。「関数電卓」というタイトルの画面に、数字の入力欄、計算記号、数字・C・小数点・sin・cosのボタンが表示されます。
 
    ```text
-   python app.py
+   python src/app.py
    ```
 
-   Windowsで `python` が見つからない場合は、VS Codeの **表示（View）→ ターミナル（Terminal）** で同じターミナルを表示し、`py app.py` と入力してEnterキーを押してください。同じ電卓が起動します。
+   Windowsで `python` が見つからない場合は、VS Codeの **表示（View）→ ターミナル（Terminal）** で同じターミナルを表示し、`py src/app.py` と入力してEnterキーを押してください。同じ電卓が起動します。
 
 `PS C:\...>` や `$` など、すでにターミナルに表示されている入力待ちの文字は入力しないでください。電卓が開いている間はTkinterが操作を待つため、起動に使ったターミナルへ次のコマンドを入力できません。
 
@@ -575,9 +587,9 @@ sin・cosボタンは、押すたびに入力欄にある数値を度の角度�
 
 `fill="both"` と `expand=True` は、余った縦横の領域へ枠を広げる指定です。`columnconfigure` の `weight=1` は各列へ余った幅を同じ割合で配り、`uniform="buttons"` は4列の幅をそろえます。`rowconfigure` の `weight=1` は各行へ余った高さを同じ割合で配ります。ボタンの `sticky="nsew"` は、割り当てられたマスの上下左右へボタンを広げる指定です。[Tk公式のgrid配置](https://www.tcl-lang.org/man/tcl8.6/TkCmd/grid.htm)
 
-配置の比較には、[Tk9の `create_digit_buttons`（98〜134行）](../Tk09_小数点を置く/calculator.py#L98-L134)と、[Tk10の `create_buttons`（53〜91行）](./calculator.py#L53-L91)を使ってください。Tk9は数字・C・小数点を一つの枠に置き、Tk10は計算記号とsin・cosも同じ枠へ置きます。Tk10の変更した全体は、[`calculator.py` 全体](./calculator.py)で確認してください。ボタンの作成処理を抜き出したものが次のコードです。
+配置の比較には、[Tk9の `create_digit_buttons`（98〜134行）](../Tk09_小数点を置く/src/calculator.py#L98-L134)と、[Tk10の `create_buttons`（53〜91行）](./src/calculator.py#L53-L91)を使ってください。Tk9は数字・C・小数点を一つの枠に置き、Tk10は計算記号とsin・cosも同じ枠へ置きます。Tk10の変更した全体は、[`calculator.py` 全体](./src/calculator.py)で確認してください。ボタンの作成処理を抜き出したものが次のコードです。
 
-元ファイル：[`calculator.py` の93〜102行](./calculator.py#L93-L102)。
+元ファイル：[`calculator.py` の93〜102行](./src/calculator.py#L93-L102)。
 
 ```python
     # 指定した文字と処理のボタンを配置する create_button を定義する
@@ -598,7 +610,7 @@ sin・cosボタンは、押すたびに入力欄にある数値を度の角度�
 
 `apply_trigonometry` は `read_number` で入力欄の数字を読み取り、`math.radians` で度からラジアンへ変換します。`math.sin` か `math.cos` が返した数値を、プログラムは答えの欄と入力欄へ表示します。保存済みの式があれば、その式へ角度の計算名を表示用として続け、数値のリスト自体は残します。
 
-元ファイル：[`calculator.py` の352〜392行](./calculator.py#L352-L392)。
+元ファイル：[`calculator.py` の352〜392行](./src/calculator.py#L352-L392)。
 
 ```python
     # 入力欄の角度からsinかcosを求める apply_trigonometry を定義する
@@ -646,7 +658,7 @@ sin・cosボタンは、押すたびに入力欄にある数値を度の角度�
 
 `prepare_input` は、数字ボタンと小数点ボタンから実行されます。`self.replace_input` がFalseなら現在の入力を消しません。Trueで保存済みの式があれば、角度の計算結果だけを消して式は残します。Trueで保存済みの式がなければ、`clear` で前の計算全体を消します。
 
-元ファイル：[`calculator.py` の104〜123行](./calculator.py#L104-L123)。
+元ファイル：[`calculator.py` の104〜123行](./src/calculator.py#L104-L123)。
 
 ```python
     # 次の数字入力のために前の値を消す prepare_input を定義する
@@ -675,7 +687,7 @@ sin・cosボタンは、押すたびに入力欄にある数値を度の角度�
 
 ウィンドウのタイトルを変える場合は、VS Codeで `calculator.py` を開き、検索欄（Windows / LinuxはCtrl + F、macOSはCommand + F）で `self.window.title` を検索してください。検索を使うと、長いファイルからタイトルを変える一行を見つけられます。次の2行を置き換えてください。
 
-元ファイル：[`calculator.py` の19〜20行](./calculator.py#L19-L20)。
+元ファイル：[`calculator.py` の19〜20行](./src/calculator.py#L19-L20)。
 
 ```python
         # self.window のタイトルを「関数電卓」にする
@@ -689,7 +701,7 @@ sin・cosボタンは、押すたびに入力欄にある数値を度の角度�
         self.window.title("角度も計算できる電卓")
 ```
 
-起動中の電卓を閉じ、実行に使ったターミナルが文字を入力できる状態へ戻ったことを確認してください。VS Codeで変更した `calculator.py` を保存してください（Windows / LinuxはCtrl + S、macOSはCommand + S）。VS Codeの **表示（View）→ ターミナル（Terminal）** でTk10用フォルダへ移動済みのターミナルを開き、Windowsなら `python app.py`、macOS / Linuxなら `python3 app.py` と入力してEnterキーを押してください。ウィンドウのタイトルが「角度も計算できる電卓」に変わり、電卓の機能は同じままです。
+起動中の電卓を閉じ、実行に使ったターミナルが文字を入力できる状態へ戻ったことを確認してください。VS Codeで変更した `calculator.py` を保存してください（Windows / LinuxはCtrl + S、macOSはCommand + S）。VS Codeの **表示（View）→ ターミナル（Terminal）** でTk10用フォルダへ移動済みのターミナルを開き、Windowsなら `python src/app.py`、macOS / Linuxなら `python3 src/app.py` と入力してEnterキーを押してください。ウィンドウのタイトルが「角度も計算できる電卓」に変わり、電卓の機能は同じままです。
 
 ## Tk10-11. 今回の内容
 

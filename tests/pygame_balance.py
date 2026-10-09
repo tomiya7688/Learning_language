@@ -34,8 +34,9 @@ def find_examples() -> list[Path]:
     # 分割後は各章のsettings.pyへ数値がまとまる。旧形式の章も読めるようにする。
     examples = []
     for folder in sorted(PYGAME_ROOT.glob("Pg*_*/")):
-        settings = folder / "settings.py"
-        examples.extend([settings] if settings.exists() else sorted(folder.glob("*.py")))
+        source_folder = folder / "src" if (folder / "src").is_dir() else folder
+        settings = source_folder / "settings.py"
+        examples.extend([settings] if settings.exists() else sorted(source_folder.glob("*.py")))
     return examples
 
 
@@ -122,7 +123,8 @@ def check_values(values: dict[str, float]) -> list[Violation]:
 
 
 def is_intentionally_unfair(path: Path) -> bool:
-    return path.parent.name.startswith("Pg10_")
+    chapter = path.parent.parent if path.parent.name == "src" else path.parent
+    return chapter.name.startswith("Pg10_")
 
 
 def has_oversized_boss_bullet(values: dict[str, float]) -> bool:
