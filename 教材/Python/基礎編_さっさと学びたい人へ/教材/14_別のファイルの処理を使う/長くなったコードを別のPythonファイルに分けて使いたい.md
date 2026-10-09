@@ -12,11 +12,25 @@ PythonとVS Codeをまだ使える状態にしていない場合は、先に準�
 
 保存するフォルダを1つ選び、このページではその場所を「練習用フォルダ」と呼びます。
 
+
+## Pythonファイルの保存場所
+
+コードのファイルが増えると、教材の説明や画像のファイルと混ざって探しにくくなります。Pythonファイルは、練習用フォルダ内の `src` にまとめてください。
+
+`src` はsource（ソース）の略で、ソースコードを入れるフォルダです。ソースコードは、書いたプログラムのことです。
+
+この章のコードを保存する練習用フォルダを1つ選んでください。まだない場合は、保存したい場所で、Windowsはエクスプローラーの **新規作成 → フォルダー**、macOSはFinderの **ファイル → 新規フォルダ**、Linux（GNOMEの「ファイル」）は右クリックの **新しいフォルダー** を選び、練習用フォルダを作ってください。
+
+練習用フォルダの中で、Windowsはエクスプローラーの空いている場所を右クリックして **新規作成 → フォルダー**、macOSはFinderの **ファイル → 新規フォルダ**、Linux（GNOMEの「ファイル」）は空いている場所を右クリックして **新しいフォルダー** を選んでください。フォルダ名を `src` と入力してEnterキーを押すと、練習用フォルダの中に `src` ができます。すでに `src` がある場合はそのフォルダを使い、保存済みのコードは必要な変更だけを行ってください。
+
+VS Codeで開くフォルダと、ターミナルの `cd` で移動するフォルダは、`src` の一つ上の練習用フォルダです。保存先を選ぶときは `src` を開き、起動するときは練習用フォルダから `src/use_greeting.py` を指定してください。実行手順のコマンドは、この練習用フォルダから入力してください。
+
+
 ## 使われる側のファイルを書く
 
 VS Codeで新しいテキストファイルを開いてください（Windows / Linuxは Ctrl + N、macOSは Command + N）。次のコード全体をコピーしてください。
 
-このコードの元ファイル：[`greeting_tools.py` の 1〜5行](./greeting_tools.py#L1-L5)。
+このコードの元ファイル：[`greeting_tools.py` の 1〜5行](./src/greeting_tools.py#L1-L5)。
 
 ```python
 # make_greeting は「挨拶を作る」、name は「名前」という意味
@@ -26,17 +40,17 @@ def make_greeting(name):
     return "こんにちは " + name
 ```
 
-Windows / Linuxは Ctrl + S、macOSは Command + S を押し、練習用フォルダに `greeting_tools.py` という名前で保存してください。ファイル名の最後は `.py` にしてください。
+Windows / Linuxは Ctrl + S、macOSは Command + S を押し、練習用フォルダ内の `src` に `greeting_tools.py` という名前で保存してください。ファイル名の最後は `.py` にしてください。
 
 greeting は「挨拶」、tools は「道具」という意味です。
 
-[使われる側のサンプルファイルを開く](./greeting_tools.py)
+[使われる側のサンプルファイルを開く](./src/greeting_tools.py)
 
 ## 実行する側のファイルを書く
 
 VS Codeで再び新しいテキストファイルを開き（Windows / Linuxは Ctrl + N、macOSは Command + N）、次のコード全体をコピーしてください。
 
-このコードの元ファイル：[`use_greeting.py` の 1〜6行](./use_greeting.py#L1-L6)。
+このコードの元ファイル：[`use_greeting.py` の 1〜6行](./src/use_greeting.py#L1-L6)。
 
 ```python
 # greeting_tools は「挨拶の道具」という意味
@@ -47,11 +61,11 @@ import greeting_tools
 print(greeting_tools.make_greeting("たろう"))
 ```
 
-Windows / Linuxは Ctrl + S、macOSは Command + S を押し、練習用フォルダに `use_greeting.py` という名前で保存してください。ファイル名の最後は `.py` にしてください。 先ほどの `greeting_tools.py` と同じフォルダへ保存してください。
+Windows / Linuxは Ctrl + S、macOSは Command + S を押し、練習用フォルダ内の `src` に `use_greeting.py` という名前で保存してください。ファイル名の最後は `.py` にしてください。 先ほどの `greeting_tools.py` と同じフォルダへ保存してください。
 
 use は「使う」、greeting は「挨拶」という意味です。
 
-[実行する側のサンプルファイルを開く](./use_greeting.py)
+[実行する側のサンプルファイルを開く](./src/use_greeting.py)
 
 ## 保存したファイルを実行する
 
@@ -59,7 +73,7 @@ use は「使う」、greeting は「挨拶」という意味です。
 
 ### 保存先フォルダのパスをコピーする
 
-`use_greeting.py` を保存したフォルダの場所を、次の操作でコピーしてください。
+`use_greeting.py` がある `src` の一つ上の練習用フォルダを開き、その場所を次の操作でコピーしてください。
 
 - Windows：エクスプローラーで保存先フォルダを開き、上部のアドレス欄をクリックしてください。表示されたフォルダのパス全体を選び、Ctrl + C を押してください。
 - macOS：Finderで保存先フォルダを選択し、Option + Command + C を押して、そのフォルダのパスをコピーしてください。ファイルではなくフォルダを選んでください。
@@ -81,7 +95,7 @@ cd "コピーした保存先フォルダのパス"
 2. Enter キーを押してください。
 
 ```text
-python use_greeting.py
+python src/use_greeting.py
 ```
 
 ### macOS / Linux
@@ -90,7 +104,7 @@ python use_greeting.py
 2. Enter キーを押してください。
 
 ```text
-python3 use_greeting.py
+python3 src/use_greeting.py
 ```
 
 ## 実行結果
@@ -109,7 +123,7 @@ python3 use_greeting.py
 
 `import greeting_tools` は、同じフォルダの `greeting_tools.py` のコードを読み込み、その中の処理を使えるようにします。`import` の後ろに名前を書くときは、`.py` を付けないでください。このように読み込んで使うPythonファイルを **モジュール** と呼びます。
 
-`greeting_tools.make_greeting("たろう")` は、ファイルの名前と処理の名前を `.` でつないで指定しています。返された「こんにちは たろう」を `print(...)` がターミナルへ表示します。2つのファイルを同じフォルダへ保存してください。実行するファイルは `use_greeting.py` です。
+`greeting_tools.make_greeting("たろう")` は、ファイルの名前と処理の名前を `.` でつないで指定しています。返された「こんにちは たろう」を `print(...)` がターミナルへ表示します。2つのファイルを練習用フォルダ内の同じ `src` へ保存してください。実行するファイルは `use_greeting.py` です。
 
 コードの `#` から行末までに書いた説明を **コメント** と呼びます。コメントは実行されません。
 
@@ -125,11 +139,11 @@ Windows / Linuxは Ctrl + F、macOSは Command + F を押してください。�
 return "こんにちは "
 ```
 
-[`greeting_tools.py` の4〜5行](./greeting_tools.py#L4-L5)のコードを、次の内容に置き換えてください。
+[`greeting_tools.py` の4〜5行](./src/greeting_tools.py#L4-L5)のコードを、次の内容に置き換えてください。
 
 変更前：
 
-このコードの元ファイル：[`greeting_tools.py` の 4〜5行](./greeting_tools.py#L4-L5)。
+このコードの元ファイル：[`greeting_tools.py` の 4〜5行](./src/greeting_tools.py#L4-L5)。
 
 ```python
     # 「こんにちは 」と name をつないだ文字列を返す
@@ -138,7 +152,7 @@ return "こんにちは "
 
 変更後：
 
-変更する場所：[`greeting_tools.py` の 5行](./greeting_tools.py#L5-L5)。
+変更する場所：[`greeting_tools.py` の 5行](./src/greeting_tools.py#L5-L5)。
 
 ```python
     # 「おはよう 」と name をつないだ文字列を返す
@@ -161,7 +175,7 @@ VS Codeで変更した `greeting_tools.py` を保存してください。実行�
 2. Enter キーを押してください。
 
 ```text
-python use_greeting.py
+python src/use_greeting.py
 ```
 
 ### macOS / Linux
@@ -170,7 +184,7 @@ python use_greeting.py
 2. Enter キーを押してください。
 
 ```text
-python3 use_greeting.py
+python3 src/use_greeting.py
 ```
 
 同じターミナルに次の結果が表示されます。
