@@ -66,5 +66,5 @@ class Game:
                 # breakでこのforを終え、閉じる操作の後に残ったキーの知らせはBattleへ送りません。
                 break
 
-            # 閉じる操作以外の知らせをBattle.handle_eventへ送り、スペースキーなら弾を作ってもらいます。
+            # 閉じる操作以外の知らせをBattle.handle_eventへ送り、スペースキーを押した知らせなら弾を作ってもらいます。
             self.battle.handle_event(event)
