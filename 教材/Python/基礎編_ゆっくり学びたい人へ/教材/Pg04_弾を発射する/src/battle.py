@@ -18,14 +18,13 @@ class Battle:
         # bulletsは弾の一覧。[]は空の一覧で、まだ1発も撃っていない状態です。
         self.bullets = []
 
-    # 発射・移動・描画を分けると、スペースキーを変えたいときはhandle_eventを探せます。
-    # handle_event（操作を受け取る）は、game.pyが送ったevent（操作の知らせ）1件を調べる処理です。
+    # 押した知らせで弾を作る処理を、押している状態で移動する処理と混ぜないよう、handle_event（知らせへの対応）へ分けます。
     def handle_event(self, event):
-        # typeは種類、KEYDOWNはキーを押した知らせ、keyは押したキー、K_SPACEはスペースキーです。
-        # andは両方を満たす条件。まず種類を調べ、キーを押した知らせのときだけevent.keyを調べます。
+        # eventは呼び出す側が指定した操作の知らせ1件、event.typeは知らせの種類、pygame.KEYDOWNはキーを押した知らせです。
+        # andは左右の条件を両方満たす指定です。キーを押した知らせのときだけ、event.key（押したキー）がpygame.K_SPACE（スペースキー）か調べます。
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            # Player.shoot（発射）が弾1発を作って返し、append（末尾に追加）がその弾をself.bulletsへ加えます。
-            # 以前撃った弾は一覧に残るので、飛んでいる弾があっても次の弾を加えられます。
+            # self.player.shoot()が自機の位置から弾1発を作って返し、append（末尾へ追加）がその弾を自機の弾一覧self.bulletsへ加えます。
+            # appendはself.bulletsに残っている以前の弾を置き換えません。弾の作成と一覧への追加だけでは、弾の移動や描画は行いません。
             self.bullets.append(self.player.shoot())
 
     # update（状態を更新する）は、Game.runが1回の画面更新で実行する自機と弾の位置更新です。
@@ -37,17 +36,16 @@ class Battle:
         # move_bullets（弾を動かす）へ、この戦闘の弾一覧を指定し、全弾の移動と画面外の弾の削除を行います。
         self.move_bullets(self.bullets)
 
-    # 弾1発ごとの移動・画面外の確認をmove_bulletsへ分け、updateから自機→弾の順を読めるようにします。
-    # bulletsはupdateから指定したself.bulletsと同じ一覧です。別の弾一覧を新しく作る指定ではありません。
+    # 弾1発の移動と、弾一覧からの削除は別の役割なので、一覧を順に管理する処理をmove_bullets（弾を動かす）へ分けます。
     def move_bullets(self, bullets):
-        # 元の一覧を読みながら弾を削除すると、前へ詰まった次の弾を飛ばしてしまうことがあります。
-        # [:]で読むための一覧をコピーします。弾自体は増やさず、コピーと元の一覧で同じ各弾を指します。
+        # bulletsは呼び出す側が指定した弾一覧です。bullets[:]は一覧だけのコピーで、各要素は元の一覧と同じ弾を指します。
+        # forはコピーの弾を順に1発ずつbulletへ選びます。元のbulletsから削除しても、コピーの次の弾を飛ばしません。
         for bullet in bullets[:]:
-            # bulletは今確認する弾1発。Bullet.moveで、その弾の縦位置を更新します。
+            # bullet.move()が、選んだ弾bulletに保存した移動量で位置を1回進めます。
             bullet.move()
-            # is_off_screen（画面外か）がTrueなら、弾全体が画面の上か下を越えています。
+            # bullet.is_off_screen()（選んだ弾が画面外か）がTrue（成り立つ）を返した場合だけ、bullets.remove(bullet)を実行します。
             if bullet.is_off_screen():
-                # remove（取り除く）でその弾を元の一覧から外し、以後の移動と描画の対象から外します。
+                # bullets.remove(bullet)が選んだ弾bulletを元の弾一覧bulletsから外します。弾一覧の削除は画面の絵を直接消す操作ではありません。
                 bullets.remove(bullet)
 
     # draw（描く）は、Game.runから指定されたscreen（ゲーム画面の描画先）へ背景・自機・弾を描きます。
@@ -61,11 +59,9 @@ class Battle:
         # draw_bullets（弾を描く）へ描画先と現在の弾一覧を指定し、一覧に残った全弾を描きます。
         self.draw_bullets(screen, self.bullets)
 
-    # 弾1発ずつ描く処理をdraw_bulletsへ分け、drawから背景→自機→弾の順を読めるようにします。
-    # screenはゲーム画面の描画先、bulletsはdrawから指定したself.bulletsと同じ弾一覧です。
+    # 弾1発を描くBullet.drawと、弾一覧を順に描く役割を分けるため、draw_bullets（弾の描画）へ繰り返しをまとめます。
     def draw_bullets(self, screen, bullets):
-        # 現在の弾一覧からbullet（弾1発）を順に取り出します。弾が0発なら、このforの中は実行しません。
+        # screenは呼び出す側が指定した描画先、bulletsは指定した弾一覧です。forが一覧に残った弾を1発ずつbulletへ選びます。
         for bullet in bullets:
-            # Bullet.drawへ描画先screenを指定し、その弾の位置に黄色い長方形を描きます。
-            # Battleは画面へ描くまでです。ウィンドウへ表示するのはgame.pyのpygame.display.flip()です。
+            # bullet.draw(screen)が、選んだ弾bulletに保存した位置・大きさ・色で描画先screenへ弾を描きます。弾を移動したり一覧へ追加したりはしません。
             bullet.draw(screen)
