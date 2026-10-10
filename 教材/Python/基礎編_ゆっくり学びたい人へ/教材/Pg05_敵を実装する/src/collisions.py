@@ -14,8 +14,8 @@ def hit_enemies(bullets, enemies):
             # rectはrectangle（長方形）の略で、弾・敵の位置と大きさを表します。
             # colliderectは2つの長方形の重なりを調べる操作です。
             # 弾と敵の長方形が面積を持って重なるとcolliderectはTrue（成り立つ）を返します。
-            # 辺が接するだけか、離れている場合、colliderectはFalse（成り立たない）を返します。
-            # ifはcolliderectの判定がTrueのときだけ、下の削除とbreakを行います。
+            # 弾と敵の長方形の辺が接するだけか、弾と敵の長方形が離れている場合、colliderectはFalse（成り立たない）を返します。
+            # ifはbullet.rect.colliderect(enemy.rect)がTrueのときだけ、bullets.remove(bullet)とenemies.remove(enemy)を行います。
             if bullet.rect.colliderect(enemy.rect):
                 # removeは指定した要素を一覧から外す操作です。
                 # bullets.removeは当たった弾を、Battleが管理する元の弾一覧から外します。
