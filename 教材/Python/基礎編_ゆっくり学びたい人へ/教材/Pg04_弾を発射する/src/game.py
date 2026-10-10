@@ -1,66 +1,70 @@
-# pygame を読み込む
+# ウィンドウの管理と弾1発ごとの処理を混ぜると、ゲーム全体の進む順序を探しにくくなります。
+# Game（ゲーム）へ画面と進行をまとめ、自機と弾の管理はbattle.pyのBattle（戦闘）へ任せます。
+# pygameは、ウィンドウを作り、キーや閉じる操作を調べ、描いた画面を表示する道具です。
 import pygame
-# settings を読み込む
+# 同じsrcフォルダのsettings.pyから、幅WIDTH=640、高さHEIGHT=480、更新回数の上限FPS=60を読み込みます。
 import settings
-# battle から Battle を読み込む
+# 同じsrcフォルダのbattle.pyから、自機1機と撃った弾の一覧を持つBattleを読み込みます。
 from battle import Battle
 
-# Game という型を定義する
+# クラスは情報と操作をまとめた定義です。Gameはゲーム画面と、その画面を動かす操作をまとめます。
 class Game:
-    # __init__ の処理を定義する
+    # __init__はmain.pyがGame()を作るときにPythonが実行する準備です。
+    # selfは今作るゲーム全体。self.screenのように、そのゲームの情報を持たせます。
     def __init__(self):
-        # settings.pyで決めた幅と高さのウィンドウを開き、あとで色や絵を描く画面を self.screen に保存する
+        # screen（画面）に、幅640・高さ480ピクセルのウィンドウへ描くための場所を保存します。
+        # ピクセルはゲーム画面の位置や大きさを数える単位。幅と高さはsettings.pyの値を使います。
         self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
-        # pygame.display.set_caption('弾を発射する') を実行する
+        # captionはウィンドウのタイトル。ゲーム画面のタイトルを「弾を発射する」にします。
         pygame.display.set_caption('弾を発射する')
 
-        # self.clock.tick(settings.FPS) で、画面更新を1秒あたり最大 settings.FPS 回に抑える
-        # pygame.time.Clock() で、画面更新の間隔を測る self.clock を作る
+        # clock（時計）は更新の間隔を測る道具。runの最後でtickを使い、更新を速くしすぎないよう待ちます。
         self.clock = pygame.time.Clock()
-        # self.running を True にして、ゲーム画面の繰り返しを続ける
+        # running（動作中）がTrue（続ける）ならrunが更新を繰り返し、False（終える）なら繰り返しを終えます。
         self.running = True
 
-        # self.start_game() を実行する
+        # start_game（ゲームを始める）で、今回の戦闘に使う自機1機と空の弾一覧を用意します。
         self.start_game()
 
-    # start_game の処理を定義する
+    # start_gameへ戦闘を作る処理を分け、ウィンドウを作る処理とは別に探せるようにします。
     def start_game(self):
-        # battle は戦闘。1回のゲームで使う自機と敵と弾の一覧を持ちます。
-        # self.battle に Battle() を入れる
+        # battleは戦闘。Battle()が自機と弾一覧を作り、self.battleに保存します。この章には敵はいません。
         self.battle = Battle()
 
-    # run の処理を定義する
+    # run（動かす）は、main.pyのgame.run()から始まるゲーム全体の繰り返しです。
     def run(self):
-        # self.running が True の間、ゲーム画面を更新する
+        # whileは条件を満たす間の繰り返し。self.runningがTrueの間、下の処理を順に実行します。
         while self.running:
-            # self.handle_events() を実行する
+            # handle_events（操作を確認する）で、届いたキーの操作とウィンドウを閉じる操作を確認します。
             self.handle_events()
-            # self.running が False なら、次の画面更新をせず繰り返しを終える
+            # notはTrue/Falseを逆にする指定。閉じる操作でself.runningがFalseになったら終了へ進みます。
             if not self.running:
-                # 画面更新を繰り返す while を終える
+                # breakでこのwhileを終えます。閉じる操作の後には位置更新・描画・表示を行いません。
                 break
 
-            # self.battle.update() を実行する
+            # Battle.update（状態を更新する）へ、自機の移動と弾の移動・画面外の弾の削除を依頼します。
             self.battle.update()
 
-            # self.battle.draw(self.screen) を実行する
+            # Battle.draw（描く）へ、描画先self.screenの背景・自機・残っている弾を描くよう依頼します。
             self.battle.draw(self.screen)
 
-            # pygame.display.flip() を実行する
+            # flip（画面を切り替える）で、今回描いた背景・自機・弾をウィンドウへ表示します。
             pygame.display.flip()
-            # settings.FPS 回/秒を上限にして、画面更新が速くなりすぎないよう待つ
+            # FPSはframes per second（毎秒の更新回数）。settings.pyの60を上限に、必要な時間だけ待ちます。
+            # tickは毎秒60回の達成を保証しません。処理に時間がかかると実際の更新回数は少なくなります。
             self.clock.tick(settings.FPS)
 
-    # handle_events の処理を定義する
+    # handle_eventsへ操作確認を分け、runからゲームが進む順序を読み取れるようにします。
     def handle_events(self):
-        # Pygameに届いた操作の知らせを1つずつ取り出して確認する
+        # event（操作の知らせ）を、pygame.event.get()が取り出した一覧から1つずつ確認します。
+        # キーを押した知らせと、閉じる操作の知らせを、このfor（順に読む繰り返し）で受け取ります。
         for event in pygame.event.get():
-            # event.type が pygame.QUIT なら、ウィンドウを閉じる操作を受けています。
+            # typeは知らせの種類。QUIT（終了）なら、ウィンドウを閉じる操作の知らせです。
             if event.type == pygame.QUIT:
-                # self.running を False にし、ゲーム画面の繰り返しを終える
+                # self.runningをFalseへ変え、runが位置更新をせずに繰り返しを終えるようにします。
                 self.running = False
-                # 残りの操作を確認せず、操作確認の繰り返しを終える
+                # breakでこのforを終え、閉じる操作の後に残ったキーの知らせはBattleへ送りません。
                 break
 
-            # self.battle.handle_event(event) を実行する
+            # 閉じる操作以外の知らせをBattle.handle_eventへ送り、スペースキーなら弾を作ってもらいます。
             self.battle.handle_event(event)
