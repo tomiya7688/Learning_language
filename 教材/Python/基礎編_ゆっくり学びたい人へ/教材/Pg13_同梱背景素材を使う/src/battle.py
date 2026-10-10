@@ -59,11 +59,13 @@ class Battle:
         # self.background に Background() を入れる
         self.background = Background()
 
-    # handle_event の処理を定義する
+    # 押した知らせで弾を作る処理を、押している状態で移動する処理と混ぜないよう、handle_event（知らせへの対応）へ分けます。
     def handle_event(self, event):
-        # event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE が成り立つなら
+        # eventは呼び出す側が指定した操作の知らせ1件、event.typeは知らせの種類、pygame.KEYDOWNはキーを押した知らせです。
+        # andは左右の条件を両方満たす指定です。キーを押した知らせのときだけ、event.key（押したキー）がpygame.K_SPACE（スペースキー）か調べます。
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            # self.bullets.append(self.player.shoot()) を実行する
+            # self.player.shoot()が自機の位置から弾1発を作って返し、append（末尾へ追加）がその弾を自機の弾一覧self.bulletsへ加えます。
+            # appendはself.bulletsに残っている以前の弾を置き換えません。弾の作成と一覧への追加だけでは、弾の移動や描画は行いません。
             self.bullets.append(self.player.shoot())
 
     # update の処理を定義する
@@ -108,15 +110,16 @@ class Battle:
         # self.boss is not None and self.boss.hp <= 0 を返す
         return self.boss is not None and self.boss.hp <= 0
 
-    # move_bullets の処理を定義する
+    # 弾1発の移動と、弾一覧からの削除は別の役割なので、一覧を順に管理する処理をmove_bullets（弾を動かす）へ分けます。
     def move_bullets(self, bullets):
-        # bullets[:] から bullet を1つずつ取り出して繰り返す
+        # bulletsは呼び出す側が指定した弾一覧です。bullets[:]は一覧だけのコピーで、各要素は元の一覧と同じ弾を指します。
+        # forはコピーの弾を順に1発ずつbulletへ選びます。元のbulletsから削除しても、コピーの次の弾を飛ばしません。
         for bullet in bullets[:]:
-            # bullet.move() を実行する
+            # bullet.move()が、選んだ弾bulletに保存した移動量で位置を1回進めます。
             bullet.move()
-            # bullet.is_off_screen() が成り立つなら
+            # bullet.is_off_screen()（選んだ弾が画面外か）がTrue（成り立つ）を返した場合だけ、bullets.remove(bullet)を実行します。
             if bullet.is_off_screen():
-                # bullets.remove(bullet) を実行する
+                # bullets.remove(bullet)が選んだ弾bulletを元の弾一覧bulletsから外します。弾一覧の削除は画面の絵を直接消す操作ではありません。
                 bullets.remove(bullet)
 
     # update_enemies の処理を定義する
@@ -215,11 +218,11 @@ class Battle:
             # self.draw_bullets(screen, self.boss_bullets) を実行する
             self.draw_bullets(screen, self.boss_bullets)
 
-    # draw_bullets の処理を定義する
+    # 弾1発を描くBullet.drawと、弾一覧を順に描く役割を分けるため、draw_bullets（弾の描画）へ繰り返しをまとめます。
     def draw_bullets(self, screen, bullets):
-        # bullets から bullet を1つずつ取り出して繰り返す
+        # screenは呼び出す側が指定した描画先、bulletsは指定した弾一覧です。forが一覧に残った弾を1発ずつbulletへ選びます。
         for bullet in bullets:
-            # bullet.draw(screen) を実行する
+            # bullet.draw(screen)が、選んだ弾bulletに保存した位置・大きさ・色で描画先screenへ弾を描きます。弾を移動したり一覧へ追加したりはしません。
             bullet.draw(screen)
 
     # draw_text の処理を定義する
