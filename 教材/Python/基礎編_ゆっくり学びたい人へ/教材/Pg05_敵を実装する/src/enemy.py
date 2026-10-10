@@ -23,12 +23,12 @@ class Enemy:
         self.rect.center = (x, y)
         # speedは速さの指定。敵を作るときにENEMY_SPEEDをその敵のself.speedへ保持します。
         # 配布時のENEMY_SPEED=1なら、敵は更新1回で下へ1ピクセル進みます。
-        # settings.pyを保存しても、起動中の敵の移動量は変わりません。終了してmain.pyを再実行してください。
+        # 起動中のゲームのウィンドウを閉じ、settings.pyを保存してからsrc/main.pyを再実行してください。敵は保存後の移動量で作り直されます。
         self.speed = settings.ENEMY_SPEED
 
     # move（動かす）は、Battle.update_enemiesが更新のたびに敵1機へ行う操作です。
     def move(self):
-        # rect.yは敵の長方形の上端。+=は今の値に右側の値を足す書き方です。
+        # self.rect.yは敵の長方形の上端。+=は今の値に右側の値を足す書き方です。
         # 移動量1なら、上端60・中心80の敵は上端61・中心81へ進みます。横の位置は変えません。
         self.rect.y += self.speed
 
@@ -37,7 +37,7 @@ class Enemy:
         # topは敵の上端、HEIGHTは画面の高さ480。>は左の値が右の値より大きいか調べます。
         # returnは調べた結果を呼び出したBattleへ返す指定。481 > 480はTrue（当てはまる）です。
         # 高さ480・移動量1の設定では、上端480はFalse（当てはまらない）。敵は見えませんが一覧へ残り、次の更新で上端481になります。
-        # この操作は敵を削除しません。Trueを受けたBattle.update_enemiesが敵を一覧から外します。
+        # Enemy.is_off_screenは敵を削除しません。self.rect.top > settings.HEIGHTがTrueなら、Battle.update_enemiesが判定対象の敵を一覧から外します。
         return self.rect.top > settings.HEIGHT
 
     # draw（描く）は、Battle.drawが一覧に残っている敵1機へ行う操作です。
