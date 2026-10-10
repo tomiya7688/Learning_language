@@ -13,7 +13,7 @@ from collisions import hit_enemies
 # Battle（戦闘）へ自機と2つの一覧、その情報を使う操作をまとめます。ウィンドウの管理と表示はGameへ任せます。
 class Battle:
     # 毎回の移動で自機や敵を作り直すと位置が戻るため、開始時にだけ用意する情報は__init__（作成時の準備）へ分けます。
-    # selfは、今作っている戦闘1つ分の情報です。Game.start_gameがBattle()と書くと、Pythonが__init__を実行します。
+    # selfは、今作っている戦闘1つ分の情報です。PythonがGame.start_game内のBattle()を実行すると、__init__が自機と一覧を用意します。
     def __init__(self):
         # playerはプレイヤー。Player()が自機1機の位置などを用意し、self.playerから同じ自機を後の移動・発射・描画で使います。
         self.player = Player()
