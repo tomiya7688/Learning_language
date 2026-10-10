@@ -1,66 +1,72 @@
-# pygame を読み込む
+# ゲームのウィンドウを閉じる処理と弾1発の移動を混ぜると、ゲーム全体が終わる場所を探しにくくなります。
+# Game（ゲーム全体）へ画面と進行をまとめ、自機・敵・弾の管理はbattle.pyのBattle（戦闘）へ任せます。
+# Pythonがウィンドウ・キー入力・描画・表示を扱う道具pygameを読み込みます。
 import pygame
-# settings を読み込む
+# Pythonが同じsrcのsettings.pyから、画面の幅WIDTH・高さHEIGHT・更新回数の上限FPSを読み込みます。
 import settings
-# battle から Battle を読み込む
+# Pythonが同じsrcのbattle.pyから、自機・敵・弾の情報と操作をまとめるBattle（戦闘）の定義を読み込みます。
 from battle import Battle
 
-# Game という型を定義する
+# クラスは情報と操作をまとめた定義。Gameはゲーム画面と、画面更新を始めて終える操作をまとめます。
 class Game:
-    # __init__ の処理を定義する
+    # __init__はGame()を作る際にPythonが実行する準備です。ウィンドウと、更新に使う情報を1回用意します。
+    # selfは今作っているゲーム自身。self.screenのように、同じゲームへ情報を持たせます。
     def __init__(self):
-        # settings.pyで決めた幅と高さのウィンドウを開き、あとで色や絵を描く画面を self.screen に保存する
+        # pygame.display.set_modeが、幅settings.WIDTH・高さsettings.HEIGHTのウィンドウを作ります。
+        # Gameはウィンドウに色や図形を描くための場所を、screen（画面）という名前のself.screenに保存します。
         self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
-        # pygame.display.set_caption('敵を実装する') を実行する
+        # pygame.display.set_captionが、ゲームのウィンドウのタイトルを「敵を実装する」にします。
         pygame.display.set_caption('敵を実装する')
 
-        # self.clock.tick(settings.FPS) で、画面更新を1秒あたり最大 settings.FPS 回に抑える
-        # pygame.time.Clock() で、画面更新の間隔を測る self.clock を作る
+        # pygame.time.Clock()が更新の間隔を測る道具を作り、Gameはclock（時計）という名前のself.clockへ保存します。
+        # Game.runはself.clock.tick(settings.FPS)で、画面更新が速くなりすぎないように待ちます。
         self.clock = pygame.time.Clock()
-        # self.running を True にして、ゲーム画面の繰り返しを続ける
+        # Gameはrunning（動作中）という名前のself.runningをTrue（続ける）にし、runが画面更新を始められるようにします。
         self.running = True
 
-        # self.start_game() を実行する
+        # Game.__init__がstart_game（ゲームを始める）を実行して、自機1機・敵3機・空の弾一覧を持つ戦闘を用意します。
         self.start_game()
 
-    # start_game の処理を定義する
+    # ウィンドウの準備と戦闘の作成を分けると、start_game（ゲームを始める）から戦闘の作成場所を探せます。
     def start_game(self):
-        # battle は戦闘。1回のゲームで使う自機と敵と弾の一覧を持ちます。
-        # self.battle に Battle() を入れる
+        # Battle（戦闘）が、自機や弾など、この章の戦闘で使う情報を作ります。
+        # GameはBattle()で作った戦闘をself.battleへ保存し、後の更新と描画で同じ戦闘を使います。
         self.battle = Battle()
 
-    # run の処理を定義する
+    # 1回の画面更新の順序をrun（動かす）へまとめると、操作確認から表示までの順を1か所で追えます。
     def run(self):
-        # self.running が True の間、ゲーム画面を更新する
+        # whileは条件が成り立つ間の繰り返し。Game.runはself.runningがTrueの間、画面更新を続けます。
         while self.running:
-            # self.handle_events() を実行する
+            # Game.runがhandle_events（操作を確認する）を実行し、届いたキーや閉じる操作の知らせを確認します。
             self.handle_events()
-            # self.running が False なら、次の画面更新をせず繰り返しを終える
+            # notはTrue/Falseを逆にする指定。self.runningがFalseならGame.runは次のbreakを実行します。
             if not self.running:
-                # 画面更新を繰り返す while を終える
+                # Game.runが画面更新のwhileを終えます。終了を確認した回の更新・描画・表示・待ち時間は省きます。
                 break
 
-            # self.battle.update() を実行する
+            # Game.runが今の戦闘self.battleのupdate（状態を更新する）へ、自機・敵・弾の移動、画面外の弾と敵の削除、弾と敵の命中の確認を依頼します。
             self.battle.update()
 
-            # self.battle.draw(self.screen) を実行する
+            # Game.runが今の戦闘self.battleのdraw（描く）へ、描画先self.screenに背景・自機・残っている弾と敵を描くよう依頼します。
             self.battle.draw(self.screen)
 
-            # pygame.display.flip() を実行する
+            # pygame.display.flip()が、self.screenへ描画済みの背景・自機・残っている弾と敵をゲームのウィンドウへ表示します。
             pygame.display.flip()
-            # settings.FPS 回/秒を上限にして、画面更新が速くなりすぎないよう待つ
+            # Game.runがself.clock.tickで、更新回数の上限settings.FPSに合わせ、必要な時間だけ待ちます。
+            # settings.pyのFPSはframes per second（毎秒の更新回数）。処理が遅い場合、実際の更新回数は上限より少なくなります。
             self.clock.tick(settings.FPS)
 
-    # handle_events の処理を定義する
+    # 操作ごとの分岐をhandle_events（操作を確認する）へ分けると、runから画面更新の順序を追えます。
     def handle_events(self):
-        # Pygameに届いた操作の知らせを1つずつ取り出して確認する
+        # Game.handle_eventsが、pygame.event.get()で取り出した操作の知らせの一覧をforで順番に確認します。
+        # event（操作の知らせ）は、forが今回確認する1件の知らせを入れる名前です。
         for event in pygame.event.get():
-            # event.type が pygame.QUIT なら、ウィンドウを閉じる操作を受けています。
+            # Game.handle_eventsが知らせの種類event.typeを確認し、QUIT（終了）なら閉じる操作として扱います。
             if event.type == pygame.QUIT:
-                # self.running を False にし、ゲーム画面の繰り返しを終える
+                # Game.handle_eventsがself.runningをFalse（続けない）にし、runが画面更新を終えるようにします。
                 self.running = False
-                # 残りの操作を確認せず、操作確認の繰り返しを終える
+                # Game.handle_eventsが操作確認のforを終え、取り出した一覧の残りの知らせはBattleへ送りません。
                 break
 
-            # self.battle.handle_event(event) を実行する
+            # Game.handle_eventsが終了以外の知らせeventを今の戦闘self.battleへ渡し、Battleがキー入力を確認します。
             self.battle.handle_event(event)
