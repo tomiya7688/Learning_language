@@ -10,7 +10,7 @@ from bullet import Bullet
 
 # クラスは情報と操作をまとめた定義です。Playerは操作する自機1機を作るための定義です。
 class Player:
-    # 初期設定・移動・発射・描画を分けると、弾を変えたいときはshootだけを探せます。
+    # 初期設定・移動・発射・描画を分けると、弾を出す位置や大きさを変えたいときはshootを探せます。
     # __init__は、battle.pyがPlayer()で自機を作るときにPythonが実行する初期設定です。
     # selfは今設定する自機1機を表す名前。self.rectのように、その自機の情報を持たせます。
     def __init__(self):
