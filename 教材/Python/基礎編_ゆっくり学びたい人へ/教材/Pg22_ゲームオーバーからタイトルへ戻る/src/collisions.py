@@ -8,7 +8,7 @@ def hit_enemies(bullets, enemies):
     # 外側のforはbullets[:]から弾を1発ずつ選び、その1発をbullet（弾）という名前で使います。
     for bullet in bullets[:]:
         # hit_enemiesは弾を1発選ぶたびに、その時点の敵の一覧enemiesをenemies[:]でコピーします。
-        # enemies[:]の各要素はenemiesと同じ敵を指し、hit_enemiesがenemiesから外した敵は入りません。
+        # enemies[:]の各要素はenemiesと同じ敵を指します。hit_enemiesが前の弾でenemiesから外した敵は、新しいenemies[:]へ入りません。
         # 内側のforはenemies[:]から敵を1機ずつ選び、その1機をenemy（敵）という名前で使います。
         for enemy in enemies[:]:
             # rectはrectangle（長方形）の略で、弾・敵の位置と大きさを表します。
