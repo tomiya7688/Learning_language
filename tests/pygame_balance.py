@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PYGAME_ROOT = ROOT / "教材" / "Python"
+PYGAME_ROOT = ROOT / "教材" / "Python" / "基礎編_ゆっくり学びたい人へ" / "教材"
 
 
 @dataclass(frozen=True)
@@ -31,7 +31,13 @@ RANGES: dict[str, tuple[float, float]] = {
 
 
 def find_examples() -> list[Path]:
-    return sorted(PYGAME_ROOT.glob("Pg*_*/**/*.py"))
+    # 分割後は各章のsettings.pyへ数値がまとまる。旧形式の章も読めるようにする。
+    examples = []
+    for folder in sorted(PYGAME_ROOT.glob("Pg*_*/")):
+        source_folder = folder / "src" if (folder / "src").is_dir() else folder
+        settings = source_folder / "settings.py"
+        examples.extend([settings] if settings.exists() else sorted(source_folder.glob("*.py")))
+    return examples
 
 
 def read_numeric_assignments(path: Path) -> dict[str, float]:
@@ -45,7 +51,7 @@ def read_numeric_assignments(path: Path) -> dict[str, float]:
         if len(node.targets) != 1 or not isinstance(node.targets[0], ast.Name):
             continue
 
-        name = node.targets[0].id
+        name = node.targets[0].id.lower()
 
         if isinstance(node.value, ast.Constant) and isinstance(node.value.value, (int, float)):
             values[name] = float(node.value.value)
@@ -117,7 +123,8 @@ def check_values(values: dict[str, float]) -> list[Violation]:
 
 
 def is_intentionally_unfair(path: Path) -> bool:
-    return path.parent.name.startswith("Pg10_")
+    chapter = path.parent.parent if path.parent.name == "src" else path.parent
+    return chapter.name.startswith("Pg10_")
 
 
 def has_oversized_boss_bullet(values: dict[str, float]) -> bool:
@@ -150,12 +157,12 @@ def main() -> int:
             if has_oversized_boss_bullet(values):
                 print(f"[PASS: INTENTIONALLY UNFAIR] {relative}")
                 print(
-                    "  - Pg9のボス弾は、画面を覆って避けにくくなるよう"
+                    "  - Pg10のボス弾は、画面を覆って避けにくくなるよう"
                     "意図的に巨大化されています。"
                 )
             else:
                 print(
-                    f"[FAIL] {relative}: Pg9は『ボスの弾がデカすぎる』失敗例なのに、"
+                    f"[FAIL] {relative}: Pg10は『ボスの弾がデカすぎる』失敗例なのに、"
                     "boss_bullet_width / boss_bullet_height が十分大きくありません。"
                 )
                 failed = True
