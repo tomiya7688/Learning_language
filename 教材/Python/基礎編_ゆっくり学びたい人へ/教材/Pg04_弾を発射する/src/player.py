@@ -56,7 +56,7 @@ class Player:
     # shoot（発射）は、battle.pyがスペースキーを押した知らせを受けたときに実行する操作です。
     def shoot(self):
         # centerxは自機の横の中心、topは上端。初期位置なら(320, 380)を弾の中心へ指定します。
-        # settings.pyのBULLET_SPEED=8を負にし、弾を1回の更新で上へ8ピクセル進めます。
+        # settings.pyのBULLET_SPEEDを負にして、新しい弾が更新1回で上へ進む量として指定します。
         # (6, 20)は弾の幅6・高さ20。色は赤・緑・青の強さを0〜255で指定し、黄色にします。
         # returnは作った弾を呼び出したbattle.pyへ返す指定。Battleが弾の一覧へ加えます。
         return Bullet(self.rect.centerx, self.rect.top, -settings.BULLET_SPEED,
