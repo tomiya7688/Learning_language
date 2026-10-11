@@ -29,13 +29,17 @@ def hit_enemies(bullets, enemies):
                 # 外側のfor bullet in bullets[:]は続き、hit_enemiesは次の弾についてenemiesに残っている敵を調べます。
                 break
 
-# hit_player の処理を定義する
+# hit_player（自機への命中）は、敵弾の移動へ一覧の除外と体力変更まで混ぜないよう、命中した弾の除外と自機へのダメージをまとめる処理です。
+# Battle.updateが、戦闘の敵弾一覧self.enemy_bulletsをbullets、自機self.playerをplayerへ指定します。各引数は元の一覧・自機と同じものを指します。
 def hit_player(bullets, player):
-    # bullets[:] から bullet を1つずつ取り出して繰り返す
+    # hit_playerは一覧から弾を外しても次の弾を飛ばさないよう、bullets[:]で敵弾の一覧だけをコピーします。弾自体を新しく作る操作ではありません。
+    # forがコピーbullets[:]の各弾をbullet（選んだ弾）へ1発ずつ選びます。元のbulletsとコピーは同じ弾を指します。
     for bullet in bullets[:]:
-        # bullet.rect.colliderect(player.rect) が成り立つなら
+        # rectはrectangle（長方形）の略。colliderectが選んだ弾bullet.rectと自機player.rectの長方形に面積の重なりがあるかを返します。
+        # hit_playerはTrue（重なる）の場合だけ、元の敵弾一覧からの除外と自機へのダメージを行います。辺だけの接触や離れた場合はFalseで、弾と体力を変更しません。
         if bullet.rect.colliderect(player.rect):
-            # bullets.remove(bullet) を実行する
+            # removeが選んだ弾bulletを元のbullets、つまりBattleのself.enemy_bulletsから直接外します。以後その弾は移動・描画・再判定されません。
             bullets.remove(bullet)
-            # player.take_damage() を実行する
+            # Player.take_damageが指定された自機playerのHP（体力）を1減らします。命中した弾を外すので、同じ弾で次の更新も体力を減らしません。
+            # hit_playerにはbreak（繰り返しの打ち切り）やHPの確認がないため、コピーに残る次の弾も調べ、命中した弾ごとに体力を減らします。
             player.take_damage()
