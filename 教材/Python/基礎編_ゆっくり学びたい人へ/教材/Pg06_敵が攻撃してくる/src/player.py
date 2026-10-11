@@ -19,8 +19,8 @@ class Player:
         # self.speed に settings.PLAYER_SPEED を入れる
         self.speed = settings.PLAYER_SPEED
 
-        # hp はhit points（体力）。攻撃1回で1減り、0で倒されます。
-        # self.hp に settings.PLAYER_HP を入れる
+        # hpはhit points（体力）の略。Playerは自機の体力をself.hpへ持ち、take_damageで命中した敵弾1発ごとに1減らします。
+        # Player.__init__がsettings.PLAYER_HPの作成時の値をself.hpへ保存します。同じ更新のBattle.updateが終わった後に、Game.runがBattle.is_game_overで自機のHPが0以下かを確認します。
         self.hp = settings.PLAYER_HP
 
     # 自機の位置を変える処理と弾を作る処理を混ぜないよう、move（移動）へキーの確認と位置変更をまとめます。
@@ -58,9 +58,10 @@ class Player:
         return Bullet(self.rect.centerx, self.rect.top, -settings.BULLET_SPEED,
                       (6, 20), (255, 240, 100))
 
-    # take_damage の処理を定義する
+    # Playerは、命中の位置判定と自機の体力変更を混ぜないよう、自機のHP変更をtake_damage（ダメージを受ける）へまとめ、位置判定はhit_playerへ任せます。
     def take_damage(self):
-        # self.hp から 1 を引く
+        # -=は引いた結果を同じ場所へ保存する書き方。Player.take_damageが自機のself.hpから1を引きます。HPを0で止める処理はありません。
+        # Player.take_damageは画面の表示やゲームの終了を行いません。Battle.is_game_overが更新後の自機のHPが0以下かを調べて結果を返し、Game.runが終了を決めます。
         self.hp -= 1
 
     # 位置の情報を用意するだけでは自機の絵が出ないため、draw（描画）へ現在の位置に自機を描く処理を分けます。

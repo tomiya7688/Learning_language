@@ -73,9 +73,10 @@ class Battle:
         # hit_playerが移動後の敵弾と自機の重なりを調べ、命中した敵弾をBattleのself.enemy_bulletsから直接外し、Battleの自機self.playerへダメージを与えます。
         hit_player(self.enemy_bullets, self.player)
 
-    # is_game_over の処理を定義する
+    # Battleは、戦闘の体力判定へウィンドウの終了まで混ぜないよう、HPが0以下かをis_game_over（ゲームオーバーか）へまとめ、終了はGame.runへ任せます。
     def is_game_over(self):
-        # self.player.hp <= 0 を返す
+        # Battle.is_game_overが自機self.playerの体力hpを調べ、0以下ならTrue（成り立つ）、正ならFalse（成り立たない）をGame.runへ返します。
+        # <=は以下か調べる比較。Battle.is_game_over自体は体力変更・ターミナル表示・繰り返しの終了を行いません。
         return self.player.hp <= 0
 
     # 弾1発の移動と、弾一覧からの削除は別の役割なので、一覧を順に管理する処理をmove_bullets（弾を動かす）へ分けます。

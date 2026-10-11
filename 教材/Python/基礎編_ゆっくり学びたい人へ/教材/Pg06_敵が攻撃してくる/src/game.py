@@ -29,33 +29,34 @@ class Game:
         # GameはBattle()で作った戦闘をself.battleへ保存し、後の更新と描画で同じ戦闘を使います。
         self.battle = Battle()
 
-    # run の処理を定義する
+    # Gameは、ウィンドウの準備と毎回の進行を混ぜないよう、操作の確認・戦闘の更新・終了判定・描画と表示をrun（実行）へまとめます。
+    # main.pyのmainがgame.run()を呼び出します。runが終わるとmainへ戻り、mainのfinally内のpygame.quit()がウィンドウを閉じます。
     def run(self):
-        # self.running が True の間、ゲーム画面を更新する
+        # whileは条件がTrueの間繰り返す指定。Game.runはゲーム全体のself.runningがTrueの間、操作の確認と更新を続けます。
         while self.running:
-            # self.handle_events() を実行する
+            # Game.handle_eventsが操作の知らせを確認し、ウィンドウを閉じる知らせならGameのself.runningをFalseへ変更します。
             self.handle_events()
-            # self.running が False なら、次の画面更新をせず繰り返しを終える
+            # Game.runは閉じる操作でself.runningがFalseになった場合、戦闘の更新を行う前にbreakを実行します。
             if not self.running:
-                # 画面更新を繰り返す while を終える
+                # breakが画面更新のwhileをすぐに終えます。この経路では下の戦闘更新・描画・表示を行いません。
                 break
 
-            # self.battle.update() を実行する
+            # Battle.updateが自機・弾・敵を動かし、命中した敵弾を除外して自機の体力を減らします。更新全体が終わってからGame.runへ戻ります。
             self.battle.update()
 
-            # self.battle.is_game_over() が成り立つなら
+            # Game.runがBattle.is_game_overで更新後の自機のHPを確認し、0以下でTrueが返った場合だけ終了を決めます。
             if self.battle.is_game_over():
-                # print('GAME OVER') を実行する
+                # Game.runがGAME OVERという文字列を実行用ターミナルへ1行表示します。ゲームのウィンドウへ表示する処理ではありません。
                 print("GAME OVER")
-                # self.running を False にし、ゲーム画面の繰り返しを終える
+                # Game.runがself.runningをFalseにし、次のwhileの確認では繰り返しを続けないようにします。ここにはbreakがなく、今回の描画・表示は続きます。
                 self.running = False
 
-            # self.battle.draw(self.screen) を実行する
+            # Battle.drawが更新後の戦闘をGameの描画先self.screenへ描きます。体力表示にも今回の命中後のHPを使います。
             self.battle.draw(self.screen)
 
-            # pygame.display.flip() を実行する
+            # pygame.display.flipが描画済みの画面をウィンドウへ表示します。HPで終了を決めた場合もこの呼び出しを行います。
             pygame.display.flip()
-            # settings.FPS 回/秒を上限にして、画面更新が速くなりすぎないよう待つ
+            # Gameのself.clock.tickがsettings.FPSを更新回数の上限として待ちます。HPで終了を決めた場合もこの呼び出しの後にwhileの条件へ戻ります。
             self.clock.tick(settings.FPS)
 
     # 操作ごとの分岐をhandle_events（操作を確認する）へ分けると、runから画面更新の順序を追えます。
