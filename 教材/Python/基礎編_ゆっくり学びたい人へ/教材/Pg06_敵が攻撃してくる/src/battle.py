@@ -40,8 +40,8 @@ class Battle:
         # self.font に pygame.font.Font(None, 36) を入れる
         self.font = pygame.font.Font(None, 36)
 
-        # fire_timer は前回の発射から何回更新したかを数える値です。
-        # self.fire_timer に 0 を入れる
+        # Battleのself.fire_timerは、開始時または前回の発射タイミングからの更新回数。Enemyごとのタイマーではなく、戦闘で1つを共有します。
+        # Battle.__init__が0を保存し、Battle.update_enemiesが更新ごとに1を足します。
         self.fire_timer = 0
 
     # 押した知らせで弾を作る処理を、押している状態で移動する処理と混ぜないよう、handle_event（知らせへの対応）へ分けます。
@@ -61,16 +61,16 @@ class Battle:
         # self.move_bullets(self.bullets) を実行する
         self.move_bullets(self.bullets)
 
-        # self.update_enemies() を実行する
+        # Battle.updateが敵の移動・画面外除外・一斉発射を行うupdate_enemiesを呼び出します。
         self.update_enemies()
 
-        # self.move_bullets(self.enemy_bullets) を実行する
+        # Battle.updateが敵弾一覧self.enemy_bulletsをmove_bulletsへ指定し、今作った敵弾も同じ更新で1回動かします。
         self.move_bullets(self.enemy_bullets)
 
-        # hit_enemies(self.bullets, self.enemies) を実行する
+        # hit_enemiesが自機の弾と敵の重なりを調べ、命中した弾と敵をBattleの元の一覧から外します。敵の発射より後の判定です。
         hit_enemies(self.bullets, self.enemies)
 
-        # hit_player(self.enemy_bullets, self.player) を実行する
+        # hit_playerが移動後の敵弾と自機の重なりを調べ、命中した敵弾を一覧から外して自機へダメージを与えます。
         hit_player(self.enemy_bullets, self.player)
 
     # is_game_over の処理を定義する
@@ -90,27 +90,29 @@ class Battle:
                 # bullets.remove(bullet)が選んだ弾bulletを元の弾一覧bulletsから外します。弾一覧の削除は画面の絵を直接消す操作ではありません。
                 bullets.remove(bullet)
 
-    # update_enemies の処理を定義する
+    # Battleは、敵1機の移動・弾の作成へ一覧の変更まで混ぜないよう、敵一覧の更新と一斉発射の間隔をupdate_enemiesへまとめます。
+    # Battle.updateがupdate_enemiesを1回呼び、Enemy.move・is_off_screen・shootへ敵1機ずつの操作を任せます。
     def update_enemies(self):
-        # self.enemies[:] から enemy を1つずつ取り出して繰り返す
+        # self.enemies[:]はBattleの敵一覧だけのコピー。forは元のself.enemiesと同じ敵をenemy（選んだ敵）へ1機ずつ選びます。
+        # Battle.update_enemiesが元のself.enemiesから敵を外しても、コピーを読むforは次の敵を飛ばしません。
         for enemy in self.enemies[:]:
-            # enemy.move() を実行する
+            # Enemy.moveが選んだ敵の保存済みの移動量で位置を1回進めます。発射位置を使う前に敵を移動します。
             enemy.move()
-            # enemy.is_off_screen() が成り立つなら
+            # Enemy.is_off_screenが敵の上端と画面の高さを比較し、Trueの場合だけBattle.update_enemiesが除外を行います。
             if enemy.is_off_screen():
-                # self.enemies.remove(enemy) を実行する
+                # removeが選んだ敵を元の敵一覧self.enemiesから外します。除外された敵は、この後の発射対象へ入りません。
                 self.enemies.remove(enemy)
 
-        # self.fire_timer に 1 を足す
+        # Battle.update_enemiesが、戦闘で共有する更新回数self.fire_timerへ1を足します。敵が0機でもこの回数は進みます。
         self.fire_timer += 1
-        # self.fire_timer >= settings.ENEMY_FIRE_INTERVAL が成り立つなら
+        # >=は以上か調べる比較。数えた回数がsettings.ENEMY_FIRE_INTERVALに届くと、残った敵を一斉に発射させます。
         if self.fire_timer >= settings.ENEMY_FIRE_INTERVAL:
-            # fire_timer は前回の発射から何回更新したかを数える値です。
-            # self.fire_timer に 0 を入れる
+            # Battle.update_enemiesが回数を0へ戻し、次の発射タイミングまで再び更新を数えます。残った敵が0機でも0へ戻します。
             self.fire_timer = 0
-            # self.enemies から enemy を1つずつ取り出して繰り返す
+            # forが元の敵一覧self.enemiesに残った敵だけを、enemyへ1機ずつ選びます。
             for enemy in self.enemies:
-                # self.enemy_bullets.append(enemy.shoot()) を実行する
+                # Enemy.shootが選んだ敵の移動後の位置で作った弾を返し、appendがBattleの敵弾一覧self.enemy_bulletsへ加えます。
+                # appendは以前の敵弾を置き換えません。Battle.updateが、この呼び出しの後に敵弾の移動と命中判定を行います。
                 self.enemy_bullets.append(enemy.shoot())
 
     # draw の処理を定義する
