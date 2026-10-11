@@ -14,7 +14,7 @@ class Enemy:
     def __init__(self, x, y):
         # rectはrectangle（長方形）の略。pygame.Rectへ左端・上端・幅・高さを指定し、敵の位置と大きさをself.rectへ保存します。
         self.rect = pygame.Rect(0, 0, 40, 40)
-        # center（中心）へ(x, y)を指定し、敵の幅40・高さ40を保って中心を指定位置へ移します。単位はピクセルです。
+        # center（中心）へ(x, y)を指定し、敵の幅40・高さ40を保って中心を指定位置へ移します。ピクセルは画面の位置や大きさを数える単位です。
         self.rect.center = (x, y)
         # speedは速さの指定。settings.ENEMY_SPEEDは更新1回で敵が下へ進む量で、作成時の値を敵のself.speedへ保存します。
         self.speed = settings.ENEMY_SPEED

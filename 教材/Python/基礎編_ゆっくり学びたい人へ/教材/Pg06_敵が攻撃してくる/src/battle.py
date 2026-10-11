@@ -67,10 +67,10 @@ class Battle:
         # Battle.updateが敵弾一覧self.enemy_bulletsをmove_bulletsへ指定し、今作った敵弾も同じ更新で1回動かします。
         self.move_bullets(self.enemy_bullets)
 
-        # hit_enemiesが自機の弾と敵の重なりを調べ、命中した弾と敵をBattleの元の一覧から外します。敵の発射より後の判定です。
+        # hit_enemiesが自機の弾と敵の重なりを調べ、命中した自機の弾をBattleのself.bullets、敵をBattleのself.enemiesから直接外します。敵の発射より後の判定です。
         hit_enemies(self.bullets, self.enemies)
 
-        # hit_playerが移動後の敵弾と自機の重なりを調べ、命中した敵弾を一覧から外して自機へダメージを与えます。
+        # hit_playerが移動後の敵弾と自機の重なりを調べ、命中した敵弾をBattleのself.enemy_bulletsから直接外し、Battleの自機self.playerへダメージを与えます。
         hit_player(self.enemy_bullets, self.player)
 
     # is_game_over の処理を定義する
