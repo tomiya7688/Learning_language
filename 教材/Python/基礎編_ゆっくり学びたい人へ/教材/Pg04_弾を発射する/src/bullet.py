@@ -1,52 +1,44 @@
-# 弾を何発も撃つと、各弾の位置と移動する処理を対応させる必要があります。
-# Bullet（弾）へ1発分の位置・縦方向の移動量・色と、その弾の操作をまとめます。
-# ピクセルは、ゲーム画面の位置や大きさを数える単位です。
-# pygame はゲーム画面へ長方形を描く道具です。
+# Pythonが、長方形の位置を管理し、描画先へ色を塗るpygameの機能を読み込みます。
 import pygame
-# settings は同じsrcフォルダのsettings.py。HEIGHTに画面の高さ480ピクセルがあります。
+# Pythonが、同じsrcのsettings.pyから画面の高さHEIGHTなどの設定を読み込みます。
 import settings
 
-# クラスは情報と操作をまとめる定義です。Bulletは弾1発を作るための定義です。
+# Bullet（弾）は、弾ごとの情報と操作を対応させるため、弾1発の位置・移動量・色と、その弾の操作をまとめるクラスです。
+# Battle.handle_eventがself.player.shoot()で作った弾を、Battleの自機の弾一覧self.bulletsへ追加します。
+# Battle.move_bulletsが、Battleの弾一覧self.bullets（自機の弾）から画面外の弾を外します。
 class Bullet:
-    # 弾を作る処理、動かす処理、画面外か調べる処理、描く処理を分けて探しやすくします。
-    # __init__ は、Bullet(...)で弾を作るときにPythonが実行する初期設定の処理です。
-    # selfは設定する弾1発を表す名前です。self.rectのように、その弾の情報を保存します。
-    # x（横）/y（縦）は弾の中心位置。画面左端から右へx、画面上端から下へyピクセルです。
-    # speed（速さの指定）は1回の更新で縦に進む量（ピクセル）。負なら上、正なら下へ進みます。
-    # size（大きさ）は幅と高さの組、color（色）は赤・緑・青の強さを0〜255で指定した組です。
-    # 配布時の設定で自機が初期位置なら、player.pyはBullet(320, 380, -8, (6, 20), (255, 240, 100))を作ります。
+    # Bulletは、移動のたびに開始位置へ戻さないよう、作成時の情報の準備を__init__、毎回の位置変更をmoveに分けて定義します。
+    # selfは作成する弾1発。PythonがBullet(...)を実行すると、この弾の__init__へ指定した値を渡します。
     def __init__(self, x, y, speed, size, color):
-        # rectはrectangle（長方形）の略。self.rectに弾の位置と大きさをまとめます。
-        # pygame.Rectは左端・上端・幅・高さの順で指定します。まず左上を(0, 0)にします。
-        # size[0]は組の最初の値で幅、size[1]は2番目の値で高さです。この章は6と20ピクセルです。
+        # x（横）・y（縦）は弾の中心位置で、ゲーム画面の左端・上端から右・下へ数えるピクセル数です。
+        # size（大きさ）は幅・高さの組。size[0]は最初の値の幅、size[1]は2番目の値の高さです。
+        # rectはrectangle（長方形）の略。pygame.Rectは左端・上端・幅・高さの順で指定し、self.rectへ弾の位置・大きさを保存します。
         self.rect = pygame.Rect(0, 0, size[0], size[1])
-        # centerは長方形の中心。幅・高さを保ったまま、弾の中心を指定位置へ移します。
-        # 中心が(320, 380)なら、幅6・高さ20の弾の左上は(317, 370)になります。
+        # center（中心）へ(x, y)を指定し、幅・高さを保って弾の中心を呼び出し側が指定した位置へ移します。
         self.rect.center = (x, y)
-        # 縦方向の移動量speedをその弾のself.speedへ保存し、moveで毎回使います。
+        # speed（速さの指定）は更新1回で縦に進む量。負なら上、正なら下、0なら縦の位置を変えません。
+        # __init__が指定されたspeedを弾のself.speedへ保存し、Bullet.moveが後の更新でその保存値を使います。
         self.speed = speed
-        # color（色）をその弾のself.colorへ保存し、drawで黄色い弾を描くときに使います。
+        # color（色）は赤・緑・青の強さを0〜255で指定した組。弾のself.colorへ保存し、Bullet.drawが描画に使います。
         self.color = color
 
-    # move（動かす）は、battle.pyが画面を1回更新するたびに弾1発へ行う操作です。
+    # Bulletは、弾の作成と毎回の位置変更の実行時点が違うため、更新ごとの位置変更をmove（移動）にまとめます。
     def move(self):
-        # yは弾の長方形の上端。画面上端が0なので、yを減らすと弾が上へ進みます。
-        # +=は現在の値に足して保存する指定。speed=-8なら上端が370から362へ変わります。
+        # self.rect.yは弾の上端。+=は足した結果を同じ場所へ保存する指定で、上端をself.speedだけ変えて弾全体を縦へ動かします。
+        # 幅・高さ・横の位置は変えません。中心と下端の縦の位置も、上端と同じ量だけ変わります。
         self.rect.y += self.speed
 
-    # 画面外の弾まで動かし続けないよう、弾が上下のどちらへ抜けたかを調べます。
-    # is_off_screen（画面外か）は、弾全体が上下の端を越えたか調べる操作です。
+    # Bulletは、弾1発の位置の比較へ戦闘の一覧変更まで混ぜないよう、上下の判定をis_off_screenにまとめ、一覧からの除外はBattle.move_bulletsへ任せます。
+    # is_off_screen（画面外か）は上下の位置を比較して結果だけを返します。Battle.move_bulletsが結果を受け取り、Trueの弾を指定された弾一覧から外します。
     def is_off_screen(self):
-        # bottomは弾の下端、topは弾の上端。HEIGHTはsettings.pyにある画面の高さ480です。
-        # 下端が0より小さければ弾全体が上側、上端が480より大きければ弾全体が下側です。
-        # orはどちらかを満たすか調べる指定。この章の上向きの弾にはbottom < 0が当てはまります。
-        # returnは結果を返す指定。条件を満たすTrueなら、battle.pyが弾を一覧から外します。
-        # 条件を満たさないFalseなら、battle.pyは弾を一覧に残します。
+        # self.rect.bottomは弾の下端、self.rect.topは上端。settings.HEIGHTはゲーム画面の高さです。
+        # 下端が画面の上端0より小さいか、上端が画面の高さより大きいかを、or（どちらかが成り立つか）で調べます。
+        # returnがTrue（どちらかが成り立つ）かFalse（両方とも成り立たない）をBattle.move_bulletsへ返します。位置や一覧は変更しません。
+        # 下端が0と同じなら上側の比較はFalse、上端が画面の高さと同じなら下側の比較はFalseです。横の位置は調べません。
         return self.rect.bottom < 0 or self.rect.top > settings.HEIGHT
 
-    # draw（描く）は弾1発を描く操作。screen（画面）はgame.pyで用意したゲーム画面の描画先です。
+    # Bulletは、位置の情報だけでは弾の絵が出ないため、位置変更をmove、描画先へ色を塗る処理をdrawに分けて定義します。
     def draw(self, screen):
-        # pygame.draw.rectは、描画先・色・長方形の順で指定して、その範囲を塗ります。
-        # この章ではself.colorに黄色の(255, 240, 100)、self.rectに幅6・高さ20の弾を持ちます。
-        # 画面への表示はgame.pyのpygame.display.flip()が行います。
+        # screenはBattle.draw_bulletsが指定した描画先。pygame.draw.rectへ描画先・弾の保存済みの色・位置と大きさを持つ長方形を指定します。
+        # 太さを指定していないので、弾の長方形の内側を塗ります。弾の位置変更や、ウィンドウの表示更新は行いません。
         pygame.draw.rect(screen, self.color, self.rect)
