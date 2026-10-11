@@ -20,7 +20,7 @@ class Player:
         self.speed = settings.PLAYER_SPEED
 
         # hpはhit points（体力）の略。Playerは自機の体力をself.hpへ持ち、take_damageで命中した敵弾1発ごとに1減らします。
-        # Player.__init__がsettings.PLAYER_HPの作成時の値をself.hpへ保存します。Battle.is_game_overが0以下かを後の更新で確認します。
+        # Player.__init__がsettings.PLAYER_HPの作成時の値をself.hpへ保存します。同じ更新のBattle.updateが終わった後に、Game.runがBattle.is_game_overで自機のHPが0以下かを確認します。
         self.hp = settings.PLAYER_HP
 
     # 自機の位置を変える処理と弾を作る処理を混ぜないよう、move（移動）へキーの確認と位置変更をまとめます。
