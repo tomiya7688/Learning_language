@@ -10,65 +10,60 @@ from bullet import Bullet
 
 # クラスは情報と操作をまとめた定義です。Playerは操作する自機1機を作るための定義です。
 class Player:
-    # 初期設定・移動・発射・描画を分けると、弾を出す位置や大きさを変えたいときはshootを探せます。
-    # __init__は、battle.pyがPlayer()で自機を作るときにPythonが実行する初期設定です。
-    # selfは今設定する自機1機を表す名前。self.rectのように、その自機の情報を持たせます。
+    # 移動のたびに位置を初期値へ戻さないよう、__init__（作成時の準備）へ開始位置と移動量の保存を分けます。
+    # selfは今用意している自機1機です。PythonがBattle.__init__内のPlayer()を実行すると、Player.__init__が情報を用意します。
     def __init__(self):
-        # rectはrectangle（長方形）の略。self.rectに自機の位置と幅・高さをまとめます。
-        # pygame.Rectは左端・上端・幅・高さの順。左上(0, 0)、幅40・高さ40で作ります。
+        # rectはrectangle（長方形）の略。self.rectが自機の位置・大きさを持ち、移動・発射・描画で同じ位置を使います。
+        # pygame.Rectへ左端・上端・幅・高さをピクセル（画面の位置や大きさの単位）で指定し、左上(0, 0)・幅40・高さ40を用意します。
         self.rect = pygame.Rect(0, 0, 40, 40)
-        # centerは中心。settings.pyのPLAYER_X（横の中心）320、PLAYER_Y（縦の中心）400へ移します。
-        # 幅・高さ40を保つので、自機の長方形の左上は(300, 380)になります。
+        # centerは中心。self.rect.centerへsettings.PLAYER_X（横の中心）とsettings.PLAYER_Y（縦の中心）を指定して位置を変えます。
+        # 配布時の中心は(320, 400)なので、幅・高さ40の自機の左上は(300, 380)です。中心の設定は幅・高さを変えません。
         self.rect.center = (settings.PLAYER_X, settings.PLAYER_Y)
 
-        # speedは速さの指定。この自機が1回の更新で横・縦それぞれに進む量（ピクセル）です。
-        # settings.pyのPLAYER_SPEED=5を自機のself.speedへ入れ、moveで毎回使います。
+        # speedは速さの指定。self.speedは、自機が更新1回で横・縦それぞれに進む量（ピクセル）です。
+        # Player.__init__がsettings.PLAYER_SPEEDをself.speedへ保存し、Player.moveが後の更新で同じ保存値を使います。
         self.speed = settings.PLAYER_SPEED
 
-    # move（動かす）は、battle.pyが画面を1回更新するたびに自機へ行う操作です。
-    # keys（キーの状態）は、pygame.key.get_pressed()で調べた、各キーが押されているかの情報です。
-    # ifは条件を満たすとき、その下の字下げした行を実行する書き方です。
+    # 自機の位置を変える処理と弾を作る処理を混ぜないよう、move（移動）へキーの確認と位置変更をまとめます。
     def move(self, keys):
-        # K_LEFTは左矢印。keys[pygame.K_LEFT]がTrue（押されている）なら左へ動かします。
+        # keysは、呼び出す側がpygame.key.get_pressed()で調べた、今押しているキーの状態です。
+        # keys[pygame.K_LEFT]がTrue（左矢印キーを押している）なら、ifの下の字下げした位置変更を行います。
         if keys[pygame.K_LEFT]:
-            # xは長方形の左端。-=は引いた値を同じ場所へ入れる指定で、初期位置300なら295になります。
+            # self.rect.xは自機の左端。-=は引いた結果を同じ場所へ保存する指定で、左端をself.speedだけ減らし、自機全体を左へ動かします。
             self.rect.x -= self.speed
-        # K_RIGHTは右矢印。押されていれば左端の値を増やし、自機全体を右へ動かします。
+        # keys[pygame.K_RIGHT]がTrue（右矢印キーを押している）なら、右へ動かす位置変更を行います。
         if keys[pygame.K_RIGHT]:
-            # +=は足した値を同じ場所へ入れる指定。右だけを押した更新なら、初期位置300が305になります。
+            # +=は足した結果を同じ場所へ保存する指定で、左端self.rect.xをself.speedだけ増やし、自機全体を右へ動かします。
             self.rect.x += self.speed
-        # K_UPは上矢印。押されていれば上端の値を減らし、自機全体を上へ動かします。
+        # keys[pygame.K_UP]がTrue（上矢印キーを押している）なら、上へ動かす位置変更を行います。
         if keys[pygame.K_UP]:
-            # yは長方形の上端。初期位置380から移動量5を引くと375になります。
+            # self.rect.yは自機の上端。上端をself.speedだけ減らし、自機全体を上へ動かします。
             self.rect.y -= self.speed
-        # K_DOWNは下矢印。押されていれば上端の値を増やし、自機全体を下へ動かします。
+        # keys[pygame.K_DOWN]がTrue（下矢印キーを押している）なら、下へ動かす位置変更を行います。
         if keys[pygame.K_DOWN]:
-            # 下だけを押した更新なら、初期位置380に移動量5を足して385にします。
+            # 上端self.rect.yをself.speedだけ増やし、自機全体を下へ動かします。
             self.rect.y += self.speed
-        # 4つのifはそれぞれ調べます。右と上なら横へ+5・縦へ-5進み、同じ軸の両矢印なら相殺します。
-        # キーがFalse（押されていない）なら、そのキーのif内の位置変更は行いません。
-        # 自機が画面から出ないよう、clamp（範囲内に収める）で自機の長方形の位置を戻します。
-        # ipはin place（その場で）の略。新しい長方形を返さず、自機のself.rect自体を変更します。
-        # settings.pyのWIDTH=640・HEIGHT=480で画面全体の長方形を指定します。
-        # 自機は40x40なので左端は0〜600、上端は0〜440。右端へ進んで左端が605なら600へ戻します。
+        # 4つのifは左・右・上・下を別々に調べます。各キーがFalse（押していない）なら、そのキーの位置変更は行いません。
+        # 同じ軸の逆向きの矢印は相殺され、右と上なら横・縦をそれぞれself.speedだけ変えて斜めに動きます。
+        # pygame.Rect(0, 0, settings.WIDTH, settings.HEIGHT)が、左上(0, 0)から画面全体の幅・高さを持つ長方形を用意します。
+        # clamp_ipは位置を範囲内に収める操作で、ipはin place（その場で）の略。元のself.rectの位置を変え、幅・高さは変えません。
+        # Player.moveが4方向の位置変更を終えた後に、自機の長方形が画面から出た分だけ位置を戻します。画面端では実際の移動量が小さくなります。
         self.rect.clamp_ip(pygame.Rect(0, 0, settings.WIDTH, settings.HEIGHT))
 
-    # shoot（発射）は、battle.pyがスペースキーを押した知らせを受けたときに実行する操作です。
+    # 自機の位置から弾1発を作る処理と、弾一覧へ加える処理を分けるため、shoot（発射）へ弾の作成をまとめます。
     def shoot(self):
-        # centerxは自機の横の中心、topは上端。初期位置なら(320, 380)を弾の中心へ指定します。
-        # settings.pyのBULLET_SPEEDを負にして、新しい弾が更新1回で上へ進む量として指定します。
-        # (6, 20)は弾の幅6・高さ20。色は赤・緑・青の強さを0〜255で指定し、黄色にします。
-        # returnは作った弾を呼び出したbattle.pyへ返す指定。Battleが弾の一覧へ加えます。
+        # self.rect.centerxは自機の横の中心、self.rect.topは上端。Bulletが作る弾の中心へ、この2つの位置を指定します。
+        # -settings.BULLET_SPEEDが弾の縦方向の移動量です。画面では縦の位置が下へ増えるので、負の値を足す弾は上へ動きます。
+        # (6, 20)は弾の幅6・高さ20ピクセル、(255, 240, 100)は赤・緑・青の強さを0〜255で指定した黄色です。
+        # returnが新しい弾1発を呼び出す側へ返します。戦闘が持つ自機の弾一覧へ追加するのはBattle.handle_eventです。
         return Bullet(self.rect.centerx, self.rect.top, -settings.BULLET_SPEED,
                       (6, 20), (255, 240, 100))
 
-    # draw（描く）は、battle.pyが自機を描くときに実行する操作です。
-    # screen（画面）は、game.pyが用意したゲーム画面の描画先です。
+    # 位置の情報を用意するだけでは自機の絵が出ないため、draw（描画）へ現在の位置に自機を描く処理を分けます。
     def draw(self, screen):
-        # points（点の一覧）に、自機の上辺の真ん中・左下・右下を、この順で入れます。
-        # midtop、bottomleft、bottomrightは長方形の辺や角の位置。初期位置なら(320,380)、(300,420)、(340,420)。
+        # screenは呼び出す側が指定した描画先です。points（点の一覧）は現在の自機の三角形を結ぶ3つの位置です。
+        # self.rect.midtopは上辺の真ん中、self.rect.bottomleftは左下、self.rect.bottomrightは右下で、pointsへその順に入れます。
         points = [self.rect.midtop, self.rect.bottomleft, self.rect.bottomright]
-        # polygon（多角形）は点を順に結ぶ図形。pygame.draw.polygonは描画先・色・点の一覧を指定します。
-        # 赤100・緑200・青255で3点の内側を水色に塗り、上向きの三角形で自機を描きます。
-        # self.rectの長方形自体は描きません。描いた画面を表示するのはgame.pyのpygame.display.flip()です。
+        # polygon（多角形）は点を順に結ぶ図形。pygame.draw.polygonへ描画先screen・水色(100, 200, 255)・3点の一覧pointsを指定します。
+        # 太さの指定がないので三角形の内側を塗ります。self.rectの長方形を描く操作や、ウィンドウの表示を更新する操作ではありません。
         pygame.draw.polygon(screen, (100, 200, 255), points)
