@@ -25,28 +25,28 @@ class Player:
 
     # 自機の位置を変える処理と弾を作る処理を混ぜないよう、move（移動）へキーの確認と位置変更をまとめます。
     def move(self, keys):
-        # keysは、呼び出す側がpygame.key.get_pressed()で調べた、今押しているキーの状態です。
+        # keysは、Battle.updateがpygame.key.get_pressed()で調べた、今押しているキーの状態です。pygame.K_LEFTなどで調べるキーを選びます。
         # keys[pygame.K_LEFT]がTrue（左矢印キーを押している）なら、ifの下の字下げした位置変更を行います。
         if keys[pygame.K_LEFT]:
-            # self.rect.xは自機の左端。-=は引いた結果を同じ場所へ保存する指定で、左端をself.speedだけ減らし、自機全体を左へ動かします。
+            # self.rect.xは自機の左端。-=でself.speedを引いて左端を変更します。左端300・移動量5なら295になり、自機全体が左へ動きます。
             self.rect.x -= self.speed
         # keys[pygame.K_RIGHT]がTrue（右矢印キーを押している）なら、右へ動かす位置変更を行います。
         if keys[pygame.K_RIGHT]:
-            # +=は足した結果を同じ場所へ保存する指定で、左端self.rect.xをself.speedだけ増やし、自機全体を右へ動かします。
+            # +=で左端self.rect.xへself.speedを足します。左端300・移動量5なら305になり、自機全体が右へ動きます。
             self.rect.x += self.speed
         # keys[pygame.K_UP]がTrue（上矢印キーを押している）なら、上へ動かす位置変更を行います。
         if keys[pygame.K_UP]:
-            # self.rect.yは自機の上端。上端をself.speedだけ減らし、自機全体を上へ動かします。
+            # self.rect.yは自機の上端。self.speedを引いて上端を変更します。上端380・移動量5なら375になり、自機全体が上へ動きます。
             self.rect.y -= self.speed
         # keys[pygame.K_DOWN]がTrue（下矢印キーを押している）なら、下へ動かす位置変更を行います。
         if keys[pygame.K_DOWN]:
-            # 上端self.rect.yをself.speedだけ増やし、自機全体を下へ動かします。
+            # 上端self.rect.yへself.speedを足します。上端380・移動量5なら385になり、自機全体が下へ動きます。
             self.rect.y += self.speed
         # 4つのifは左・右・上・下を別々に調べます。各キーがFalse（押していない）なら、そのキーの位置変更は行いません。
         # Player.moveは逆向きの矢印を両方押した場合も2回の位置変更を行い、同じ軸の座標変化は差し引き0になります。右と上なら横・縦をそれぞれself.speedだけ変えて斜めに動きます。
         # pygame.Rect(0, 0, settings.WIDTH, settings.HEIGHT)が、左上(0, 0)から画面全体の幅・高さを持つ長方形を用意します。
-        # clamp_ipは位置を範囲内に収める操作で、ipはin place（その場で）の略。元のself.rectの位置を変え、幅・高さは変えません。
-        # Player.moveが4方向の位置変更を終えた後に、自機の長方形が画面から出た分だけ位置を戻します。画面端では実際の移動量が小さくなります。
+        # clamp_ipは元の長方形を範囲内へ収める操作。自機のself.rectの位置を調整し、幅・高さは変えません。
+        # Player.moveはキーによる位置変更の後に画面内へ収めます。左端2から移動量5で左へ動かす例では、左端-3を0へ戻し、実際には2ピクセルだけ左へ動きます。
         self.rect.clamp_ip(pygame.Rect(0, 0, settings.WIDTH, settings.HEIGHT))
 
     # 自機の位置から弾1発を作る処理と、弾一覧へ加える処理を分けるため、shoot（発射）へ弾の作成をまとめます。
