@@ -36,8 +36,9 @@ class Battle:
         # enemy_bullets は通常の敵が撃った弾の一覧です。
         # self.enemy_bullets に [] を入れる
         self.enemy_bullets = []
-        # font はフォント。文字の形と大きさを指定します。
-        # self.font に pygame.font.Font(None, 36) を入れる
+        # BattleはHP（hit points、体力）の文字画像を毎回作るため、文字の形と大きさを決めるフォントを戦闘のself.fontへ保存します。
+        # FontのNoneは同梱のFreeSans Boldを選ぶ指定、36はピクセル単位のサイズ指定です。ピクセルは画面上の点を数える単位です。
+        # Battle.__init__がフォントを一度作り、Battle.draw_textが保存済みのself.fontで更新後のHPを文字画像にします。36は文字画像の実寸の高さを保証する値ではありません。
         self.font = pygame.font.Font(None, 36)
 
         # Battleのself.fire_timerは、開始時または前回の発射タイミングからの更新回数。Enemyごとのタイマーではなく、戦闘で1つを共有します。
@@ -116,37 +117,43 @@ class Battle:
                 # appendは以前の敵弾を置き換えません。Battle.updateが、この呼び出しの後に敵弾の移動と命中判定を行います。
                 self.enemy_bullets.append(enemy.shoot())
 
-    # draw の処理を定義する
+    # Battleは、位置や体力を変更するupdateと絵を描く処理を混ぜないよう、戦闘全体の描画をdraw（描く）へまとめます。
+    # Game.runがゲームの描画先self.screenをscreenへ指定します。Battle.drawは同じ描画先へ背景・機体・弾・HPの順に描きます。
     def draw(self, screen):
-        # screen.fill((10, 10, 30)) を実行する
+        # fillが描画先screen全体を暗い青系の色で塗り、前の更新の絵を覆います。色は赤10・緑10・青30で、各値は0（暗い）から255（明るい）です。
+        # Battleの自機・弾・敵の情報は変えず、描画先の色だけを変えます。背景を後から塗ると、その前に描いた機体や文字も覆ってしまいます。
         screen.fill((10, 10, 30))
 
-        # self.player.draw(screen) を実行する
+        # Player.drawが戦闘の自機self.playerの長方形から3点を選び、水色(100, 200, 255)の三角形をscreenへ描きます。Battle.drawは自機を動かしません。
         self.player.draw(screen)
-        # self.draw_bullets(screen, self.bullets) を実行する
+        # Battle.draw_bulletsが戦闘の自機の弾一覧self.bulletsに残る弾をscreenへ描きます。命中や画面外判定で除外した弾は描きません。
         self.draw_bullets(screen, self.bullets)
 
-        # self.enemies から enemy を1つずつ取り出して繰り返す
+        # forが戦闘の敵一覧self.enemiesに残る敵をenemy（選んだ敵）へ1機ずつ選びます。空の一覧なら敵を描く処理は0回です。
         for enemy in self.enemies:
-            # enemy.draw(screen) を実行する
+            # Enemy.drawが選んだ敵enemyの長方形を赤系の色(255, 100, 100)で同じ描画先screenへ描きます。
             enemy.draw(screen)
 
-        # self.draw_bullets(screen, self.enemy_bullets) を実行する
+        # Battle.draw_bulletsが戦闘の敵弾一覧self.enemy_bulletsに残る弾を同じscreenへ描きます。
         self.draw_bullets(screen, self.enemy_bullets)
-        # self.draw_text(screen, f'HP: {self.player.hp}', (10, 10)) を実行する
+        # f付きの文字列は{}内の値を文字列へ組み込みます。自機self.player.hpが3ならHP: 3、2ならHP: 2、-1ならHP: -1をdraw_textへ指定します。
+        # Battle.draw_textが白いHP文字画像の左上を、screenの左端から10・上端から10ピクセルへ置きます。Game.runが後のflipで描画済みの画面を表示します。
         self.draw_text(screen, f"HP: {self.player.hp}", (10, 10))
 
-    # 弾1発を描くBullet.drawと、弾一覧を順に描く役割を分けるため、draw_bullets（弾の描画）へ繰り返しをまとめます。
+    # 自機の弾一覧と敵弾一覧を描く繰り返しが同じなので、Battleは一覧の描画をdraw_bulletsへまとめ、弾1発の描画はBullet.drawへ任せます。
     def draw_bullets(self, screen, bullets):
-        # screenは呼び出す側が指定した描画先、bulletsは指定した弾一覧です。forが一覧に残った弾を1発ずつbulletへ選びます。
+        # Battle.drawが指定したscreenはGameの描画先、bulletsは戦闘のself.bullets（自機の弾）またはself.enemy_bullets（敵弾）と同じ一覧です。
+        # forが指定された一覧に残る弾をbullet（選んだ弾）へ1発ずつ選びます。空の一覧ならBullet.drawの呼び出しは0回です。
         for bullet in bullets:
-            # bullet.draw(screen)が、選んだ弾bulletに保存した位置・大きさ・色で描画先screenへ弾を描きます。弾を移動したり一覧へ追加したりはしません。
+            # Bullet.drawが選んだ弾の保存済みの位置・大きさ・色でscreenへ描きます。Battle.draw_bulletsは弾を動かしたり一覧へ追加・除外したりしません。
             bullet.draw(screen)
 
-    # draw_text の処理を定義する
+    # HP文字を用意するdrawへ文字画像の作成と配置まで詰めないよう、Battleは文字列から画像を作って置く処理をdraw_text（文字を描く）へまとめます。
     def draw_text(self, screen, text, position):
-        # image は画像。画面へ描く内容を持ちます。
-        # image に self.font.render(text, True, (255, 255, 255)) を入れる
+        # Battle.drawが、Gameの描画先をscreen、更新後の自機のHPを含む文字列をtext、文字画像の左上の位置(10, 10)をpositionへ指定します。
+        # imageは文字画像。保存済みのフォントself.fontのrenderがtextを描いた新しいSurface（画像を持つPygameの部品）を返し、imageへ保存します。
+        # Trueは文字の縁を滑らかにする指定、(255, 255, 255)は赤・緑・青を各255にする白色です。背景色は省略するので、文字以外の部分は透明です。
         image = self.font.render(text, True, (255, 255, 255))
-        # screen.blit(image, position) を実行する
+        # blitが文字画像imageを描画先screenへ重ねます。positionは画像の左上で、中心位置ではありません。文字画像を作っただけではscreenへ描かれません。
+        # Battle.draw_textは画像をファイルへ保存せず、Game.runのpygame.display.flipが後でウィンドウへ表示します。
         screen.blit(image, position)
