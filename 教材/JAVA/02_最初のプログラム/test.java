@@ -1,6 +1,6 @@
-// class testは、今回のプログラムをtestという名前でまとめる指定です。ファイル名もtest.javaにします。
+// class testの中の処理をtestという名前でまとめます。ファイル名はtest.javaにしてください。
 public class test {
-    // Javaはmainから実行を始めるため、最初に行う文字の表示をmainの中へ書きます。
+    // mainは、このプログラムを実行したときに最初に動く処理です。
     public static void main(String[] args) {
         // System.out.printlnが、括弧の中で指定した文字列を実行用ターミナルへ1行表示します。
         System.out.println("Hello World!");
