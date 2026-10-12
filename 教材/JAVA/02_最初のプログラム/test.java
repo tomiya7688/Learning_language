@@ -1,4 +1,4 @@
-// この中の処理をtestという名前でまとめます。ファイル名はtest.javaにしてください。
+// class testの中の処理をtestという名前でまとめます。ファイル名はtest.javaにしてください。
 public class test {
     // mainは、このプログラムを実行したときに最初に動く処理です。
     public static void main(String[] args) {
