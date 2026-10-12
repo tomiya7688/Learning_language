@@ -46,7 +46,7 @@ Calculator.java
 Game.java
 ```
 
-第2章のサンプルは、[`HelloWorld.java`](../02_最初のプログラム/HelloWorld.java) に保存されています。
+第2章のサンプルは、[`test.java`](../02_最初のプログラム/test.java) に保存されています。
 
 ## 0-6. 進め方
 
