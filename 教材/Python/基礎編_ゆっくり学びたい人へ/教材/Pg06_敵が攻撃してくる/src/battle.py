@@ -11,30 +11,30 @@ from collisions import hit_enemies
 # collisions から hit_player を読み込む
 from collisions import hit_player
 
-# Battle という型を定義する
+# Battle（戦闘）は、自機・敵・弾がどの戦闘のものか分かるよう、情報と更新する操作を同じクラスへまとめます。
 class Battle:
-    # __init__ の処理を定義する
+    # Battleは、更新ごとに自機の位置や体力を初期値へ戻さないよう、作成時の準備を__init__、毎回の移動と命中判定をupdateへ分けます。
     def __init__(self):
-        # player はプレイヤー。ここでは操作する自機です。
-        # self.player に Player() を入れる
+        # player（プレイヤー）は操作する自機。selfは作成中の戦闘を指します。
+        # Player()が自機1機を作り、Battleはself.playerから後の移動・射撃・体力確認で同じ自機を使います。
         self.player = Player()
 
         # bullets は弾の一覧。ここでは自機が撃った弾を並べます。
-        # self.bullets に [] を入れる
+        # Battleは発射前の自機弾一覧を[]（空の一覧）で用意し、handle_eventで撃った弾を追加します。
         self.bullets = []
 
-        # enemies は通常の敵の一覧。各要素はEnemyです。
-        # self.enemies に [] を入れる
+        # enemies（敵の複数形）は通常の敵の一覧。各要素はEnemyで作った敵1機です。
+        # Battleは敵一覧を空で用意し、下の3回のappend（末尾への追加）で敵を1機ずつ加えます。
         self.enemies = []
-        # self.enemies.append(Enemy(160, 80)) を実行する
+        # Enemyが中心を左端から160・上端から80ピクセルへ置いた敵1機を作り、appendが戦闘の敵一覧へ加えます。
         self.enemies.append(Enemy(160, 80))
-        # self.enemies.append(Enemy(320, 40)) を実行する
+        # Enemyが中心を左端から320・上端から40ピクセルへ置いた敵1機を作り、appendが同じself.enemiesへ加えます。
         self.enemies.append(Enemy(320, 40))
-        # self.enemies.append(Enemy(480, 100)) を実行する
+        # Enemyが中心を左端から480・上端から100ピクセルへ置いた敵1機を作り、appendが同じself.enemiesへ加えます。
         self.enemies.append(Enemy(480, 100))
 
         # enemy_bullets は通常の敵が撃った弾の一覧です。
-        # self.enemy_bullets に [] を入れる
+        # Battleは敵の発射前なので敵弾一覧も空で用意し、update_enemiesで作った敵弾を追加します。
         self.enemy_bullets = []
         # BattleはHP（hit points、体力）の文字画像を毎回作るため、文字の形と大きさを決めるフォントを戦闘のself.fontへ保存します。
         # FontのNoneは同梱のFreeSans Boldを選ぶ指定、36はピクセル単位のサイズ指定です。ピクセルは画面上の点を数える単位です。
@@ -54,12 +54,12 @@ class Battle:
             # appendはself.bulletsに残っている以前の弾を置き換えません。弾の作成と一覧への追加だけでは、弾の移動や描画は行いません。
             self.bullets.append(self.player.shoot())
 
-    # update の処理を定義する
+    # Battleは、準備した機体や弾を動かし続けるため、更新1回分の移動と移動後の命中判定をupdate（更新）へまとめます。
     def update(self):
-        # self.player.move(pygame.key.get_pressed()) を実行する
+        # pygame.key.get_pressed()が今押しているキーの状態を調べ、Player.moveが矢印キーの状態に従って自機の位置を変えます。
         self.player.move(pygame.key.get_pressed())
 
-        # self.move_bullets(self.bullets) を実行する
+        # Battle.move_bulletsが自機弾一覧self.bulletsの各弾を1回動かし、上下の画面外に出た弾を元の一覧から外します。
         self.move_bullets(self.bullets)
 
         # Battle.updateが敵の移動・画面外除外・一斉発射を行うupdate_enemiesを呼び出します。
