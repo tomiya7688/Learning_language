@@ -1,22 +1,22 @@
-# pygame を読み込む
+# Pythonが、自機の位置を長方形で扱い、三角形を描くpygameの機能を読み込みます。
 import pygame
-# settings を読み込む
+# Pythonが、同じsrcのsettings.pyから自機の初期位置・移動量・体力と自機弾の移動量を読み込みます。
 import settings
-# bullet から Bullet を読み込む
+# Pythonが、同じsrcのbullet.pyから弾1発の位置・移動・描画をまとめるBullet（弾）の定義を読み込みます。
 from bullet import Bullet
 
-# Player という型を定義する
+# Player（自機）は、自機の位置や体力と、それを変える操作が同じ機体のものだと分かるよう、情報と操作をまとめるクラスです。
 class Player:
-    # __init__ の処理を定義する
+    # Playerは、毎回の移動で初期位置へ戻さないよう、作成時の準備を__init__、位置変更をmoveに分けます。selfは作成する自機1機を指します。
     def __init__(self):
-        # rect はrectangle（長方形）の略。位置・大きさと当たり判定に使います。
-        # self.rect に pygame.Rect(0, 0, 40, 40) を入れる
+        # rectはrectangle（長方形）の略。自機の位置・大きさと命中判定に使い、drawで三角形の3点を選ぶときも使います。
+        # pygame.Rectへ左端0・上端0・幅40・高さ40ピクセルを指定します。次のcenterで自機の初期位置へ移します。
         self.rect = pygame.Rect(0, 0, 40, 40)
-        # self.rect.center に (settings.PLAYER_X, settings.PLAYER_Y) を入れる
+        # center（中心）へ(settings.PLAYER_X, settings.PLAYER_Y)を指定し、幅と高さを変えず中心を移します。初期値(320, 400)なら左端300・上端380です。
         self.rect.center = (settings.PLAYER_X, settings.PLAYER_Y)
 
-        # speed は速さ。1回の更新で動く距離で、単位はピクセルです。
-        # self.speed に settings.PLAYER_SPEED を入れる
+        # speedは移動量。押した矢印の方向ごとに、更新1回で進むピクセル数です。
+        # Playerは作成時のsettings.PLAYER_SPEEDをself.speedへ持ち、後のmoveで使います。初期値は方向ごとに5ピクセルです。
         self.speed = settings.PLAYER_SPEED
 
         # hpはhit points（体力）の略。Playerは自機の体力をself.hpへ持ち、take_damageで命中した敵弾1発ごとに1減らします。
@@ -66,8 +66,8 @@ class Player:
 
     # 位置の情報を用意するだけでは自機の絵が出ないため、draw（描画）へ現在の位置に自機を描く処理を分けます。
     def draw(self, screen):
-        # screenは呼び出す側が指定した描画先です。points（点の一覧）は現在の自機の三角形を結ぶ3つの位置です。
-        # self.rect.midtopは上辺の真ん中、self.rect.bottomleftは左下、self.rect.bottomrightは右下で、pointsへその順に入れます。
+        # screenはBattle.drawが指定した描画先。points（点の一覧）は自機の三角形を結ぶ3点で、更新後のself.rectから選びます。
+        # midtop（上辺の中央）・bottomleft（左下）・bottomright（右下）の順です。初期位置なら(320, 380)・(300, 420)・(340, 420)です。
         points = [self.rect.midtop, self.rect.bottomleft, self.rect.bottomright]
         # polygon（多角形）は点を順に結ぶ図形。pygame.draw.polygonへ描画先screen・水色(100, 200, 255)・3点の一覧pointsを指定します。
         # 太さの指定がないので三角形の内側を塗ります。self.rectの長方形を描く操作や、ウィンドウの表示を更新する操作ではありません。
