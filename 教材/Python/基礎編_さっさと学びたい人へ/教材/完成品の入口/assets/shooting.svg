@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
+  <title id="title">完成ゲームのタイトル画面の構成</title>
+  <desc id="desc">公開サンプルのコードをもとにした画面構成図。実行画面の撮影ではありません。</desc>
+  <g font-family="sans-serif"><rect width="640" height="480" fill="#12121e"/><text x="320" y="237" text-anchor="middle" font-size="64" fill="white">SPACE SHOOTER</text><text x="320" y="291" text-anchor="middle" font-size="32" fill="#bbb">Defeat the boss!</text><rect x="220" y="330" width="200" height="60" fill="#466ebe"/><text x="320" y="374" text-anchor="middle" font-size="40" fill="white">START</text></g>
+</svg>

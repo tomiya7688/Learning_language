@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="760" viewBox="0 0 900 760" role="img" aria-labelledby="title desc">
+  <title id="title">Pg4の設定値で決まる自機と弾の位置</title>
+  <desc id="desc">幅640、高さ480のゲーム画面。左上が横0、縦0。横は右へ、縦は下へ増える。自機の中心は320、400、左上は300、380。弾を作った直後の中心は320、380、左上は317、370。初回の位置更新前の説明図で、実行画面の撮影ではない。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#9ed9ff" stroke-width="1.5"/></marker>
+  </defs>
+  <rect width="900" height="760" fill="#101827"/>
+  <g font-family="Meiryo, 'Noto Sans CJK JP', sans-serif" fill="#eef5ff">
+    <text x="40" y="40" font-size="27" font-weight="bold">設定値で決まる自機と弾の位置</text>
+    <text x="40" y="73" font-size="20">自機を動かさず、弾を作った直後の説明図（実行画面の撮影ではありません）</text>
+    <rect x="135" y="135" width="640" height="480" fill="#0a0a1e" stroke="#9ed9ff" stroke-width="2"/>
+    <text x="145" y="125" font-size="21">ゲーム画面の左上 (0, 0)</text>
+    <path d="M450 115H775" stroke="#9ed9ff" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="500" y="104" font-size="20">x（横）は右へ増える</text>
+    <path d="M110 145V600" stroke="#9ed9ff" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="40" y="250" font-size="20">y（縦）</text>
+    <text x="40" y="278" font-size="20">は下へ</text>
+    <text x="40" y="306" font-size="20">増える</text>
+    <text x="25" y="415" font-size="18">HEIGHT</text>
+    <text x="25" y="443" font-size="18">= 480</text>
+    <text x="360" y="646" font-size="21">WIDTH = 640ピクセル</text>
+    <g transform="translate(135 135)">
+      <rect x="300" y="380" width="40" height="40" fill="none" stroke="#8bb3c6" stroke-dasharray="4 3"/>
+      <polygon points="320,380 300,420 340,420" fill="#64c8ff"/>
+      <rect x="317" y="370" width="6" height="20" fill="#fff064"/>
+      <circle cx="320" cy="400" r="4" fill="#ffffff"/>
+    </g>
+    <path d="M455 515L510 465" fill="none" stroke="#fff064"/>
+    <text x="520" y="445" font-size="21" fill="#fff064">弾の中心 (320, 380)</text>
+    <text x="520" y="474" font-size="19" fill="#fff064">左上 (317, 370)・幅6・高さ20</text>
+    <path d="M455 535L510 550" fill="none" stroke="#64c8ff"/>
+    <text x="520" y="552" font-size="21" fill="#64c8ff">自機の中心 (320, 400)</text>
+    <text x="520" y="581" font-size="19" fill="#64c8ff">左上 (300, 380)・幅40・高さ40</text>
+    <text x="40" y="693" font-size="21">自機の幅・高さを引いた移動範囲：左端0〜600、上端0〜440</text>
+    <text x="40" y="728" font-size="20">弾は最初の表示前に上へ8ピクセル動き、中心が (320, 372) になります。</text>
+  </g>
+</svg>

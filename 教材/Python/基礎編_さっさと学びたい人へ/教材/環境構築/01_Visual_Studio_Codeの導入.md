@@ -1,0 +1,184 @@
+# 1-1. Visual Studio Code をインストールする
+
+> **「コードはどこに書くの？書いて、直して、動かせる場所が欲しい！」**
+
+Pythonのコードを書く場所が必要です。保存したファイルを開いて直し、同じ画面で実行結果も確認できると、書く・直す・試す作業を進めやすくなります。
+
+**Visual Studio Code（VS Code）は、コードを書いて保存するためのアプリです。** この教材ではVS Codeを使ってください。Pythonそのものは、次のページで用意します。
+
+VS Code は Windows / macOS / Linux で利用できます。
+
+公式サイト:
+
+- https://code.visualstudio.com/
+
+---
+
+## Windows
+
+1. ブラウザで[VS Code公式サイト](https://code.visualstudio.com/)を開いてください。VS Codeをダウンロードする画面が表示されます。
+2. VS Codeのダウンロード画面で、Windows用の **User Setup** を選んでダウンロードしてください。完了したら、エクスプローラーの「ダウンロード」フォルダに、`VSCodeUserSetup` から始まる `.exe` ファイルがあることを確認してください。
+3. エクスプローラーの「ダウンロード」フォルダで、`VSCodeUserSetup` から始まる `.exe` ファイルをダブルクリックしてください。VS Codeのインストール画面が開きます。
+4. VS Codeのインストール画面で、ライセンスを読み、同意する場合は同意する項目を選んで **次へ（Next）** を押してください。設定画面を順に確認し、**インストール（Install）** を押してください。完了画面が出たら **完了（Finish）** を押し、インストール画面が閉じることを確認してください。
+5. Windowsのスタートボタンをクリックし、検索欄へ `Visual Studio Code` と入力してください。検索結果の **Visual Studio Code** をクリックすると、VS Codeの編集画面が開きます。
+
+通常の個人利用では User Setup で問題ありません。
+
+VS Code の Windows 用 User Setup は、管理者権限なしでもインストールできます。
+
+---
+
+## macOS
+
+1. ブラウザで[VS Code公式サイト](https://code.visualstudio.com/)を開き、macOS用の `.dmg` をダウンロードしてください。Finderの「ダウンロード」フォルダに `.dmg` ファイルが保存されます。
+2. Finderの「ダウンロード」フォルダで、VS Codeの `.dmg` をダブルクリックしてください。`Visual Studio Code.app` がある画面が開きます。
+3. `.dmg` を開いた画面の `Visual Studio Code.app` を **アプリケーション（Applications）** フォルダへドラッグしてください。FinderのアプリケーションにVisual Studio Codeが追加されます。
+4. Finderの **アプリケーション（Applications）** で **Visual Studio Code** をダブルクリックしてください。VS Codeの編集画面が開きます。
+
+---
+
+## Linux
+
+Linux ではディストリビューションに合ったパッケージを使用してください。
+
+Ubuntu / Debian 系では `.deb`、Fedora / RHEL 系では `.rpm` が利用できます。
+
+Ubuntu / Debian 系の例:
+
+Linuxの「ファイル」で、VS Codeのインストーラーを保存したフォルダを開いてください。Ctrl + Lで上部の場所欄を表示し、Ctrl + Cでフォルダのパスをコピーしてください。下の `cd` コマンドの引用符の中へ、Ctrl + Shift + Vで貼り付けてください。
+
+1. OS のアプリ一覧から **端末（Terminal）** を開いてください。
+2. `cd "ダウンロードしたファイルを保存したフォルダのパス"` と入力し、Enter キーを押してください。引用符の中は、自分の保存先に置き換えてください。
+3. 次のコマンドの「ダウンロードしたファイル.deb」または「ダウンロードしたファイル.rpm」を、実際のファイル名に置き換えて、端末に入力してください。
+4. Enter キーを押してください。
+
+```bash
+sudo apt install ./ダウンロードしたファイル.deb
+```
+
+Fedora / RHEL 系の例:
+
+Linuxの「ファイル」で、VS Codeのインストーラーを保存したフォルダを開いてください。Ctrl + Lで上部の場所欄を表示し、Ctrl + Cでフォルダのパスをコピーしてください。下の `cd` コマンドの引用符の中へ、Ctrl + Shift + Vで貼り付けてください。
+
+1. OS のアプリ一覧から **端末（Terminal）** を開いてください。
+2. `cd "ダウンロードしたファイルを保存したフォルダのパス"` と入力し、Enter キーを押してください。引用符の中は、自分の保存先に置き換えてください。
+3. 次のコマンドの「ダウンロードしたファイル.deb」または「ダウンロードしたファイル.rpm」を、実際のファイル名に置き換えて、端末に入力してください。
+4. Enter キーを押してください。
+
+```bash
+sudo dnf install ./ダウンロードしたファイル.rpm
+```
+
+---
+
+## VS Code の表示を日本語にする
+
+VS Code のメニューやボタンを日本語で表示するには、**Japanese Language Pack** を入れます。たとえば、`File` メニューが「ファイル」と表示されるようになります。
+
+このように、VS Code に機能を追加するものを **拡張機能** といいます。
+
+1. VS Code を起動してください
+2. VS Code左側の四角が並んだ **Extensions（拡張機能）** アイコンをクリックしてください。拡張機能を探す画面が開きます。
+3. 開いた画面の検索欄に `Japanese Language Pack` と入力してください
+4. Microsoft が提供している [Japanese Language Pack](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja) を選んでください
+5. **Install（インストール）** を押してください
+6. 表示言語の変更や再起動の案内が出たら、案内に従って VS Code を再起動してください
+
+再起動したら、上部のメニューが「ファイル」「編集」などの日本語になっていることを確認してください。
+
+### 表示が英語のままの場合
+
+1. Windows / Linux では **Ctrl + Shift + P**、macOS では **Command + Shift + P** を押してください
+2. VS Codeの画面上部に、操作を検索して選ぶ入力欄が表示されます。この画面を **コマンドパレット** と呼びます。
+3. 入力欄に `Configure Display Language` と入力し、一覧に表示された同じ名前の項目を選んでください
+4. VS Codeの言語一覧から **日本語（ja）** を選び、再起動の案内に従ってください。
+
+表示言語の設定については、[VS Code の公式説明](https://code.visualstudio.com/docs/configure/locales) でも確認できます。
+
+---
+
+## Python 拡張機能を入れる
+
+VS Codeでコードの入力候補を表示し、実行に使うPythonを選ぶため、Python拡張機能を入れてください。
+
+1. VS Code 左側の **拡張機能** アイコンを開いてください
+2. 検索欄に `Python` と入力してください
+3. Microsoft が提供している [Python 拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-python.python) を選んでください
+4. **インストール（Install）** を押してください
+
+Python 拡張機能を入れると、コードを書くときに続きの候補を表示できます。また、VS Code でコードを動かすときに使う Python を選べます。
+
+Python を選ぶ操作は、Python をインストールしたあとの [1-3. VS Code が使う Python を確認する](./03_動作確認.md) で説明します。
+
+---
+
+## `code` コマンドについて
+
+文字を入力してコンピュータへ操作を指示する方法もあります。まず、その文字を入力する画面を開いてください。
+
+### Windows の検索から開く
+
+1. 画面下の検索欄、または虫眼鏡のアイコンをクリックしてください
+2. 検索欄が見当たらない場合は、Windows のスタートボタンをクリックしてください
+3. `PowerShell` と入力してください
+4. 検索結果の **Windows PowerShell** または **PowerShell** をクリックして開いてください
+5. PowerShellの画面に文字を入力できる場所が表示されます。
+
+このように、文字で操作を指示するための画面を、この教材では **ターミナル** と呼びます。
+そこへ入力する操作の指示を **コマンド** と呼びます。
+
+### VS Code の中で開く
+
+VS Code をすでに開いている場合は、その中でもターミナルを開けます。Windows / macOS / Linux で使える手順です。
+
+1. VS Code を起動してください
+2. 画面上部の **ターミナル（Terminal）** メニューをクリックしてください
+3. **新しいターミナル（New Terminal）** をクリックしてください
+4. VS Codeの画面下側に、文字を入力できるターミナルが表示されます。
+
+Python のコードを書く欄ではなく、今開いた文字を入力する場所へコマンドを入力してください。
+
+### コマンドで VS Code を開く
+
+開いたターミナルへ、次の1行を入力し、Enter キーを押してください。
+
+1. VS Code のターミナルを開いてください。表示されていなければ **表示（View）→ ターミナル（Terminal）** を選んでください。前の操作から続ける場合は、同じターミナルを使ってください。
+2. 次のコマンドを、そのターミナルに入力してください。
+3. Enter キーを押してください。
+
+```text
+code .
+```
+
+`PS C:\Users\sample>` など、すでに表示されている文字は入力しないでください。入力するのは `code .` だけです。
+
+これは「現在のフォルダを VS Code で開く」という意味です。
+
+Windows の通常のインストーラーでは `code` コマンドが PATH に追加されます。
+
+macOSで `code` コマンドが見つからない場合は、次の操作を行ってください。
+
+1. VS Codeを開き、**Command + Shift + P** を押してください。
+2. 画面上部に、操作を検索して選ぶ入力欄が表示されます。この画面が **コマンドパレット** です。
+3. 入力欄に `shell command` と入力してください。
+4. 一覧から **Shell Command: Install 'code' command in PATH** を選んでください。
+5. VS Codeを **Code → Quit Visual Studio Code** から終了してください。
+6. Finderの **アプリケーション（Applications）** フォルダで **Visual Studio Code** をダブルクリックして開いてください。
+7. 上部の **ターミナル（Terminal）→ 新しいターミナル（New Terminal）** を選んでください。
+8. 画面下に開いたターミナルへ `code .` と入力し、Enterキーを押してください。
+
+この設定の手順は、[VS CodeのmacOS向け公式説明](https://code.visualstudio.com/docs/setup/mac#launch-vs-code-from-the-command-line)でも確認できます。
+
+この機能は便利ですが、最初から必須ではありません。
+
+次:
+
+- [Python をインストールする](./02_Pythonの導入.md)
+
+---
+
+## 前後のページ
+
+← [1. 環境構築](./環境構築ガイド.md)
+
+[1-2. Pythonをインストールする](./02_Pythonの導入.md) →

@@ -3,12 +3,12 @@ name: pygame CI
 on:
   push:
     paths:
-      - "教材/Python/Pg*/**"
+      - "教材/Python/基礎編_ゆっくり学びたい人へ/教材/Pg*/**"
       - "tests/pygame_*.py"
       - ".github/workflows/pygame-ci.yml"
   pull_request:
     paths:
-      - "教材/Python/Pg*/**"
+      - "教材/Python/基礎編_ゆっくり学びたい人へ/教材/Pg*/**"
       - "tests/pygame_*.py"
       - ".github/workflows/pygame-ci.yml"
 
@@ -25,8 +25,21 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install pygame
-        run: python -m pip install --upgrade pip pygame
+      - name: Install pygame-ce
+        run: python -m pip install --upgrade pip pygame-ce
+
+      - name: Verify pygame-ce runtime
+        run: |
+          python - <<'PY'
+          from importlib.metadata import version
+          import pygame
+
+          if not getattr(pygame, "IS_CE", False):
+              raise SystemExit("pygame-ceではないpygameが読み込まれています")
+
+          print("pygame-ce:", version("pygame-ce"))
+          print("pygame module:", pygame.__file__)
+          PY
 
       - name: Compile pygame examples
         run: |
@@ -34,7 +47,7 @@ jobs:
           from pathlib import Path
           import py_compile
 
-          files = sorted(Path("教材/Python").glob("Pg*_*/**/*.py"))
+          files = sorted(Path("教材/Python/基礎編_ゆっくり学びたい人へ/教材").glob("Pg*_*/**/*.py"))
           if not files:
               raise SystemExit("pygameサンプルが見つかりません")
 

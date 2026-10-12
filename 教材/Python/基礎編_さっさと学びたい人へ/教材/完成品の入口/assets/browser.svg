@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320" role="img" aria-labelledby="title desc">
+  <title id="title">名前を入力すると挨拶を表示するブラウザアプリの画面構成</title>
+  <desc id="desc">公開サンプルのコードをもとにした画面構成図。実行画面の撮影ではありません。</desc>
+  <g font-family="sans-serif"><rect width="640" height="320" fill="white"/><text x="48" y="84" font-size="32" font-weight="bold" fill="#20232a">名前を入力してみよう</text><text x="48" y="139" font-size="18" fill="#20232a">名前</text><rect x="48" y="155" width="544" height="48" rx="6" fill="#f0f2f6" stroke="#a8adb7"/><text x="64" y="187" font-size="20" fill="#20232a">たろう</text><text x="48" y="254" font-size="20" fill="#20232a">こんにちは たろう</text></g>
+</svg>
