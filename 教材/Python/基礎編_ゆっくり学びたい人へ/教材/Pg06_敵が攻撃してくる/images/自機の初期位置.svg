@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 390" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 620" role="img" aria-labelledby="title desc">
   <title id="title">自機の初期位置と三角形に使う3点</title>
-  <desc id="desc">中心は320,400。位置管理用の長方形の左上は300,380で幅と高さは40。三角形は上辺の中央320,380、左下300,420、右下340,420を結ぶ。破線の長方形と赤い中心点は説明用でゲームには描かない。図は4倍に拡大している。</desc>
-  <rect width="760" height="390" fill="#f8fafc"/>
+  <desc id="desc">画面は幅640、高さ480。左上が0,0で、横の位置xは右、縦の位置yは下へ増える。下の画面全体の小図の自機を上の図で拡大している。自機の中心は320,400。位置管理用の長方形の左上は300,380で幅と高さは40。三角形は上辺の中央320,380、左下300,420、右下340,420を結ぶ。破線の長方形と赤い中心点は説明用でゲームには描かない。上の図は4倍に拡大している。</desc>
+  <rect width="760" height="620" fill="#f8fafc"/>
   <g font-family="sans-serif" font-size="17" fill="#172033">
     <text x="30" y="30">自機の初期位置を拡大した説明図（座標の単位：ピクセル）</text>
-    <polygon points="340,90 260,250 420,250" fill="rgb(100,200,255)" stroke="#167ca8" stroke-width="2"/>
+    <polygon points="340,90 260,250 420,250" fill="rgb(100,200,255)"/>
     <rect x="260" y="90" width="160" height="160" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="7 5"/>
     <circle cx="340" cy="170" r="4" fill="#dc2626"/>
     <g stroke="#64748b" stroke-width="1.5" fill="none">
@@ -23,5 +23,20 @@
     <text x="455" y="315">bottomright (340, 420)</text>
     <text x="30" y="350">破線の長方形と赤い中心点は説明用で、ゲームには描きません。</text>
     <text x="30" y="375">長方形の幅40・高さ40を、図では4倍に拡大しています。</text>
+    <text x="30" y="405">画面全体：幅640 × 高さ480ピクセル（下の小図は4分の1）</text>
+    <rect x="50" y="440" width="160" height="120" fill="#0a0a1e" stroke="#64748b"/>
+    <polygon points="130,535 125,545 135,545" fill="rgb(100,200,255)"/>
+    <rect x="122" y="532" width="16" height="16" fill="none" stroke="#dc2626" stroke-dasharray="3 2"/>
+    <g stroke="#64748b" stroke-width="1.5" fill="none">
+      <path d="M50 440 L235 440 M227 435 L235 440 L227 445"/>
+      <path d="M50 440 L50 580 M45 572 L50 580 L55 572"/>
+      <path d="M140 540 L245 500"/>
+    </g>
+    <text x="30" y="430">左上 (0, 0)</text>
+    <text x="245" y="445">横の位置xは右へ増えます →</text>
+    <text x="60" y="580">下端の位置は480</text>
+    <text x="30" y="605">縦の位置yは下へ増えます ↓</text>
+    <text x="255" y="500">赤い枠内の自機を上の図で拡大しています。</text>
+    <text x="255" y="525">下の小図の赤い枠も説明用です。</text>
   </g>
 </svg>
