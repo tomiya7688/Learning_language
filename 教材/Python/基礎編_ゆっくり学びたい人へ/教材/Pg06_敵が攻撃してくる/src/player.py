@@ -51,8 +51,8 @@ class Player:
 
     # 自機の位置から弾1発を作る処理と、弾一覧へ加える処理を分けるため、shoot（発射）へ弾の作成をまとめます。
     def shoot(self):
-        # self.rect.centerxは自機の横の中心、self.rect.topは上端。Bulletが作る弾の中心へ、この2つの位置を指定します。
-        # -settings.BULLET_SPEEDが弾の縦方向の移動量です。画面では縦の位置が下へ増えるので、負の値を足す弾は上へ動きます。
+        # self.rect.centerxは自機の横の中心、self.rect.topは上端。Bulletの中心へ指定するので、自機の初期位置なら弾の中心は(320, 380)です。
+        # -settings.BULLET_SPEEDは弾の縦方向の移動量。初期値8を負にした-8を指定し、Bullet.moveが更新1回で上へ8ピクセル動かします。
         # (6, 20)は弾の幅6・高さ20ピクセル、(255, 240, 100)は赤・緑・青の強さを0〜255で指定した黄色です。
         # returnが新しい弾1発を呼び出す側へ返します。戦闘が持つ自機の弾一覧へ追加するのはBattle.handle_eventです。
         return Bullet(self.rect.centerx, self.rect.top, -settings.BULLET_SPEED,
