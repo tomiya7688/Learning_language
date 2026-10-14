@@ -4,7 +4,7 @@
 # bulletsは自機の弾の一覧、enemiesは敵の一覧で、Battleが管理する元の一覧を受け取ります。
 def hit_enemies(bullets, enemies):
     # bullets[:]は自機弾の並びを別の一覧へ写します。弾そのものは新しく作らず、同じ弾1発を両方の一覧から使えます。
-    # hit_enemiesは確認用のコピーを読みます。元のbulletsから弾Aを外しても、コピーの次の弾Bを続けて選べます。
+    # hit_enemiesは確認用のコピーを読みます。元のbulletsから調べた弾を外しても、コピーに残る次の弾を続けて選べます。
     # 外側のforはbullets[:]から弾を1発ずつ選び、その1発をbullet（弾）という名前で使います。
     for bullet in bullets[:]:
         # hit_enemiesは弾を1発選ぶたびに、その時点の敵の一覧enemiesをenemies[:]でコピーします。
@@ -24,7 +24,7 @@ def hit_enemies(bullets, enemies):
                 # enemies.removeは当たった敵を、Battleが管理する元の敵一覧から外します。
                 # 以後、Battleはenemiesから外したenemyを移動・描画しません。
                 enemies.remove(enemy)
-                # hit_enemiesは自機弾1発につき敵1機で命中判定を止めます。除外した弾で別の敵を調べ続けないためです。
+                # hit_enemiesが同じ弾で次の敵への命中も調べると、既に外した弾を再びremoveしてValueError（一覧に指定した弾がないエラー）になります。
                 # breakは内側のfor enemy in enemies[:]（選んだ弾に重なる敵を探す繰り返し）だけを終えます。
                 # 外側のfor bullet in bullets[:]は続き、hit_enemiesは次の弾についてenemiesに残っている敵を調べます。
                 break
