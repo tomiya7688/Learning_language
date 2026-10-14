@@ -1,10 +1,10 @@
 # hit_enemiesは「弾が敵に重なったのに通り抜けた！」を防ぐため、重なった弾と敵を一覧から外します。
 # 敵の移動へ命中時の削除も混ぜると追いにくいため、命中時の処理をcollisions.pyへまとめます。
-# collisionsは衝突、hit_enemiesは敵への命中を扱う名前です。
+# collisions（コリジョンズ）は衝突、hit_enemiesは敵への命中、hit_playerは自機への命中を扱います。Battle.updateがこの2つの処理を実行します。
 # bulletsは自機の弾の一覧、enemiesは敵の一覧で、Battleが管理する元の一覧を受け取ります。
 def hit_enemies(bullets, enemies):
-    # bullets[:]は弾の一覧だけをコピーします。bullets[:]の各要素は、元のbulletsと同じ弾を指します。
-    # hit_enemiesがbulletsから弾を外しても、bullets[:]には調べる弾が残るため、次の弾を飛ばしません。
+    # bullets[:]は自機弾の並びを別の一覧へ写します。弾そのものは新しく作らず、同じ弾1発を両方の一覧から使えます。
+    # hit_enemiesは確認用のコピーを読みます。元のbulletsから調べた弾を外しても、コピーに残る次の弾を続けて選べます。
     # 外側のforはbullets[:]から弾を1発ずつ選び、その1発をbullet（弾）という名前で使います。
     for bullet in bullets[:]:
         # hit_enemiesは弾を1発選ぶたびに、その時点の敵の一覧enemiesをenemies[:]でコピーします。
@@ -24,7 +24,7 @@ def hit_enemies(bullets, enemies):
                 # enemies.removeは当たった敵を、Battleが管理する元の敵一覧から外します。
                 # 以後、Battleはenemiesから外したenemyを移動・描画しません。
                 enemies.remove(enemy)
-                # hit_enemiesが命中後も同じ弾で別の敵への命中を調べ続けると、重なった場合に同じ弾を2回removeしてエラーになります。
+                # hit_enemiesが同じ弾で次の敵への命中も調べ、その敵とも重なった場合、既に外した弾を再びremoveしてValueError（一覧に指定した弾がないエラー）になります。
                 # breakは内側のfor enemy in enemies[:]（選んだ弾に重なる敵を探す繰り返し）だけを終えます。
                 # 外側のfor bullet in bullets[:]は続き、hit_enemiesは次の弾についてenemiesに残っている敵を調べます。
                 break
