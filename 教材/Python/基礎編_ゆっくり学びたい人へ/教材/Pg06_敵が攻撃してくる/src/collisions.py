@@ -29,17 +29,17 @@ def hit_enemies(bullets, enemies):
                 # 外側のfor bullet in bullets[:]は続き、hit_enemiesは次の弾についてenemiesに残っている敵を調べます。
                 break
 
-# hit_player（自機への命中）は、敵弾の移動へ一覧の除外と体力変更まで混ぜないよう、命中した弾の除外と自機へのダメージをまとめる処理です。
-# Battle.updateが、戦闘の敵弾一覧self.enemy_bulletsをbullets、自機self.playerをplayerへ指定します。各引数は元の一覧・自機と同じものを指します。
+# hit_player（自機への命中）は「同じ敵弾で何度も体力が減った！」を防ぐため、命中した敵弾を外し、自機の体力を減らします。
+# 敵弾の移動と命中後の対応を分けるため、Battle.updateがhit_playerを実行します。hit_playerは命中した敵弾1発ごとにplayer.take_damage()（自機の体力を1減らす処理）を実行します。
 def hit_player(bullets, player):
-    # hit_playerは一覧から弾を外しても次の弾を飛ばさないよう、bullets[:]で敵弾の一覧だけをコピーします。弾自体を新しく作る操作ではありません。
-    # forがコピーbullets[:]の各弾をbullet（選んだ弾）へ1発ずつ選びます。元のbulletsとコピーは同じ弾を指します。
+    # bulletsはBattleの敵弾一覧self.enemy_bullets、playerはBattleの自機self.playerです。hit_playerは新しい弾や自機を作りません。
+    # bullets[:]はfor開始時の敵弾一覧のコピーです。hit_playerは弾を作り直しません。hit_playerが元の一覧から弾を外しても、forはコピーから次の弾を選べます。
     for bullet in bullets[:]:
-        # rectはrectangle（長方形）の略。colliderectが選んだ弾bullet.rectと自機player.rectの長方形に面積の重なりがあるかを返します。
-        # hit_playerはTrue（重なる）の場合だけ、元の敵弾一覧からの除外と自機へのダメージを行います。辺だけの接触や離れた場合はFalseで、弾と体力を変更しません。
+        # rectは位置と大きさを持つ長方形です。colliderectは選んだ敵弾bullet.rectと自機player.rectの内側が重なるかを調べます。
+        # colliderectは重なればTrue、辺だけの接触や離れた場合はFalseを返します。ifはTrueのときだけ、下の除外と体力変更を行います。
         if bullet.rect.colliderect(player.rect):
-            # removeが選んだ弾bulletを元のbullets、つまりBattleのself.enemy_bulletsから直接外します。以後その弾は移動・描画・再判定されません。
+            # removeは指定した弾を一覧から外す操作です。hit_playerは元の敵弾一覧bulletsから、命中した弾bulletを外します。
             bullets.remove(bullet)
-            # Player.take_damageが指定された自機playerのHP（体力）を1減らします。命中した弾を外すので、同じ弾で次の更新も体力を減らしません。
-            # hit_playerにはbreak（繰り返しの打ち切り）やHPの確認がないため、コピーに残る次の弾も調べ、命中した弾ごとに体力を減らします。
+            # player.take_damage()は自機の体力を1減らします。外した敵弾は元の一覧に残らず、次の更新の命中判定に入りません。
+            # hit_playerはbreak（繰り返しの打ち切り）を使いません。hit_playerは自機の体力が0以下でもコピーに残る敵弾を調べ、命中ごとにplayer.take_damage()を実行します。
             player.take_damage()
