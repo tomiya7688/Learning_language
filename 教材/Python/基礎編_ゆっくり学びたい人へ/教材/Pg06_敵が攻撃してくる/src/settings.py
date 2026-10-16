@@ -13,22 +13,22 @@ PLAYER_X = 320
 # PLAYER_Y は自機を最初に置く中心位置です。画面上端からの距離をピクセルで表します。
 # PLAYER_Y に 400 を入れる
 PLAYER_Y = 400
-# PLAYER_SPEED は、画面更新1回で押した矢印の方向へ進む距離です（ピクセル）。
-# 縦と横を同時に押すと、それぞれの方向へ PLAYER_SPEED だけ進みます
-# PLAYER_SPEED に 5 を入れる
+# PLAYER_SPEEDは自機が矢印の方向ごとに更新1回で進む量（ピクセル）です。Playerは作成時にこの値を保存します。
+# Player.moveは右と上を同時に押すと横へ5・縦へ5動かします。斜めの直線距離は約7.1で、横だけの5より長くなります（画面端以外）。
+# Player.moveは画面端では自機を画面内へ戻すため、矢印の方向へ進む量がPLAYER_SPEED未満になる場合があります。
 PLAYER_SPEED = 5
-# BULLET_SPEED は自機の弾が1回の画面更新で動く距離（ピクセル）です。
-# player.py はこの値を負にし、自機の弾を上へ動かします。
-# BULLET_SPEED に 8 を入れる
+# BULLET_SPEEDは自機弾の上への移動量の大きさ（ピクセル/更新1回）です。Player.shootは8を負の-8にして弾へ保存します。
+# Bullet.moveは弾の上端の縦位置へ-8を足すので、自機弾は上へ8動きます。縦位置は画面上端0から下ほど大きくなります。
+# Player.shootはBULLET_SPEEDが12なら-12を新しい自機弾へ保存し、その弾は更新1回で上へ12ピクセル動きます。
 BULLET_SPEED = 8
-# ENEMY_SPEED は通常の敵が画面を1回更新する間に下へ動く距離です。単位はピクセルです。
-# ENEMY_SPEED に 1 を入れる
+# ENEMY_SPEEDはこの章の敵が下へ進む量（ピクセル/更新1回）です。Enemyは作成時にこの値を保存します。
+# Enemy.moveは敵の上端の縦位置へ保存した移動量を足します。値1なら下へ1、値2なら下へ2ピクセル動きます。
 ENEMY_SPEED = 1
 # PLAYER_HPは自機の初期体力です。Player.take_damageは命中した敵弾1発ごとに自機の体力を1減らし、Game.runは体力0以下で終了します。
 # Player.__init__は作成時にsettings.PLAYER_HPを自機へ保存します。3なら合計3発、5なら合計5発の命中で体力0になります。
 PLAYER_HP = 3
-# ENEMY_BULLET_SPEED は通常の敵の弾が画面を1回更新する間に下へ動く距離です。単位はピクセルです。
-# ENEMY_BULLET_SPEED に 4 を入れる
+# ENEMY_BULLET_SPEEDは敵弾の下への移動量（ピクセル/更新1回）です。Enemy.shootは4を正のまま新しい弾へ保存します。
+# Bullet.moveは敵弾の上端の縦位置へ保存した移動量を足します。値4なら下へ4、値6なら下へ6ピクセル動きます。
 ENEMY_BULLET_SPEED = 4
 # ENEMY_FIRE_INTERVALは、Battleが敵全体で共有する発射間隔（更新回数）です。Battleの敵一覧に残る敵は同じ更新で一斉に撃ちます。
 # Game.runが毎秒60回更新できる場合、発射間隔90回は約1.5秒、60回は約1秒です。Battleは更新回数を数えるため、更新が遅いほど秒数は長くなります。
