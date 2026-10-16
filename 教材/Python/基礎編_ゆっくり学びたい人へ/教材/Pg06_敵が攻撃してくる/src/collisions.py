@@ -32,14 +32,14 @@ def hit_enemies(bullets, enemies):
 # hit_player（自機への命中）は「同じ敵弾で何度も体力が減った！」を防ぐため、命中した敵弾を外し、自機の体力を減らします。
 # 敵弾の移動と命中後の対応を分けるため、Battle.updateがhit_playerを実行します。hit_playerは命中した敵弾1発ごとにplayer.take_damage()（自機の体力を1減らす処理）を実行します。
 def hit_player(bullets, player):
-    # bulletsはBattleの敵弾一覧self.enemy_bullets、playerはBattleの自機self.playerです。新しい弾や自機は作りません。
-    # bullets[:]はfor開始時の敵弾一覧のコピーです。弾を作り直さず、元の一覧から弾を外してもコピーから次の弾を選べます。
+    # bulletsはBattleの敵弾一覧self.enemy_bullets、playerはBattleの自機self.playerです。hit_playerは新しい弾や自機を作りません。
+    # bullets[:]はfor開始時の敵弾一覧のコピーです。hit_playerは弾を作り直しません。hit_playerが元の一覧から弾を外しても、forはコピーから次の弾を選べます。
     for bullet in bullets[:]:
         # rectは位置と大きさを持つ長方形です。colliderectは選んだ敵弾bullet.rectと自機player.rectの内側が重なるかを調べます。
         # colliderectは重なればTrue、辺だけの接触や離れた場合はFalseを返します。ifはTrueのときだけ、下の除外と体力変更を行います。
         if bullet.rect.colliderect(player.rect):
-            # removeは指定した弾を一覧から外す操作です。元の敵弾一覧bulletsから、命中した弾bulletを外します。
+            # removeは指定した弾を一覧から外す操作です。hit_playerは元の敵弾一覧bulletsから、命中した弾bulletを外します。
             bullets.remove(bullet)
             # player.take_damage()は自機の体力を1減らします。外した敵弾は元の一覧に残らず、次の更新の命中判定に入りません。
-            # hit_playerはbreak（繰り返しの打ち切り）を使いません。自機の体力が0以下でも、コピーに残る敵弾を調べ、命中した分だけ体力を減らします。
+            # hit_playerはbreak（繰り返しの打ち切り）を使いません。hit_playerは自機の体力が0以下でもコピーに残る敵弾を調べ、命中ごとにplayer.take_damage()を実行します。
             player.take_damage()
