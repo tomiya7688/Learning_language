@@ -19,7 +19,7 @@ PLAYER_Y = 400
 PLAYER_SPEED = 5
 # BULLET_SPEEDは自機弾の上への移動量の大きさ（ピクセル/更新1回）です。配布時の値8なら、Player.shootは負の-8を新しい弾へ指定します。
 # 配布時の値8なら、Bullet.moveは弾の上端の縦位置へ-8を足し、自機弾を上へ8動かします。縦位置は画面上端0から下ほど大きくなります。
-# Player.shootはBULLET_SPEEDが12なら-12を新しい自機弾へ保存し、その弾は更新1回で上へ12ピクセル動きます。
+# BULLET_SPEEDが12ならPlayer.shootは-12をBulletへ指定し、Bullet.__init__が保存します。Bullet.moveはその弾を更新1回で上へ12動かします。
 BULLET_SPEED = 8
 # ENEMY_SPEEDはこの章の敵が下へ進む量（ピクセル/更新1回）です。Enemyは作成時にこの値を保存します。
 # Enemy.moveは敵の上端の縦位置へ保存した移動量を足します。値1なら下へ1、値2なら下へ2ピクセル動きます。
