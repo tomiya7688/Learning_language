@@ -5,7 +5,7 @@ WIDTH = 640
 # Gameはsettings.WIDTHとsettings.HEIGHTを使い、配布時の値なら幅640・高さ480の画面を作ります。
 HEIGHT = 480
 # FPSはframes per second（1秒あたりの画面更新回数）の略。このゲームでは更新回数の上限を指定します。
-# Game.runはsettings.FPSをClock.tickへ指定して毎秒最大60回に抑えます。実際の更新が毎秒60回になる保証はありません。
+# Game.runはsettings.FPSをClock.tickへ指定して更新回数の上限を設定します。配布時のFPSが60なら、Game.runの更新回数は毎秒最大60回で、実際の更新回数が毎秒60回になる保証はありません。
 FPS = 60
 # PLAYER_X は自機を最初に置く中心位置です。画面左端からの距離をピクセルで表します。
 # Player.__init__はsettings.PLAYER_Xを自機の横の中心へ使います。値320なら、幅640の画面の左右中央です。
