@@ -1,14 +1,18 @@
-# 1つ目の入力を文字列として受け取り、first_text という名前を付ける
-first_text = input("1つ目の金額を入力してください: ")
-# 2つ目の入力を文字列として受け取り、second_text という名前を付ける
-second_text = input("2つ目の金額を入力してください: ")
+# number1 は「1つ目の数」という意味の変数
+# number1 に「1つ目の数字を入力してください: 」と表示して入力された文字列を入れる
+number1 = input("1つ目の数字を入力してください: ")
+# number2 は「2つ目の数」という意味の変数
+# number2 に「2つ目の数字を入力してください: 」と表示して入力された文字列を入れる
+number2 = input("2つ目の数字を入力してください: ")
+# 作り方と10・20を入力した場合の表示は、同じフォルダの「数値と計算.md」を参照
+# number1 の文字列を、小数部分を持たない数（整数）に変換し、number1 に入れ直す
+number1 = int(number1)
+# number2 の文字列を整数に変換し、number2 に入れ直す
+number2 = int(number2)
 
-# 入力された文字列を整数に変換し、計算に使う名前を付ける
-first_price = int(first_text)
-second_price = int(second_text)
+# answer は「答え」という意味の変数
+# answer に number1 と number2 を足した値を入れる
+answer = number1 + number2
 
-# 2つの金額を足し、合計に total という名前を付ける
-total = first_price + second_price
-
-# ターミナルに合計金額を表示する
-print("合計は", total, "円です")
+# 「答えは」と answer の値と「です」を、間に空白を入れてターミナルに表示する
+print("答えは", answer, "です")
