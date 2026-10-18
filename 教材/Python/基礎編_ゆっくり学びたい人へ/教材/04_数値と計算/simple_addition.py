@@ -1,11 +1,14 @@
-# 1つ目の入力を受け取り、int() で整数に変換して number1 に保存します。
-number1 = int(input("1つ目の数字を入力してください: "))
+# 1つ目の入力を文字列として受け取り、first_text という名前を付ける
+first_text = input("1つ目の金額を入力してください: ")
+# 2つ目の入力を文字列として受け取り、second_text という名前を付ける
+second_text = input("2つ目の金額を入力してください: ")
 
-# 2つ目の入力も整数に変換して number2 に保存します。
-number2 = int(input("2つ目の数字を入力してください: "))
+# 入力された文字列を整数に変換し、計算に使う名前を付ける
+first_price = int(first_text)
+second_price = int(second_text)
 
-# number1 と number2 を足し、その結果を answer に保存します。
-answer = number1 + number2
+# 2つの金額を足し、合計に total という名前を付ける
+total = first_price + second_price
 
-# answer に保存した計算結果を表示します。
-print("答えは", answer, "です")
+# ターミナルに合計金額を表示する
+print("合計は", total, "円です")
