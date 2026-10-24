@@ -14,22 +14,30 @@ class Student:
         print(self.name, ":", self.score)
 
 
-# Student（生徒）から、たろうのインスタンスを作ります。
-# student（たろうの生徒データを使う名前）で、この生徒のインスタンスを使えるようにします。
-student = Student("たろう", 80)
+# main（主な処理）に、生徒を作って表示する順序をまとめます。
+def main():
+    # Student（生徒）から、たろうのインスタンスを作ります。
+    # student（たろうの生徒データを使う名前）で、この生徒のインスタンスを使えるようにします。
+    student = Student("たろう", 80)
 
-# student（たろうの生徒データ）の name（名前）を表示します。
-print(student.name)
+    # student（たろうの生徒データ）の name（名前）を表示します。
+    print(student.name)
 
-# student（たろうの生徒データ）の score（点数）を表示します。
-print(student.score)
+    # student（たろうの生徒データ）の score（点数）を表示します。
+    print(student.score)
 
-# student（たろうの生徒データ）の show_result（結果表示）を実行します。
-student.show_result()
+    # student（たろうの生徒データ）の show_result（結果表示）を実行します。
+    student.show_result()
 
-# Student（生徒）から、はなこのインスタンスを作ります。
-# student2（はなこの生徒データを使う名前）で、この生徒のインスタンスを使えるようにします。
-student2 = Student("はなこ", 95)
+    # Student（生徒）から、はなこのインスタンスを作ります。
+    # student2（はなこの生徒データを使う名前）で、この生徒のインスタンスを使えるようにします。
+    student2 = Student("はなこ", 95)
 
-# student2（はなこの生徒データ）の show_result（結果表示）を実行します。
-student2.show_result()
+    # student2（はなこの生徒データ）の show_result（結果表示）を実行します。
+    student2.show_result()
+
+
+# このファイルを直接実行した場合かどうかを調べます。
+if __name__ == "__main__":
+    # 生徒を作って表示する main を呼び出します。
+    main()
