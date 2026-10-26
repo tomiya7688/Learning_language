@@ -1,37 +1,36 @@
-# 名前と数学・国語の点数をまとめる Student（生徒）クラスを定義します。
+# 生徒のクラス（Student）を宣言します。
 class Student:
-    # 生徒データの初期設定をする __init__ 関数を定義します。
+    # 初期設定の関数（__init__）を宣言します。
     def __init__(self, name, math_score, kokugo_score):
-        # name（名前）で受け取った値を、self（設定中の生徒データ）の name（名前）にします。
+        # 受け取った名前（name）を、生徒自身（self）の名前に設定します。
         self.name = name
-        # math_score で受け取った数学の点数を、この生徒の math_score にします。
+        # 受け取った数学の点数（math_score）を、生徒自身の数学の点数に設定します。
         self.math_score = math_score
-        # kokugo_score で受け取った国語の点数を、この生徒の kokugo_score にします。
+        # 受け取った国語の点数（kokugo_score）を、生徒自身の国語の点数に設定します。
         self.kokugo_score = kokugo_score
 
-    # 生徒の結果を表示する show_result 関数を定義します。
+    # 生徒の結果を見せる関数（show_result）を宣言します。
     def show_result(self):
-        # self.name は生徒自身の名前、self.math_score は数学、self.kokugo_score は国語の点数です。
-        # この生徒の名前と2教科の点数を1行にして表示します。
+        # 生徒自身の名前・数学の点数・国語の点数を、1行にして表示します。
         print(f"{self.name}: 数学 {self.math_score}点、国語 {self.kokugo_score}点")
 
 
-# 主な処理をする main 関数を定義します。
+# 主な処理をする関数（main）を宣言します。
 def main():
-    # hanako（はなこ）という変数を、この行で作ります。
-    # 名前「Hanako」、数学80点、国語50点の生徒データを作り、hanako に代入します。
-    hanako = Student("Hanako", 80, 50)
-    # taro（たろう）という変数を、この行で作ります。
-    # 名前「Taro」、数学40点、国語60点の生徒データを作り、taro に代入します。
-    taro = Student("Taro", 40, 60)
+    # はなこの変数（hanako）を宣言します。
+    # 名前「Hanako」、数学80点、国語50点の生徒を代入します。
+    hanako = Student(name="Hanako", math_score=80, kokugo_score=50)
+    # たろうの変数（taro）を宣言します。
+    # 名前「Taro」、数学40点、国語60点の生徒を代入します。
+    taro = Student(name="Taro", math_score=40, kokugo_score=60)
 
-    # hanako（はなこのデータ）の show_result（結果表示）関数を実行します。
+    # はなこの結果を見せる関数（hanako.show_result）を実行します。
     hanako.show_result()
-    # taro（たろうのデータ）の show_result（結果表示）関数を実行します。
+    # たろうの結果を見せる関数（taro.show_result）を実行します。
     taro.show_result()
 
 
 # このファイルを直接実行した場合だけ、main() を実行します。
 if __name__ == "__main__":
-    # 主な処理をする main 関数を実行します。
+    # 主な処理をする関数（main）を実行します。
     main()
