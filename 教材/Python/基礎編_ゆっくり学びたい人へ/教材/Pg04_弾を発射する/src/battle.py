@@ -7,7 +7,7 @@ import settings
 # 同じsrcフォルダのplayer.pyから、自機1機の位置・移動・発射・描画をまとめたPlayerを読み込みます。
 from player import Player
 
-# クラスは情報と操作をまとめた定義です。Battleは1回の戦闘に使う自機と弾を管理します。
+# クラスは情報と操作をまとめた宣言です。Battleは1回の戦闘に使う自機と弾を管理します。
 class Battle:
     # __init__は、game.pyがBattle()を作るときにPythonが実行する初期設定です。
     # selfは今作る戦闘。self.playerやself.bulletsに、その戦闘が使う自機と弾一覧を持たせます。

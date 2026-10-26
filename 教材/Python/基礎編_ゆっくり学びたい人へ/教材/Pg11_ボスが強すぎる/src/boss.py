@@ -5,9 +5,9 @@ import settings
 # bullet から Bullet を読み込む
 from bullet import Bullet
 
-# Boss という型を定義する
+# Boss という型を宣言する
 class Boss:
-    # __init__ の処理を定義する
+    # __init__ の処理を宣言する
     def __init__(self):
         # rect はrectangle（長方形）の略。位置・大きさと当たり判定に使います。
         # self.rect に pygame.Rect(0, 0, 120, 80) を入れる
@@ -25,7 +25,7 @@ class Boss:
         # self.fire_interval に settings.BOSS_FIRE_INTERVAL を入れる
         self.fire_interval = settings.BOSS_FIRE_INTERVAL
 
-    # ready_to_fire の処理を定義する
+    # ready_to_fire の処理を宣言する
     def ready_to_fire(self):
         # self.fire_timer に 1 を足す
         self.fire_timer += 1
@@ -39,7 +39,7 @@ class Boss:
         # False を返す
         return False
 
-    # shoot の処理を定義する
+    # shoot の処理を宣言する
     def shoot(self):
         # Bullet(self.rect.centerx, self.rect.bottom, settings.BOSS_BULLET_SPEED, (settings.BOSS_BULLET_WIDTH, settings.BOSS_BULLET_HEIGHT), (255, 80, 80)) を返す
         return Bullet(self.rect.centerx, self.rect.bottom,
@@ -47,12 +47,12 @@ class Boss:
                       (settings.BOSS_BULLET_WIDTH, settings.BOSS_BULLET_HEIGHT),
                       (255, 80, 80))
 
-    # take_damage の処理を定義する
+    # take_damage の処理を宣言する
     def take_damage(self):
         # self.hp から 1 を引く
         self.hp -= 1
 
-    # draw の処理を定義する
+    # draw の処理を宣言する
     def draw(self, screen):
         # pygame.draw.rect(screen, (180, 80, 255), self.rect) を実行する
         pygame.draw.rect(screen, (180, 80, 255), self.rect)

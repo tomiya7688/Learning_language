@@ -29,7 +29,7 @@ def hit_enemies(bullets, enemies):
                 # 外側のfor bullet in bullets[:]は続き、hit_enemiesは次の弾についてenemiesに残っている敵を調べます。
                 break
 
-# hit_player の処理を定義する
+# hit_player の処理を宣言する
 def hit_player(bullets, player):
     # bullets[:] から bullet を1つずつ取り出して繰り返す
     for bullet in bullets[:]:

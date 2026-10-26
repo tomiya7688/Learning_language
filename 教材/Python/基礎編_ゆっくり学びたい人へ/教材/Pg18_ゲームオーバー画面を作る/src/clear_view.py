@@ -5,9 +5,9 @@ from ui import draw_centered_text
 # ui から Button を読み込む
 from ui import Button
 
-# ClearScreen という型を定義する
+# ClearScreen という型を宣言する
 class ClearScreen:
-    # __init__ の処理を定義する
+    # __init__ の処理を宣言する
     def __init__(self, game):
         # game はゲーム全体を表し、ゲーム画面や実行状態を持ちます。
         # self.game に game を入れる
@@ -25,19 +25,19 @@ class ClearScreen:
             Button((220, 330, 200, 60), 'BACK', game.show_menu),
         ]
 
-    # handle_event の処理を定義する
+    # handle_event の処理を宣言する
     def handle_event(self, event):
         # self.buttons から button を1つずつ取り出して繰り返す
         for button in self.buttons:
             # button.handle_event(event) を実行する
             button.handle_event(event)
 
-    # update の処理を定義する
+    # update の処理を宣言する
     def update(self):
         # この処理を終える
         return
 
-    # draw の処理を定義する
+    # draw の処理を宣言する
     def draw(self, screen):
         # screen.fill((10, 10, 30)) を実行する
         screen.fill((10, 10, 30))

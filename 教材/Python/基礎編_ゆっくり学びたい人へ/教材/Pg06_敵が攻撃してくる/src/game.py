@@ -2,7 +2,7 @@
 import pygame
 # Pythonが、同じsrcのsettings.pyから画面の幅・高さ・更新回数の上限を読み込みます。
 import settings
-# Pythonが、同じsrcのbattle.pyから自機・敵・弾と更新をまとめるBattle（戦闘）の定義を読み込みます。
+# Pythonが、同じsrcのbattle.pyから自機・敵・弾と更新をまとめるBattle（戦闘）の宣言を読み込みます。
 from battle import Battle
 
 # Game（ゲーム全体）は、戦闘の機体や弾とウィンドウの操作を混ぜないよう、描画先・更新の間隔・続けるかの情報と操作をまとめるクラスです。

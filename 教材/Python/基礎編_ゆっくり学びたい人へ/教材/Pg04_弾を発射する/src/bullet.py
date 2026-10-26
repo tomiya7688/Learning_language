@@ -7,7 +7,7 @@ import settings
 # Battle.handle_eventがself.player.shoot()で作った弾を、Battleの自機の弾一覧self.bulletsへ追加します。
 # Battle.move_bulletsが、Battleの弾一覧self.bullets（自機の弾）から画面外の弾を外します。
 class Bullet:
-    # Bulletは、移動のたびに開始位置へ戻さないよう、作成時の情報の準備を__init__、毎回の位置変更をmoveに分けて定義します。
+    # Bulletは、移動のたびに開始位置へ戻さないよう、作成時の情報の準備を__init__、毎回の位置変更をmoveに分けて宣言します。
     # selfは作成する弾1発。PythonがBullet(...)を実行すると、この弾の__init__へ指定した値を渡します。
     def __init__(self, x, y, speed, size, color):
         # x（横）・y（縦）は弾の中心位置で、ゲーム画面の左端・上端から右・下へ数えるピクセル数です。
@@ -37,7 +37,7 @@ class Bullet:
         # 下端が0と同じなら上側の比較はFalse、上端が画面の高さと同じなら下側の比較はFalseです。横の位置は調べません。
         return self.rect.bottom < 0 or self.rect.top > settings.HEIGHT
 
-    # Bulletは、位置の情報だけでは弾の絵が出ないため、位置変更をmove、描画先へ色を塗る処理をdrawに分けて定義します。
+    # Bulletは、位置の情報だけでは弾の絵が出ないため、位置変更をmove、描画先へ色を塗る処理をdrawに分けて宣言します。
     def draw(self, screen):
         # screenはBattle.draw_bulletsが指定した描画先。pygame.draw.rectへ描画先・弾の保存済みの色・位置と大きさを持つ長方形を指定します。
         # 太さを指定していないので、弾の長方形の内側を塗ります。弾の位置変更や、ウィンドウの表示更新は行いません。

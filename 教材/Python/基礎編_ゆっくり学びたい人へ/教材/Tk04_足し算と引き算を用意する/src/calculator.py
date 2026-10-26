@@ -2,9 +2,9 @@
 import tkinter
 
 
-# 電卓の入力欄・選択中の計算方法・結果表示・計算処理をまとめる CalculatorApp クラスを定義する
+# 電卓の入力欄・選択中の計算方法・結果表示・計算処理をまとめる CalculatorApp クラスを宣言する
 class CalculatorApp:
-    # CalculatorApp の画面と部品を用意する __init__ を定義する
+    # CalculatorApp の画面と部品を用意する __init__ を宣言する
     def __init__(self):
         # self.selected_operator（選択中の演算子）に足し算を表す「+」を入れる
         self.selected_operator = "+"
@@ -76,21 +76,21 @@ class CalculatorApp:
         # self.result_label を self.window 内に配置する
         self.result_label.pack()
 
-    # 足し算を選び、選択中の表示を更新する select_addition を定義する
+    # 足し算を選び、選択中の表示を更新する select_addition を宣言する
     def select_addition(self):
         # self.selected_operator に足し算を表す「+」を入れる
         self.selected_operator = "+"
         # self.operator_label の表示を「選択中: +」に変える
         self.operator_label.config(text="選択中: +")
 
-    # 引き算を選び、選択中の表示を更新する select_subtraction を定義する
+    # 引き算を選び、選択中の表示を更新する select_subtraction を宣言する
     def select_subtraction(self):
         # self.selected_operator に引き算を表す「-」を入れる
         self.selected_operator = "-"
         # self.operator_label の表示を「選択中: -」に変える
         self.operator_label.config(text="選択中: -")
 
-    # 入力された2つの数字を選択中の演算子で計算し、答えを表示する calculate を定義する
+    # 入力された2つの数字を選択中の演算子で計算し、答えを表示する calculate を宣言する
     def calculate(self):
         # number1_text（1つ目の入力文字列）に self.number1_entry に入力された文字列を入れる
         number1_text = self.number1_entry.get()
@@ -121,7 +121,7 @@ class CalculatorApp:
         # self.result_label の表示を「答え: 」と answer の値を含む文字列に変える
         self.result_label.config(text=f"答え: {answer}")
 
-    # ウィンドウを表示する run を定義する
+    # ウィンドウを表示する run を宣言する
     def run(self):
         # self.window を表示し、利用者の操作を待ち続ける
         self.window.mainloop()

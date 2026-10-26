@@ -1,17 +1,17 @@
-# PlayingScreen という型を定義する
+# PlayingScreen という型を宣言する
 class PlayingScreen:
-    # __init__ の処理を定義する
+    # __init__ の処理を宣言する
     def __init__(self, game):
         # game はゲーム全体を表し、ゲーム画面や実行状態を持ちます。
         # self.game に game を入れる
         self.game = game
 
-    # handle_event の処理を定義する
+    # handle_event の処理を宣言する
     def handle_event(self, event):
         # self.game.battle.handle_event(event) を実行する
         self.game.battle.handle_event(event)
 
-    # update の処理を定義する
+    # update の処理を宣言する
     def update(self):
         # self.game.battle.update() を実行する
         self.game.battle.update()
@@ -28,7 +28,7 @@ class PlayingScreen:
             # self.game.show_clear() を実行する
             self.game.show_clear()
 
-    # draw の処理を定義する
+    # draw の処理を宣言する
     def draw(self, screen):
         # self.game.battle.draw(screen) を実行する
         self.game.battle.draw(screen)

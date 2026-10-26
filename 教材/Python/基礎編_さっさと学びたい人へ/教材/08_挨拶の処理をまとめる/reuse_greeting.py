@@ -1,5 +1,5 @@
 # greet は「挨拶する」、name は「名前」という意味
-# greet という名前で、name を受け取り、下の処理を行う関数を定義する
+# greet という名前で、name を受け取り、下の処理を行う関数を宣言する
 def greet(name):
     # 「こんにちは」と name を表示する
     print("こんにちは", name)
