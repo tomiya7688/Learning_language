@@ -51,9 +51,9 @@ sinとcosで変わるのは、角度を計算する一行です。入力確認�
 
 計算途中で `sin` を押す場合、入力中の角度だけをsinの値へ置き換え、入力済みの式は残します。たとえば `2 +` を保存した後に0度のsinを求めた場合、最後に「=」を押すと `2 + 0` の答えが出ます。sinの値を別の数字へ変える時に `2 +` まで消えると、式を最初から入力し直すことになります。数字と小数点の両方で同じ消去の判定をするため、`prepare_input`（次の入力を準備する）へまとめます。保存済みの式があれば入力中の値だけを消し、式がなければ前の計算全体を消します。
 
-入力欄、保存済みの式、角度を計算する操作、表示欄は、同じ電卓に関する情報と操作です。角度を読む場所と答えを表示する場所を別々に置くと、どの電卓の入力をどの電卓へ戻すかが対応しにくくなります。`CalculatorApp`（電卓アプリ）というクラスに、同じ電卓の情報と操作をまとめます。クラスは、同じ対象の情報と操作をまとめて定義する仕組みです。
+入力欄、保存済みの式、角度を計算する操作、表示欄は、同じ電卓に関する情報と操作です。角度を読む場所と答えを表示する場所を別々に置くと、どの電卓の入力をどの電卓へ戻すかが対応しにくくなります。`CalculatorApp`（電卓アプリ）というクラスに、同じ電卓の情報と操作をまとめます。クラスは、同じ対象の情報と操作をまとめて宣言する仕組みです。
 
-`CalculatorApp()` で作った個々の電卓を「インスタンス」と呼びます。クラス内の `self` は操作対象の電卓です。`self.calculation_parts` は保存済みの数値と計算記号の一覧、`self.replace_input` は次の数字ボタンか小数点ボタンで入力を置き換えるかを覚える情報です。sin/cos、数字入力、表示の処理は同じ `self` を使うので、操作する電卓がそろいます。クラス内で定義する関数を「メソッド」と呼びます。
+`CalculatorApp()` で作った個々の電卓を「インスタンス」と呼びます。クラス内の `self` は操作対象の電卓です。`self.calculation_parts` は保存済みの数値と計算記号の一覧、`self.replace_input` は次の数字ボタンか小数点ボタンで入力を置き換えるかを覚える情報です。sin/cos、数字入力、表示の処理は同じ `self` を使うので、操作する電卓がそろいます。クラス内で宣言する関数を「メソッド」と呼びます。
 
 計算記号を押した時の保存は `add_operator`（演算子を追加する）、四則演算の答えは `calculate`（計算する）、入力と式の消去は `clear`（消す）が担当します。演算子は「+」「-」「*」「/」など計算の種類を示す記号です。`select_addition` などのメソッドは、ボタンを押した時に対応する記号を `add_operator` へ指定します。
 
@@ -67,7 +67,7 @@ Tk10用として選んだ練習用フォルダを使い、その中の `src` に
 
 | ファイル | 担当 |
 | --- | --- |
-| [`calculator.py`](./src/calculator.py) | 表示欄、数字と計算記号の配置、入力確認、四則演算、sin/cosの処理を定義します。機能を変更するファイルです。 |
+| [`calculator.py`](./src/calculator.py) | 表示欄、数字と計算記号の配置、入力確認、四則演算、sin/cosの処理を宣言します。機能を変更するファイルです。 |
 | [`app.py`](./src/app.py) | 同じフォルダから `CalculatorApp` を読み込み、電卓を起動します。ターミナルで実行するファイルです。 |
 
 ### calculator.py：関数電卓の画面と計算
@@ -83,9 +83,9 @@ import math
 from functools import partial
 
 
-# 電卓の入力欄・計算途中の式・結果表示・計算処理をまとめる CalculatorApp クラスを定義する
+# 電卓の入力欄・計算途中の式・結果表示・計算処理をまとめる CalculatorApp クラスを宣言する
 class CalculatorApp:
-    # CalculatorApp の画面と部品を用意する __init__ を定義する
+    # CalculatorApp の画面と部品を用意する __init__ を宣言する
     def __init__(self):
         # self.calculation_parts（計算式の部品）に空のリストを入れる
         self.calculation_parts = []
@@ -104,7 +104,7 @@ class CalculatorApp:
         # 数字と計算記号のボタンを配置する self.create_buttons を呼び出す
         self.create_buttons()
 
-    # 入力欄・式・答えを配置する create_display を定義する
+    # 入力欄・式・答えを配置する create_display を宣言する
     def create_display(self):
         # self.number_label（数字の案内）に self.window 内の「数字（sin・cosは角度を度で入力）」というラベルを入れる
         self.number_label = tkinter.Label(
@@ -127,7 +127,7 @@ class CalculatorApp:
         # self.result_label を横へ広げ、上下に6ピクセルずつ間を空ける
         self.result_label.pack(fill="x", pady=6)
 
-    # 数字と計算記号のボタンを配置する create_buttons を定義する
+    # 数字と計算記号のボタンを配置する create_buttons を宣言する
     def create_buttons(self):
         # self.buttons_frame（ボタンの枠）に self.window 内の部品をまとめる枠を入れる
         self.buttons_frame = tkinter.Frame(self.window)
@@ -167,7 +167,7 @@ class CalculatorApp:
             # 「=」なら2列分、それ以外なら1列分の幅を指定して self.create_button を呼び出す
             self.create_button(text, row, column, command, 2 if text == "=" else 1)
 
-    # 指定した文字と処理のボタンを配置する create_button を定義する
+    # 指定した文字と処理のボタンを配置する create_button を宣言する
     def create_button(self, text, row, column, command, column_span=1):
         # column_span（使う列数）には、ボタンを広げる列の数が入り、省略した場合は1になる
         # button（ボタン）に text を表示し、押すと command を実行するボタンを入れる
@@ -178,7 +178,7 @@ class CalculatorApp:
             sticky="nsew", padx=4, pady=4
         )
 
-    # 次の数字入力のために前の値を消す prepare_input を定義する
+    # 次の数字入力のために前の値を消す prepare_input を宣言する
     def prepare_input(self):
         # self.replace_input が False なら、次の処理を実行する
         if not self.replace_input:
@@ -199,7 +199,7 @@ class CalculatorApp:
             # 同じ電卓の入力・計算式・結果表示を空にする self.clear を呼び出す
             self.clear()
 
-    # 入力欄へ数字を追加する append_digit を定義する
+    # 入力欄へ数字を追加する append_digit を宣言する
     def append_digit(self, digit):
         # digit（追加する数字）には、押された数字ボタンの文字列が入る
         # 次の数字入力のために前の値を消す self.prepare_input を呼び出す
@@ -209,7 +209,7 @@ class CalculatorApp:
         # self.result_label の表示を「答え:」に変える
         self.result_label.config(text="答え:")
 
-    # 入力欄へ小数点を追加する append_decimal_point を定義する
+    # 入力欄へ小数点を追加する append_decimal_point を宣言する
     def append_decimal_point(self):
         # 次の数字入力のために前の値を消す self.prepare_input を呼び出す
         self.prepare_input()
@@ -230,7 +230,7 @@ class CalculatorApp:
         # self.result_label の表示を「答え:」に変える
         self.result_label.config(text="答え:")
 
-    # 入力・計算式・結果表示を空にする clear を定義する
+    # 入力・計算式・結果表示を空にする clear を宣言する
     def clear(self):
         # self.calculation_parts の要素をすべて削除する
         self.calculation_parts.clear()
@@ -243,7 +243,7 @@ class CalculatorApp:
         # self.replace_input に False を入れる
         self.replace_input = False
 
-    # 入力欄を数値へ変換し、使えない入力を結果の欄で知らせる read_number を定義する
+    # 入力欄を数値へ変換し、使えない入力を結果の欄で知らせる read_number を宣言する
     def read_number(self, empty_message):
         # empty_message（空欄の案内）には、入力欄が空の場合に表示する文字列が入る
         # number_text（入力文字列）に self.number_entry の文字列から前後の空白を取り除いた文字列を入れる
@@ -273,7 +273,7 @@ class CalculatorApp:
         # 読み取った数値 number を返す
         return number
 
-    # 入力された数字と operator を計算式に追加する add_operator を定義する
+    # 入力された数字と operator を計算式に追加する add_operator を宣言する
     def add_operator(self, operator):
         # operator（演算子）には、この電卓のボタン処理が指定した計算記号が入る
         # number（読み取った数値）に、空欄の案内「次の数字を入力してください」を指定して self.read_number が返す値を入れる
@@ -301,27 +301,27 @@ class CalculatorApp:
         # self.replace_input に False を入れる
         self.replace_input = False
 
-    # 入力された数字と「+」を計算式に追加する select_addition を定義する
+    # 入力された数字と「+」を計算式に追加する select_addition を宣言する
     def select_addition(self):
         # 「+」を指定して self.add_operator を呼び出す
         self.add_operator("+")
 
-    # 入力された数字と「-」を計算式に追加する select_subtraction を定義する
+    # 入力された数字と「-」を計算式に追加する select_subtraction を宣言する
     def select_subtraction(self):
         # 「-」を指定して self.add_operator を呼び出す
         self.add_operator("-")
 
-    # 入力された数字と「*」を計算式に追加する select_multiplication を定義する
+    # 入力された数字と「*」を計算式に追加する select_multiplication を宣言する
     def select_multiplication(self):
         # 「*」を指定して self.add_operator を呼び出す
         self.add_operator("*")
 
-    # 入力された数字と「/」を計算式に追加する select_division を定義する
+    # 入力された数字と「/」を計算式に追加する select_division を宣言する
     def select_division(self):
         # 「/」を指定して self.add_operator を呼び出す
         self.add_operator("/")
 
-    # 計算式に最後の数字を追加し、掛け算と割り算を先に計算して答えを表示する calculate を定義する
+    # 計算式に最後の数字を追加し、掛け算と割り算を先に計算して答えを表示する calculate を宣言する
     def calculate(self):
         # number（読み取った数値）に、空欄の案内「最後の数字を入力してください」を指定して self.read_number が返す値を入れる
         number = self.read_number("最後の数字を入力してください")
@@ -426,7 +426,7 @@ class CalculatorApp:
         # self.replace_input に True を入れる
         self.replace_input = True
 
-    # 入力欄の角度からsinかcosを求める apply_trigonometry を定義する
+    # 入力欄の角度からsinかcosを求める apply_trigonometry を宣言する
     def apply_trigonometry(self, function_name):
         # function_name（計算名）には、ボタンが指定した「sin」か「cos」が入る
         # angle_degrees（度の角度）に、空欄の案内を指定して self.read_number が返す値を入れる
@@ -468,7 +468,7 @@ class CalculatorApp:
         # self.replace_input に True を入れる
         self.replace_input = True
 
-    # ウィンドウを表示する run を定義する
+    # ウィンドウを表示する run を宣言する
     def run(self):
         # self.window を表示し、利用者の操作を待ち続ける
         self.window.mainloop()
@@ -592,7 +592,7 @@ sin・cosボタンは、押すたびに入力欄にある数値を度の角度�
 元ファイル：[`calculator.py` の93〜102行](./src/calculator.py#L93-L102)。
 
 ```python
-    # 指定した文字と処理のボタンを配置する create_button を定義する
+    # 指定した文字と処理のボタンを配置する create_button を宣言する
     def create_button(self, text, row, column, command, column_span=1):
         # column_span（使う列数）には、ボタンを広げる列の数が入り、省略した場合は1になる
         # button（ボタン）に text を表示し、押すと command を実行するボタンを入れる
@@ -613,7 +613,7 @@ sin・cosボタンは、押すたびに入力欄にある数値を度の角度�
 元ファイル：[`calculator.py` の352〜392行](./src/calculator.py#L352-L392)。
 
 ```python
-    # 入力欄の角度からsinかcosを求める apply_trigonometry を定義する
+    # 入力欄の角度からsinかcosを求める apply_trigonometry を宣言する
     def apply_trigonometry(self, function_name):
         # function_name（計算名）には、ボタンが指定した「sin」か「cos」が入る
         # angle_degrees（度の角度）に、空欄の案内を指定して self.read_number が返す値を入れる
@@ -661,7 +661,7 @@ sin・cosボタンは、押すたびに入力欄にある数値を度の角度�
 元ファイル：[`calculator.py` の104〜123行](./src/calculator.py#L104-L123)。
 
 ```python
-    # 次の数字入力のために前の値を消す prepare_input を定義する
+    # 次の数字入力のために前の値を消す prepare_input を宣言する
     def prepare_input(self):
         # self.replace_input が False なら、次の処理を実行する
         if not self.replace_input:

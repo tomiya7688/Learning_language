@@ -2,9 +2,9 @@
 import tkinter
 
 
-# 名前入力欄と挨拶表示をまとめる GreetingApp クラスを定義する
+# 名前入力欄と挨拶表示をまとめる GreetingApp クラスを宣言する
 class GreetingApp:
-    # GreetingApp の画面と部品を用意する __init__ を定義する
+    # GreetingApp の画面と部品を用意する __init__ を宣言する
     def __init__(self):
         # self.window に tkinter.Tk() で作ったウィンドウを入れる
         self.window = tkinter.Tk()
@@ -38,14 +38,14 @@ class GreetingApp:
         # self.result_label を self.window 内に配置する
         self.result_label.pack()
 
-    # 入力された名前で挨拶する show_greeting を定義する
+    # 入力された名前で挨拶する show_greeting を宣言する
     def show_greeting(self):
         # name に self.name_entry から取り出した文字列を入れる
         name = self.name_entry.get()
         # self.result_label の表示を「こんにちは 」と name をつないだ文字列に変える
         self.result_label.config(text=f"こんにちは {name}")
 
-    # ウィンドウを表示する run を定義する
+    # ウィンドウを表示する run を宣言する
     def run(self):
         # self.window を表示し、利用者の操作を待ち続ける
         self.window.mainloop()

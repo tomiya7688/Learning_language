@@ -1,9 +1,9 @@
 # pygame を読み込む
 import pygame
 
-# Game という型を定義する
+# Game という型を宣言する
 class Game:
-    # __init__ の処理を定義する
+    # __init__ の処理を宣言する
     def __init__(self):
         # 横640、高さ480ピクセルのウィンドウを開き、あとで色や絵を描く画面を self.screen に保存する
         self.screen = pygame.display.set_mode((640, 480))
@@ -14,7 +14,7 @@ class Game:
         # self.running を True にして、ゲーム画面の繰り返しを続ける
         self.running = True
 
-    # run の処理を定義する
+    # run の処理を宣言する
     def run(self):
         # self.running が True の間、ゲーム画面を更新する
         while self.running:

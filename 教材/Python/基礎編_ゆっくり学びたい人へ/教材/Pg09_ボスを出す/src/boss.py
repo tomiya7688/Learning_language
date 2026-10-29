@@ -3,9 +3,9 @@ import pygame
 # settings を読み込む
 import settings
 
-# Boss という型を定義する
+# Boss という型を宣言する
 class Boss:
-    # __init__ の処理を定義する
+    # __init__ の処理を宣言する
     def __init__(self):
         # rect はrectangle（長方形）の略。位置・大きさと当たり判定に使います。
         # self.rect に pygame.Rect(0, 0, 120, 80) を入れる
@@ -16,12 +16,12 @@ class Boss:
         # self.hp に settings.BOSS_HP を入れる
         self.hp = settings.BOSS_HP
 
-    # take_damage の処理を定義する
+    # take_damage の処理を宣言する
     def take_damage(self):
         # self.hp から 1 を引く
         self.hp -= 1
 
-    # draw の処理を定義する
+    # draw の処理を宣言する
     def draw(self, screen):
         # pygame.draw.rect(screen, (180, 80, 255), self.rect) を実行する
         pygame.draw.rect(screen, (180, 80, 255), self.rect)

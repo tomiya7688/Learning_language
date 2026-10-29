@@ -6,7 +6,7 @@ import pygame
 # 同じsrcフォルダのsettings.pyから、敵の移動量ENEMY_SPEEDと画面の高さHEIGHTを読み込みます。
 import settings
 
-# クラスは情報と操作をまとめる定義。Enemyは敵1機を作るための定義です。
+# クラスは情報と操作をまとめる宣言。Enemyは敵1機を作るための宣言です。
 class Enemy:
     # 敵を作る・動かす・画面外か調べる・描く処理を分けて、各操作を探しやすくします。
     # __init__はEnemy(...)で敵を作るときにPythonが実行する初期設定の処理です。

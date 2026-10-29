@@ -8,7 +8,7 @@ import settings
 # 同じsrcフォルダのbullet.pyから、弾1発の情報と操作をまとめたBullet（弾）を読み込みます。
 from bullet import Bullet
 
-# クラスは情報と操作をまとめた定義です。Playerは操作する自機1機を作るための定義です。
+# クラスは情報と操作をまとめた宣言です。Playerは操作する自機1機を作るための宣言です。
 class Player:
     # 移動のたびに位置を初期値へ戻さないよう、__init__（作成時の準備）へ開始位置と移動量の保存を分けます。
     # selfは今用意している自機1機です。PythonがBattle.__init__内のPlayer()を実行すると、Player.__init__が情報を用意します。

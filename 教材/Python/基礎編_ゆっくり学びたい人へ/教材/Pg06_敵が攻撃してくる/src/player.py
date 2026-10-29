@@ -2,7 +2,7 @@
 import pygame
 # Pythonが、同じsrcのsettings.pyから自機の初期位置・移動量・体力と自機弾の移動量を読み込みます。
 import settings
-# Pythonが、同じsrcのbullet.pyから弾1発の位置・移動・描画をまとめるBullet（弾）の定義を読み込みます。
+# Pythonが、同じsrcのbullet.pyから弾1発の位置・移動・描画をまとめるBullet（弾）の宣言を読み込みます。
 from bullet import Bullet
 
 # Player（自機）は、自機の位置や体力と、それを変える操作が同じ機体のものだと分かるよう、情報と操作をまとめるクラスです。

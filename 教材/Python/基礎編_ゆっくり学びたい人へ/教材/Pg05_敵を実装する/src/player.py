@@ -2,7 +2,7 @@
 import pygame
 # Pythonが、同じsrcのsettings.pyから画面の大きさ、自機の開始位置と移動量、弾の移動量を読み込みます。
 import settings
-# Pythonが、同じsrcのbullet.pyから弾1発の情報と操作をまとめるBullet（弾）の定義を読み込みます。
+# Pythonが、同じsrcのbullet.pyから弾1発の情報と操作をまとめるBullet（弾）の宣言を読み込みます。
 from bullet import Bullet
 
 # 自機の位置と、移動・発射・描画する操作を別々に置くと、どの自機の位置を使うか追いにくくなります。

@@ -4,10 +4,10 @@
 import pygame
 # Pythonが同じsrcのsettings.pyから、画面の幅WIDTH・高さHEIGHT・更新回数の上限FPSを読み込みます。
 import settings
-# Pythonが同じsrcのbattle.pyから、自機・敵・弾の情報と操作をまとめるBattle（戦闘）の定義を読み込みます。
+# Pythonが同じsrcのbattle.pyから、自機・敵・弾の情報と操作をまとめるBattle（戦闘）の宣言を読み込みます。
 from battle import Battle
 
-# クラスは情報と操作をまとめた定義。Gameはゲーム画面と、画面更新を始めて終える操作をまとめます。
+# クラスは情報と操作をまとめた宣言。Gameはゲーム画面と、画面更新を始めて終える操作をまとめます。
 class Game:
     # __init__はGame()を作る際にPythonが実行する準備です。ウィンドウと、更新に使う情報を1回用意します。
     # selfは今作っているゲーム自身。self.screenのように、同じゲームへ情報を持たせます。

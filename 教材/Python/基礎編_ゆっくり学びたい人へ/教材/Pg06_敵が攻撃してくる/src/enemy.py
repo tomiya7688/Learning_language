@@ -2,14 +2,14 @@
 import pygame
 # Pythonが、同じsrcのsettings.pyから敵の移動量・画面の高さ・敵弾の移動量を読み込みます。
 import settings
-# Pythonが、同じsrcのbullet.pyから弾1発の情報と操作をまとめたBullet（弾）の定義を読み込みます。
+# Pythonが、同じsrcのbullet.pyから弾1発の情報と操作をまとめたBullet（弾）の宣言を読み込みます。
 from bullet import Bullet
 
 # Enemy（敵）は、敵ごとに異なる位置と、その敵を動かす・撃たせる・描く操作を対応させるため、敵1機の情報と操作をまとめるクラスです。
 # Battle.__init__が敵を作り、Battleの敵一覧self.enemiesへ追加します。
 # Battle.update_enemiesが敵を動かして画面外の敵を一覧から外し、発射の更新では残った敵のshootを呼び出します。
 class Enemy:
-    # Enemyは、毎回の移動で開始位置へ戻さないよう、情報の準備を__init__、位置変更をmoveに分けて定義します。
+    # Enemyは、毎回の移動で開始位置へ戻さないよう、情報の準備を__init__、位置変更をmoveに分けて宣言します。
     # selfは作成する敵1機。PythonがEnemy(x, y)を実行すると、__init__が指定された中心位置でその敵の情報を用意します。
     def __init__(self, x, y):
         # rectはrectangle（長方形）の略。pygame.Rectへ左端・上端・幅・高さを指定し、敵の位置と大きさをself.rectへ保存します。
@@ -39,7 +39,7 @@ class Enemy:
         return Bullet(self.rect.centerx, self.rect.bottom,
                       settings.ENEMY_BULLET_SPEED, (8, 16), (255, 100, 180))
 
-    # Enemyは、位置の情報だけでは敵の絵が出ないため、位置変更をmove、描画先へ色を塗る処理をdraw（描画）に分けて定義します。
+    # Enemyは、位置の情報だけでは敵の絵が出ないため、位置変更をmove、描画先へ色を塗る処理をdraw（描画）に分けて宣言します。
     def draw(self, screen):
         # screenはBattle.drawが指定した描画先。pygame.draw.rectへ描画先・赤系の色・敵の位置と大きさを持つself.rectを指定します。
         # pygame.draw.rectは太さを指定しない場合、長方形の内側を塗ります。敵の位置変更やウィンドウの表示更新は行いません。
