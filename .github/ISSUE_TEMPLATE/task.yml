@@ -5,9 +5,10 @@ body:
   - type: markdown
     attributes:
       value: |
-        優先度は P0＝緊急 / P1＝高 / P2＝通常 / P3＝低 / P4＝保留。
-        **P0は重大な緊急事態専用で、通常は空けておきます。迷ったらP2にしてください。**
-        詳しくはリポジトリの `.github/CONTRIBUTING.md`（Issue運用ルール）を確認してください。
+        このリポジトリの優先度は **P0〜P8** です。
+        P0は重大事故専用、P1〜P3はPython教材と関連する共通作業、P4〜P8は他言語の教材に使います。
+        他リポジトリ共通のP0〜P4（高・通常・低・保留）とは異なります。
+        具体的な割当ては「資料/Issue優先度運用.md」を正本としてください。
   - type: dropdown
     id: issue_type
     attributes:
@@ -26,14 +27,17 @@ body:
     id: priority
     attributes:
       label: 優先度
-      description: "P0は重大障害など即時対応が必要な場合のみ選び、緊急性の根拠を記入してください"
+      description: "Learning_languageのP0〜P8から選択。Python以外の通常作業はP4以降。詳細は資料/Issue優先度運用.md"
       options:
-        - "P0：緊急（重大障害・データ損失・セキュリティ事故など）"
-        - "P1：高（直近で対応すべき重要タスク）"
-        - "P2：通常（標準）"
-        - "P3：低（後回し可能）"
-        - "P4：保留・長期（アイデア・調査）"
-      default: 2
+        - "P0：緊急（教材の重大破損、公開・ライセンス事故）"
+        - "P1：Python教材の基盤・優先共通作業"
+        - "P2：Python教材の通常作業"
+        - "P3：Python教材の応用・上級・将来作業"
+        - "P4：Pythonの次に着手する他言語（例：DNCL、Scratch）"
+        - "P5：続いて着手する他言語（例：Rust、Zig、Fortran）"
+        - "P6：その後の他言語（例：C、Go、C++、Common Lisp）"
+        - "P7：さらに後で扱う他言語（例：Java、C#、SQL）"
+        - "P8：将来対応の他言語（例：Simula、Smalltalk、Bend）"
     validations:
       required: true
   - type: textarea
