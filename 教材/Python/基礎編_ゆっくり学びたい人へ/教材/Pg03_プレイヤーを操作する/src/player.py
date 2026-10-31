@@ -1,9 +1,9 @@
 # pygame を読み込む
 import pygame
 
-# Player という型を定義する
+# Player という型を宣言する
 class Player:
-    # __init__ の処理を定義する
+    # __init__ の処理を宣言する
     def __init__(self):
         # rect はrectangle（長方形）の略。自機の位置・大きさに使います。
         # self.rect に pygame.Rect(0, 0, 40, 40) を入れる
@@ -13,7 +13,7 @@ class Player:
         # self.speed に 5 を入れる
         self.speed = 5
 
-    # move の処理を定義する
+    # move の処理を宣言する
     def move(self, keys):
         # keys[pygame.K_LEFT] が成り立つなら
         if keys[pygame.K_LEFT]:

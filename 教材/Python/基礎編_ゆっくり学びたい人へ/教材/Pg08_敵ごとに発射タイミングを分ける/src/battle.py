@@ -11,9 +11,9 @@ from collisions import hit_enemies
 # collisions から hit_player を読み込む
 from collisions import hit_player
 
-# Battle という型を定義する
+# Battle という型を宣言する
 class Battle:
-    # __init__ の処理を定義する
+    # __init__ の処理を宣言する
     def __init__(self):
         # player はプレイヤー。ここでは操作する自機です。
         # self.player に Player() を入れる
@@ -50,7 +50,7 @@ class Battle:
             # appendはself.bulletsに残っている以前の弾を置き換えません。弾の作成と一覧への追加だけでは、弾の移動や描画は行いません。
             self.bullets.append(self.player.shoot())
 
-    # update の処理を定義する
+    # update の処理を宣言する
     def update(self):
         # self.player.move(pygame.key.get_pressed()) を実行する
         self.player.move(pygame.key.get_pressed())
@@ -73,7 +73,7 @@ class Battle:
         # hit_player(self.enemy_bullets, self.player) を実行する
         hit_player(self.enemy_bullets, self.player)
 
-    # is_game_over の処理を定義する
+    # is_game_over の処理を宣言する
     def is_game_over(self):
         # self.player.hp <= 0 を返す
         return self.player.hp <= 0
@@ -90,7 +90,7 @@ class Battle:
                 # bullets.remove(bullet)が選んだ弾bulletを元の弾一覧bulletsから外します。弾一覧の削除は画面の絵を直接消す操作ではありません。
                 bullets.remove(bullet)
 
-    # update_enemies の処理を定義する
+    # update_enemies の処理を宣言する
     def update_enemies(self):
         # self.enemies[:] から enemy を1つずつ取り出して繰り返す
         for enemy in self.enemies[:]:
@@ -106,7 +106,7 @@ class Battle:
                 # self.enemy_bullets.append(enemy.shoot()) を実行する
                 self.enemy_bullets.append(enemy.shoot())
 
-    # spawn_enemy の処理を定義する
+    # spawn_enemy の処理を宣言する
     def spawn_enemy(self):
         # self.spawn_index >= len(settings.SPAWN_POSITIONS_X) が成り立つなら
         if self.spawn_index >= len(settings.SPAWN_POSITIONS_X):
@@ -132,7 +132,7 @@ class Battle:
             # self.spawn_timer に 0 を入れる
             self.spawn_timer = 0
 
-    # draw の処理を定義する
+    # draw の処理を宣言する
     def draw(self, screen):
         # screen.fill((10, 10, 30)) を実行する
         screen.fill((10, 10, 30))
@@ -159,7 +159,7 @@ class Battle:
             # bullet.draw(screen)が、選んだ弾bulletに保存した位置・大きさ・色で描画先screenへ弾を描きます。弾を移動したり一覧へ追加したりはしません。
             bullet.draw(screen)
 
-    # draw_text の処理を定義する
+    # draw_text の処理を宣言する
     def draw_text(self, screen, text, position):
         # image は画像。画面へ描く内容を持ちます。
         # image に self.font.render(text, True, (255, 255, 255)) を入れる

@@ -7,7 +7,7 @@ import settings
 # 同じsrcフォルダのbattle.pyから、自機1機と撃った弾の一覧を持つBattleを読み込みます。
 from battle import Battle
 
-# クラスは情報と操作をまとめた定義です。Gameはゲーム画面と、その画面を動かす操作をまとめます。
+# クラスは情報と操作をまとめた宣言です。Gameはゲーム画面と、その画面を動かす操作をまとめます。
 class Game:
     # __init__はmain.pyがGame()を作るときにPythonが実行する準備です。
     # selfは今作るゲーム全体。self.screenのように、そのゲームの情報を持たせます。

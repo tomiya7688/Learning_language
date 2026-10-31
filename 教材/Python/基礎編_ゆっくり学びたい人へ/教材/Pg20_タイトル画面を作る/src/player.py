@@ -5,9 +5,9 @@ import settings
 # bullet から Bullet を読み込む
 from bullet import Bullet
 
-# Player という型を定義する
+# Player という型を宣言する
 class Player:
-    # __init__ の処理を定義する
+    # __init__ の処理を宣言する
     def __init__(self, image):
         # rect はrectangle（長方形）の略。位置・大きさと当たり判定に使います。
         # self.rect に pygame.Rect(0, 0, 40, 40) を入れる
@@ -65,12 +65,12 @@ class Player:
         return Bullet(self.rect.centerx, self.rect.top, -settings.BULLET_SPEED,
                       (6, 20), (255, 240, 100))
 
-    # take_damage の処理を定義する
+    # take_damage の処理を宣言する
     def take_damage(self):
         # self.hp から 1 を引く
         self.hp -= 1
 
-    # draw の処理を定義する
+    # draw の処理を宣言する
     def draw(self, screen):
         # screen.blit(self.image, self.rect) を実行する
         screen.blit(self.image, self.rect)

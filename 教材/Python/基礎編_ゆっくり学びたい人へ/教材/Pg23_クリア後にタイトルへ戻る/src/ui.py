@@ -1,7 +1,7 @@
 # pygame を読み込む
 import pygame
 
-# draw_centered_text の処理を定義する
+# draw_centered_text の処理を宣言する
 def draw_centered_text(screen, font, text, color, center):
     # image は画像。画面へ描く内容を持ちます。
     # image に font.render(text, True, color) を入れる
@@ -12,9 +12,9 @@ def draw_centered_text(screen, font, text, color, center):
     # screen.blit(image, rect) を実行する
     screen.blit(image, rect)
 
-# Button という型を定義する
+# Button という型を宣言する
 class Button:
-    # __init__ の処理を定義する
+    # __init__ の処理を宣言する
     def __init__(self, rect, text, action):
         # rect はrectangle（長方形）の略。位置・大きさと当たり判定に使います。
         # self.rect に pygame.Rect(rect) を入れる
@@ -29,7 +29,7 @@ class Button:
         # self.font に pygame.font.Font(None, 40) を入れる
         self.font = pygame.font.Font(None, 40)
 
-    # handle_event の処理を定義する
+    # handle_event の処理を宣言する
     def handle_event(self, event):
         # event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 が成り立つなら
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -38,7 +38,7 @@ class Button:
                 # self.action() を実行する
                 self.action()
 
-    # draw の処理を定義する
+    # draw の処理を宣言する
     def draw(self, screen):
         # pygame.draw.rect(screen, (70, 110, 190), self.rect, border_radius=8) を実行する
         pygame.draw.rect(screen, (70, 110, 190), self.rect, border_radius=8)

@@ -2,9 +2,9 @@
 import tkinter
 
 
-# 電卓の入力欄・計算途中の式・結果表示・計算処理をまとめる CalculatorApp クラスを定義する
+# 電卓の入力欄・計算途中の式・結果表示・計算処理をまとめる CalculatorApp クラスを宣言する
 class CalculatorApp:
-    # CalculatorApp の画面と部品を用意する __init__ を定義する
+    # CalculatorApp の画面と部品を用意する __init__ を宣言する
     def __init__(self):
         # self.calculation_parts（計算式の部品）に空のリストを入れる
         self.calculation_parts = []
@@ -86,7 +86,7 @@ class CalculatorApp:
         # self.result_label を self.window 内に配置する
         self.result_label.pack()
 
-    # 入力された数字と operator を計算式に追加する add_operator を定義する
+    # 入力された数字と operator を計算式に追加する add_operator を宣言する
     def add_operator(self, operator):
         # operator（演算子）には、この電卓のボタン処理が指定した計算記号が入る
         # number_text（入力文字列）に self.number_entry に入力された文字列を入れる
@@ -115,27 +115,27 @@ class CalculatorApp:
         # self.result_label の表示を「答え:」に変える
         self.result_label.config(text="答え:")
 
-    # 入力された数字と「+」を計算式に追加する select_addition を定義する
+    # 入力された数字と「+」を計算式に追加する select_addition を宣言する
     def select_addition(self):
         # 「+」を指定して self.add_operator を呼び出す
         self.add_operator("+")
 
-    # 入力された数字と「-」を計算式に追加する select_subtraction を定義する
+    # 入力された数字と「-」を計算式に追加する select_subtraction を宣言する
     def select_subtraction(self):
         # 「-」を指定して self.add_operator を呼び出す
         self.add_operator("-")
 
-    # 入力された数字と「*」を計算式に追加する select_multiplication を定義する
+    # 入力された数字と「*」を計算式に追加する select_multiplication を宣言する
     def select_multiplication(self):
         # 「*」を指定して self.add_operator を呼び出す
         self.add_operator("*")
 
-    # 入力された数字と「/」を計算式に追加する select_division を定義する
+    # 入力された数字と「/」を計算式に追加する select_division を宣言する
     def select_division(self):
         # 「/」を指定して self.add_operator を呼び出す
         self.add_operator("/")
 
-    # 計算式に最後の数字を追加し、掛け算と割り算を先に計算して答えを表示する calculate を定義する
+    # 計算式に最後の数字を追加し、掛け算と割り算を先に計算して答えを表示する calculate を宣言する
     def calculate(self):
         # number_text（入力文字列）に self.number_entry に入力された文字列を入れる
         number_text = self.number_entry.get()
@@ -228,7 +228,7 @@ class CalculatorApp:
         # self.number_entry の先頭に answer を文字列にした値を挿入する
         self.number_entry.insert(0, str(answer))
 
-    # ウィンドウを表示する run を定義する
+    # ウィンドウを表示する run を宣言する
     def run(self):
         # self.window を表示し、利用者の操作を待ち続ける
         self.window.mainloop()

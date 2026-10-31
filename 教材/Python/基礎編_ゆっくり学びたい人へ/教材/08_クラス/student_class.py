@@ -1,35 +1,36 @@
-# Student（生徒）という新しい種類の値を定義します。
+# 生徒のクラス（Student）を宣言します。
 class Student:
-    # 生徒ひとり分を作るときに呼び出す処理を定義します。
-    def __init__(self, name, score):
-        # self は、いま作っている生徒ひとり分を表します。
-        # name（受け取った生徒の名前）を、その生徒の name 属性（名前を保存する場所）に保存します。
+    # 初期設定の関数（__init__）を宣言します。
+    def __init__(self, name, math_score, kokugo_score):
+        # 受け取った名前（name）を、生徒自身（self）の名前に設定します。
         self.name = name
-        # score（受け取った生徒の点数）を、その生徒の score 属性（点数を保存する場所）に保存します。
-        self.score = score
+        # 受け取った数学の点数（math_score）を、生徒自身の数学の点数に設定します。
+        self.math_score = math_score
+        # 受け取った国語の点数（kokugo_score）を、生徒自身の国語の点数に設定します。
+        self.kokugo_score = kokugo_score
 
-    # 生徒の結果を表示する処理を定義します。
+    # 生徒の結果を見せる関数（show_result）を宣言します。
     def show_result(self):
-        # この生徒の名前と点数をコロンで区切って表示します。
-        print(self.name, ":", self.score)
+        # 生徒自身の名前・数学の点数・国語の点数を、1行にして表示します。
+        print(f"{self.name}: 数学 {self.math_score}点、国語 {self.kokugo_score}点")
 
 
-# Student（生徒）から、たろうのインスタンスを作ります。
-# student（たろうの生徒データを使う名前）で、この生徒のインスタンスを使えるようにします。
-student = Student("たろう", 80)
+# 主な処理をする関数（main）を宣言します。
+def main():
+    # はなこの変数（hanako）を宣言します。
+    # 名前「Hanako」、数学80点、国語50点の生徒を代入します。
+    hanako = Student(name="Hanako", math_score=80, kokugo_score=50)
+    # たろうの変数（taro）を宣言します。
+    # 名前「Taro」、数学40点、国語60点の生徒を代入します。
+    taro = Student(name="Taro", math_score=40, kokugo_score=60)
 
-# student（たろうの生徒データ）の name（名前）を表示します。
-print(student.name)
+    # はなこの結果を見せる関数（hanako.show_result）を実行します。
+    hanako.show_result()
+    # たろうの結果を見せる関数（taro.show_result）を実行します。
+    taro.show_result()
 
-# student（たろうの生徒データ）の score（点数）を表示します。
-print(student.score)
 
-# student（たろうの生徒データ）の show_result（結果表示）を実行します。
-student.show_result()
-
-# Student（生徒）から、はなこのインスタンスを作ります。
-# student2（はなこの生徒データを使う名前）で、この生徒のインスタンスを使えるようにします。
-student2 = Student("はなこ", 95)
-
-# student2（はなこの生徒データ）の show_result（結果表示）を実行します。
-student2.show_result()
+# このファイルを直接実行した場合だけ、main() を実行します。
+if __name__ == "__main__":
+    # 主な処理をする関数（main）を実行します。
+    main()

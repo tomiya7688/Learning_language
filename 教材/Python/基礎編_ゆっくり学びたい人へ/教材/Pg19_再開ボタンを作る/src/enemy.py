@@ -5,9 +5,9 @@ import settings
 # bullet から Bullet を読み込む
 from bullet import Bullet
 
-# Enemy という型を定義する
+# Enemy という型を宣言する
 class Enemy:
-    # __init__ の処理を定義する
+    # __init__ の処理を宣言する
     def __init__(self, x, y, fire_interval, image):
         # rect はrectangle（長方形）の略。位置・大きさと当たり判定に使います。
         # self.rect に pygame.Rect(0, 0, 40, 40) を入れる
@@ -32,23 +32,23 @@ class Enemy:
         # self.fire_timer に 0 を入れる
         self.fire_timer = 0
 
-    # move の処理を定義する
+    # move の処理を宣言する
     def move(self):
         # self.rect.y に self.speed を足す
         self.rect.y += self.speed
 
-    # is_off_screen の処理を定義する
+    # is_off_screen の処理を宣言する
     def is_off_screen(self):
         # self.rect.top > settings.HEIGHT を返す
         return self.rect.top > settings.HEIGHT
 
-    # shoot の処理を定義する
+    # shoot の処理を宣言する
     def shoot(self):
         # Bullet(self.rect.centerx, self.rect.bottom, settings.ENEMY_BULLET_SPEED, (8, 16), (255, 100, 180)) を返す
         return Bullet(self.rect.centerx, self.rect.bottom,
                       settings.ENEMY_BULLET_SPEED, (8, 16), (255, 100, 180))
 
-    # ready_to_fire の処理を定義する
+    # ready_to_fire の処理を宣言する
     def ready_to_fire(self):
         # self.fire_timer に 1 を足す
         self.fire_timer += 1
@@ -62,7 +62,7 @@ class Enemy:
         # False を返す
         return False
 
-    # draw の処理を定義する
+    # draw の処理を宣言する
     def draw(self, screen):
         # screen.blit(self.image, self.rect) を実行する
         screen.blit(self.image, self.rect)

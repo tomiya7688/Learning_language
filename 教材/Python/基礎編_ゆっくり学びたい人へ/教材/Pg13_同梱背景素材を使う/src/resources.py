@@ -3,7 +3,7 @@ from pathlib import Path
 # pygame を読み込む
 import pygame
 
-# load_image の処理を定義する
+# load_image の処理を宣言する
 def load_image(name, size=None):
     # path は画像ファイルの場所です。
     # path に Path(__file__).parent.parent / 'assets' / name を入れる

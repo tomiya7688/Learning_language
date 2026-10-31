@@ -5,9 +5,9 @@ import settings
 # battle から Battle を読み込む
 from battle import Battle
 
-# Game という型を定義する
+# Game という型を宣言する
 class Game:
-    # __init__ の処理を定義する
+    # __init__ の処理を宣言する
     def __init__(self):
         # settings.pyで決めた幅と高さのウィンドウを開き、あとで色や絵を描く画面を self.screen に保存する
         self.screen = pygame.display.set_mode((settings.WIDTH, settings.HEIGHT))
@@ -29,7 +29,7 @@ class Game:
         # GameはBattle()で作った戦闘をself.battleへ保存し、後の更新と描画で同じ戦闘を使います。
         self.battle = Battle()
 
-    # run の処理を定義する
+    # run の処理を宣言する
     def run(self):
         # self.running が True の間、ゲーム画面を更新する
         while self.running:

@@ -2,11 +2,11 @@
 import pygame
 # Pythonが、同じsrcのsettings.pyから画面の大きさなどの設定を読み込みます。
 import settings
-# Pythonが、同じsrcのplayer.pyから自機の情報と操作をまとめるPlayer（プレイヤー）の定義を読み込みます。
+# Pythonが、同じsrcのplayer.pyから自機の情報と操作をまとめるPlayer（プレイヤー）の宣言を読み込みます。
 from player import Player
-# Pythonが、同じsrcのenemy.pyから敵1機の情報と操作をまとめるEnemy（敵）の定義を読み込みます。
+# Pythonが、同じsrcのenemy.pyから敵1機の情報と操作をまとめるEnemy（敵）の宣言を読み込みます。
 from enemy import Enemy
-# Pythonが、同じsrcのcollisions.pyから弾と敵の命中を調べて一覧を変更するhit_enemies（敵への命中）の定義を読み込みます。
+# Pythonが、同じsrcのcollisions.pyから弾と敵の命中を調べて一覧を変更するhit_enemies（敵への命中）の宣言を読み込みます。
 from collisions import hit_enemies
 
 # 自機・弾・敵の情報を別々に置くと、どの一覧を移動・命中・描画に使うか追いにくくなります。
