@@ -1,0 +1,11 @@
+[package]
+name = "learning-rust"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+# 各章は examples/ 以下に独立した実行用ファイルを置く。
+# 別ファイルを使う第17章だけ、起動ファイルの場所を明示する。
+[[example]]
+name = "lesson17_modules"
+path = "examples/lesson17_modules/main.rs"
